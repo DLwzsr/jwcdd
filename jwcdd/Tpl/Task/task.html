@@ -1,0 +1,1320 @@
+<include file="./jwcdd/Tpl/headerTemp.html" />
+<section id='content'>
+<div class='container-fluid'>
+<div class='row-fluid' id='content-wrapper'>
+<div class='span12'>
+<hr class='hr-normal' />
+<div class='row-fluid'>
+<div class='span3'>
+    <div class='row-fluid'>
+        <strong>学年学期</strong>
+        <select class='select2 input-block-level'>
+            <option value='-1' />------请选择------
+            <optgroup label='2014-2015 学年'>
+                <option value='AK' />2013-2014 学年第 1 学期
+                <option value='HI' />2013-2014 学年第 2 学期
+            </optgroup>
+            <optgroup label='2012-2013 学年'>
+                <option value='AK' />2012-2013 学年第 1 学期
+                 <option value='HI' />2012-2013 学年第 2 学期
+            </optgroup>
+            <optgroup label='2013-2014 学年'>
+                <option value='AK' />2011-2012 学年第 1 学期
+                <option value='HI' />2011-2012 学年第 2 学期
+            </optgroup>
+        </select>
+    </div>
+</div>
+<div class='span5'>
+    <div class='row-fluid'>
+        <strong>行政班级</strong>
+        <select class='select2 input-block-level'>
+            <option value='-1' />------请选择------
+            <option value='AK' />信息科学与技术学院2013级计算机科学与技术专业
+            <option value='HI' />信息科学与技术学院2013级电子信息科学与技术专业
+            <option value='CA' />物理学系2013级理论物理专业
+            <option value='NV' />数学系2012级统计学专业
+            <option value='OR' />生命科学与技术学院2011级生命学专业
+            <option value='WA' />遥感与应用学院2011级应用专业
+        </select>
+    </div>
+</div>
+<div class='span2'>
+    <div class='row-fluid'>
+        <strong>周次</strong>
+        <select class='select2 input-block-level'>
+            <option value='-1' />------请选择------
+            <option value='AK' />1
+            <option value='HI' />2
+            <option value='CA' />3
+            <option value='NV' />4
+            <option value='OR' />5
+            <option value='WA' />6
+            <option value='AK' />7
+            <option value='AK' />8
+            <option value='HI' />9
+            <option value='CA' />10
+            <option value='NV' />11
+            <option value='OR' />12
+            <option value='WA' />13
+            <option value='AK' />14
+            <option value='HI' />15
+            <option value='CA' />16
+            <option value='NV' />17
+            <option value='OR' />18
+            <option value='WA' />19
+            <option value='AK' />20
+        </select>
+    </div>
+</div>
+</div>
+
+<div class='row-fluid' style="margin-top:10px; margin-bottom:2px;">
+    <div class='span3'>
+    <div class='row-fluid'>
+        <strong>教师名称</strong>
+        <select class='select2 input-block-level'>
+            <option value='-1' />------请选择------
+            <option value='AK' />林树明
+            <option value='HI' />陈燕
+            <option value='CA' />林明
+            <option value='NV' />赵三
+            <option value='OR' />王五
+            <option value='WA' />小李
+        </select>
+    </div>
+</div>
+<div class='span3'>
+    <div class='row-fluid'>
+        <strong>教师单位</strong>
+        <select class='select2 input-block-level'>
+            <option value='-1' />------请选择------
+            <option value='AK' />经济与工商管理学院
+            <option value='HI' />信息科学与技术学院
+            <option value='CA' />物理学系
+            <option value='NV' />数学系
+            <option value='OR' />化学学院
+            <option value='WA' />天文系
+        </select>
+    </div>
+</div>
+<div class='span4'>
+    <div class='row-fluid'>
+        <strong>学生院系</strong>
+        <select class='select2 input-block-level'>
+            <option value='-1' />------请选择------
+            <option value='AK' />2014/国际经济与贸易
+            <option value='HI' />2013/计算机科学与技术
+            <option value='CA' />2012/电子信息科学与技术
+            <option value='NV' />2011/应用数学与统计
+            <option value='OR' />2012/化学系
+            <option value='WA' />2013/天文系
+        </select>
+    </div>
+</div>
+<button class="btn btn-defalut pull-right" style="margin:17px 0px 0px 0px;">检索 | Search</button>
+</div>
+<div class='row-fluid'>
+<div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
+<div class='box-header green-background'>
+    <div class='text-center'>2013-2014 第 2 学期课程信息<a href="#teacher" class="btn btn-default pull-right">下一步</a></div>
+</div>
+<div class='box-content box-no-padding'>
+<div class='responsive-table'>
+<div class='scrollable-area'>
+<table class='data-table table table-bordered table-striped' style='margin-bottom:0;'>
+<thead>
+<tr>
+    <td><button id="check" class="btn btn-primary btn-mini">全选</button></td>
+    <td><strong>周次</strong></td>
+    <td><strong>上课时间</strong></td>
+    <td><strong>教师姓名</strong></td>
+    <td><strong>教师单位</strong></td>
+    <td><strong>课程名称</strong></td>
+    <td><strong>学生院系</strong></td>
+    <td><strong>课程类别</strong></td>
+    <td><strong>上课地点</strong></td>
+    <td><strong>听课时间</strong></td>
+    <td><strong>听课专题</strong></td>
+    <td><strong>听课专家[督导]</strong></td>
+    <td></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>1</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>1</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>敬文讲堂[教七旁]</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明,陈燕</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼103</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>1</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>敬文讲堂[教七旁]</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明,陈燕</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼103</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>1</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>敬文讲堂[教七旁]</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明,陈燕</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼103</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>1</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>敬文讲堂[教七旁]</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>1</td>
+    <td>晚上9-10节</td>
+    <td>林树明,陈燕</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼阶梯教室</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td><input type='checkbox' value='1' name='taskId' /></td>
+    <td>2</td>
+    <td>晚上9-10节</td>
+    <td>林树明</td>
+    <td>经济与工商管理学院</td>
+    <td>宏观经济学原理</td>
+    <td>国际经济与贸易</td>
+    <td>专业基础课</td>
+    <td>电子楼103</td>
+    <td>
+        <div>
+            <div class='datepicker input-append' id='datepicker'>
+                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
+                <span class='add-on'>
+                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:150px;'>
+            <option value='AK' />新生研讨课
+            <option value='HI' />绪论课
+            <option value='CA' />实验课
+            <option value='NV' />双语课
+            <option value='OR' />新生研讨课\绪论课
+            <option value='WA' />新生研讨课\双语课
+        </select>
+    </td>
+    <td>
+        <select class='select2 input-block-level' style='width:90px;'>
+            <option value='AK' />李春生
+            <option value='HI' />张燕平
+            <option value='CA' />连慕兰
+            <option value='NV' />郑光宇
+            <option value='OR' />熊立文
+            <option value='WA' />尹冬冬
+        </select>
+    </td>
+    <td>
+        <div class='text-right'>
+            <a class='btn btn-success btn-mini' href='#'>
+                <i class='icon-ok'></i>
+            </a>
+            <a class='btn btn-danger btn-mini' href='#'>
+                <i class='icon-remove'></i>
+            </a>
+        </div>
+    </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='row-fluid' style="margin-top:20px; margin-bottom:50px;" id="teacher">
+    <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
+        <div class='box-header green-background'>
+            <div class='text-center'>督导基本信息<button id="fenTask" class="btn btn-default pull-right">分配</a></div>
+        </div>
+        <div class='box-content box-no-padding'>
+            <div class='responsive-table'>
+                <div class='scrollable-area'>
+                    <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+                        <thead>
+                        <tr>
+                            <th>姓名&单位</th>
+                            <th>姓名&单位</th>
+                            <th>姓名&单位</th>
+                            <th>姓名&单位</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;赵三 信息科学与技术学院
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 马克思主义学院
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;赵三 管理学院
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 生命科学与技术学院
+                              </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 核科学与技术学院
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 环境学院
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;赵三 心理学院
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 体育与运动学院
+                              </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;李四 中文学院
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 外文学院
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 脑认知科学与技术所
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;李四 经济与工商管理学院
+                              </label>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 物理系
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 数学系
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;李四 天文系
+                              </label>
+                            </div>
+                            </td>
+                            <td>
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name="teaId[]" value="1">&nbsp;&nbsp;王五 化学学院
+                              </label>
+                            </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>      
+</div>
+</div>
+</div>
+</section>
+<include file="./jwcdd/Tpl/footerTemp.html" />
