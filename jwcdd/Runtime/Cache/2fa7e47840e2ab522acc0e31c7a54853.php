@@ -55,7 +55,6 @@
     <link href='/jwcdd/Public/assets/stylesheets/demo.css' media='all' rel='stylesheet' type='text/css' />
     <!-- / jquery -->
     <script src='/jwcdd/Public/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
-    <script src='/jwcdd/Public/js/myfun.js' type='text/javascript'></script>
 </head>
 <body class='contrast-red fixed-header fixed-navigation'>
 <header>
@@ -265,20 +264,20 @@
         <span>通知</span>
     </a>
 </li-->
-<li id="umanager">
+<li>
     <a class='dropdown-collapse' href='#'>
         <i class='icon-user'></i>
         <span>人员管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li id="user">
+        <li class=''>
             <a href='<?php echo U('User/user');?>'>
                 <i class='icon-caret-right'></i>
                 <span>系统用户</span>
             </a>
         </li>
-        <li id="user_dd">
+        <li class=''>
             <a href='<?php echo U('User/user_dd');?>'>
                 <i class='icon-caret-right'></i>
                 <span>督导用户</span>
@@ -286,20 +285,20 @@
         </li>
     </ul>
 </li>
-<li id="tmanager">
+<li>
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-tasks'></i>
         <span>听课任务管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li id="task">
+        <li class=''>
             <a href='<?php echo U('Task/task');?>'>
                 <i class='icon-caret-right'></i>
                 <span>分配</span>
             </a>
         </li>
-        <li id="showTask">
+        <li class=''>
             <a href='<?php echo U('Task/showTask');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -307,20 +306,20 @@
         </li>
     </ul>
 </li>
-<li id="rmanager">
+<li class=''>
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-edit'></i>
         <span>听课记录</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li id="record">
+        <li class=''>
             <a href='<?php echo U('Record/record');?>'>
                 <i class='icon-caret-right'></i>
                 <span>填写</span>
             </a>
         </li>
-        <li id="showRecord">
+        <li class=''>
             <a href='<?php echo U('Record/showRecord');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -328,44 +327,44 @@
         </li>
     </ul>
 </li>
-<li id="smanager">
+<li>
     <a class='dropdown-collapse' href='#'>
         <i class='icon-table'></i>
         <span>数据报表</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li id="analysis">
+        <li class=''>
             <a href='<?php echo U('Analysis/analysis');?>'>
                 <i class='icon-caret-right'></i>
                 <span>数据检索</span>
             </a>
         </li>
-        <li id="department">
+        <li class=''>
             <a href='<?php echo U('Analysis/department');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系统计</span>
             </a>
         </li>
-        <li id="month">
+        <li class=''>
             <a href='<?php echo U('Analysis/month');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系月份统计</span>
             </a>
         </li>
-        <li id="supervisor">
+        <li class=''>
             <a href='<?php echo U('Analysis/supervisor');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按督导统计</span>
             </a>
         </li>
-        <li id="teacher">
+        <li class=''>
             <a href='<?php echo U('Analysis/teacher');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按教师职称统计</span>
             </a>
         </li>
-        <li id="course">
+        <li class=''>
             <a href='<?php echo U('Analysis/course');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按课程名统计</span>
@@ -377,150 +376,115 @@
 </div>
 </nav>
 <section id='content'>
-<div class='container-fluid'>
-<div class='row-fluid' id='content-wrapper'>
-<div class='span12'>
-<div class='row-fluid'>
-    <div class='span12'>
-        <div class='page-header'>
-            <h1 class='pull-left'>
-                <i class='icon-table'></i>
-                <span>数据报表</span>
-            </h1>
-            <div class='pull-right'>
-                <ul class='breadcrumb'>
-                    <li>
-                        <a href="index.html"><i class='icon-bar-chart'></i>
-                        </a>
-                    </li>
-                    <li class='separator'>
-                        <i class='icon-angle-right'></i>
-                    </li>
-                    <li class='active'>按教师职称统计</li>
-                </ul>
+    <div class='container-fluid'>
+        <div class='row-fluid' id='content-wrapper'>
+        <div class='span12'>
+            <div class='row-fluid'>
+                <div class='span6'>
+                    <div class='page-header'>
+                        <h1 class='pull-left'>
+                            <i class='icon-user'></i>
+                            <span>人员管理-编辑用户</span>
+                        </h1>
+                    </div>
+                </div>  
+                <div class='row-fluid'>
+                    <div class='span12 box'>
+                        <div class='box-header green-background'>
+                            <div class='title'>
+                                <div class='icon-edit'></div>
+                                用户信息
+                            </div>
+                        </div>
+                        <div class='box-content'>
+                            <form accept-charset="UTF-8" action="<?php echo U('User/editUser');?>" class="form form-horizontal" method="post" style="margin-bottom: 0;">
+                            <div class='control-group'>
+                                <label class='control-label' for='inputSelect'>用户角色</label>
+                                <div class='controls'>
+                                    <select id='inputSelect' name='role'>
+                                        <?php if($euser['role'] == 1): ?><option value='1' selected="selected">系统管理员</option>
+                                            <?php else: ?><option value='1'>系统管理员</option><?php endif; ?>
+                                        <?php if($euser['role'] == 2): ?><option value='2' selected="selected">督导</option>
+                                            <?php else: ?><option value='2'>督导</option><?php endif; ?>
+                                        <?php if($euser['role'] == 3): ?><option value='3' selected="selected">学校领导</option>
+                                            <?php else: ?><option value='3'>学校领导</option><?php endif; ?>
+                                        <?php if($euser['role'] == 4): ?><option value='4' selected="selected">教学院长</option>
+                                            <?php else: ?><option value='4'>教学院长</option><?php endif; ?>
+                                        <?php if($euser['role'] == 5): ?><option value='5' selected="selected">教师</option>
+                                            <?php else: ?><option value='5'>教师</option><?php endif; ?>
+                                    </select>                                
+                                </div>
+                            </div>
+                            <div class='control-group'>
+                                <label class='control-label' for='inputNumber'>工作证号</label>
+                                <div class='controls'>
+                                        <input id='inputNumber' type='text' name='teaid' value='<?php echo ($euser["teaid"]); ?>' />
+                                    </div>
+                                </div>
+                                <div class='control-group'>
+                                    <label class='control-label' for='inputText1'>用户姓名</label>
+                                    <div class='controls'>
+                                        <input id='inputText1' type='text' name='name' value='<?php echo ($euser["name"]); ?>' />
+                                    </div>
+                                </div>
+                                <div class='control-group'>
+                                    <label class='control-label' for='inputText1'>职称/职务</label>
+                                    <div class='controls'>
+                                        <input id='inputText1' type='text' name='title' value='<?php echo ($euser["title"]); ?>' />
+                                    </div>
+                                </div>
+                                <div class='control-group'>
+                                    <label class='control-label' for='inputText1'>院系/机构</label>
+                                    <div class='controls'>
+                                        <input id='inputText1' type='text' name='college' value='<?php echo ($euser["college"]); ?>' />
+                                    </div>
+                                </div>
+                                <div class='control-group'>
+                                    <label class='control-label' for='inputText1'>身份证号</label>
+                                    <div class='controls'>
+                                        <input id='inputText1' type='text' name='idcard' value='<?php echo ($euser["idcard"]); ?>' />
+                                    </div>
+                                </div>
+                                <div class='control-group'>
+                                    <label class='control-label' for='inputText1'>手机号码</label>
+                                    <div class='controls'>
+                                        <input id='inputText1' type='text' name='mobi' value='<?php echo ($euser["mobi"]); ?>' />
+                                    </div>
+                                </div>
+                                <div class='control-group'>
+                                    <label class='control-label' for='inputText1'>固定电话</label>
+                                    <div class='controls'>
+                                        <input id='inputText1' type='text' name='phone' value='<?php echo ($euser["phone"]); ?>' />
+                                    </div>
+                                </div>
+                                <div class='control-group'>
+                                    <label class='control-label' for='inputText1'>电子邮件</label>
+                                    <div class='controls'>
+                                        <input id='inputText1' type='text' name='email' value='<?php echo ($euser["email"]); ?>' />
+                                    </div>
+                                </div>
+                                <!--div class='control-group'>
+                                    <label class='control-label' for='inputText1'>*督导职务</label>
+                                    <div class='controls'>
+                                        <input id='inputText1' placeholder='非督导用户请跳过' type='text' value='' />
+                                    </div>
+                                </div-->
+                                <div class='form-actions'>
+                                    <input type='hidden' name='uid' value='<?php echo ($euser["uid"]); ?>'>
+                                    <button class='btn btn-primary' type='submit'><i class='icon-save'></i>保存</button>
+                                    <button class='btn' type='reset'>取消</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class='row-fluid' style="margin-bottom:5px;">
-<div class='span4 pull-right'>
-    <div class='row-fluid'>
-        <strong>学年学期</strong>
-        <form id="form1" method="post" action="<?php echo U('Analysis/teacher');?>">
-            <select class='select2 input-block-level' name="yt" id="selYt">
-                <option value='-1' selected="selected"/>------请选择------
-                <?php if(is_array($yt)): $i = 0; $__LIST__ = $yt;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["yt"]); ?>"><?php echo ($vo["yt"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-            </select>
-        </form>
-    </div>
-</div>
-</div>
-<div class='row-fluid'>
-    <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
-        <div class='box-header green-background'>
-            <div class='text-center'><?php echo ($title); ?>&nbsp;&nbsp;督导听课统计总表（按院系、职称统计）总表</div>
-            <button class='btn btn-success btn-large' name='button' style='position:absolute; left:0px;top:2px;'><i class='icon-share'>&nbsp;&nbsp;导出</i></button>
         </div>
-        <div class='box-content box-no-padding'>
-            <div class='responsive-table'>
-              <div class='scrollable-area'>
-                <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
-                  <thead>
-                    <!--tr>
-                      <th colspan='26' style='text-align:center;'>2014-2015学年第一学期督导听课统计总表（按院系统计）</th>
-                    </tr-->
-                    <tr>
-                        <th rowspan='2'>序号</th>
-                        <th rowspan='2'>教师单位</th>
-                        <th colspan='6'>教授</th>
-                        <th colspan='6'>副教授</th>
-                        <th colspan='6'>讲师</th>
-                        <th colspan='6'>其他</th>
-                    </tr>
-                    <tr>
-                        <th>总计</th>
-                        <th>好</th>
-                        <th>较好</th>
-                        <th>一般</th>
-                        <th>较差</th>
-                        <th>差</th>
-                        <th>空白</th>
-                        <th>总计</th>
-                        <th>好</th>
-                        <th>较好</th>
-                        <th>一般</th>
-                        <th>较差</th>
-                        <th>差</th>
-                        <th>空白</th>
-                        <th>总计</th>
-                        <th>好</th>
-                        <th>较好</th>
-                        <th>一般</th>
-                        <th>较差</th>
-                        <th>差</th>
-                        <th>空白</th>
-                        <th>总计</th>
-                        <th>好</th>
-                        <th>较好</th>
-                        <th>一般</th>
-                        <th>较差</th>
-                        <th>差</th>
-                        <th>空白</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
-                        <td><?php echo ($i); ?></td>
-                        <td><?php echo ($vo["tcollege"]); ?></td>
-                        <td><?php echo ($vo["pro_zj"]); ?></td>
-                        <td><?php echo ($vo["pro_h"]); ?></td>
-                        <td><?php echo ($vo["pro_j"]); ?></td>
-                        <td><?php echo ($vo["pro_yb"]); ?></td>
-                        <td><?php echo ($vo["pro_jc"]); ?></td>
-                        <td><?php echo ($vo["pro_c"]); ?></td>
-                        <td><?php echo ($vo["pro_k"]); ?></td>
-                        <td><?php echo ($vo["apro_zj"]); ?></td>
-                        <td><?php echo ($vo["apro_h"]); ?></td>
-                        <td><?php echo ($vo["apro_j"]); ?></td>
-                        <td><?php echo ($vo["apro_yb"]); ?></td>
-                        <td><?php echo ($vo["apro_jc"]); ?></td>
-                        <td><?php echo ($vo["apro_c"]); ?></td>
-                        <td><?php echo ($vo["apro_k"]); ?></td>
-                        <td><?php echo ($vo["lec_zj"]); ?></td>
-                        <td><?php echo ($vo["lec_h"]); ?></td>
-                        <td><?php echo ($vo["lec_j"]); ?></td>
-                        <td><?php echo ($vo["lec_yb"]); ?></td>
-                        <td><?php echo ($vo["lec_jc"]); ?></td>
-                        <td><?php echo ($vo["lec_c"]); ?></td>
-                        <td><?php echo ($vo["lec_k"]); ?></td>
-                        <td><?php echo ($vo["other_zj"]); ?></td>
-                        <td><?php echo ($vo["other_h"]); ?></td>
-                        <td><?php echo ($vo["other_j"]); ?></td>
-                        <td><?php echo ($vo["other_yb"]); ?></td>
-                        <td><?php echo ($vo["other_jc"]); ?></td>
-                        <td><?php echo ($vo["other_c"]); ?></td>
-                        <td><?php echo ($vo["other_k"]); ?></td>
-                    </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-                    <tr>
-                        <td colspan='26' style="text-align:center;">备注：多位督导同时听同一门课程，计作多门次；其评价结果不一致时，采取多数人的意见。如同等人数的意见不一致时，采取从严原则，同时参考评语。</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-      </div>
     </div>
-</div>
 </section>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#smanager').nav_slide('smanager','teacher');
-        $('#selYt').change(function(){
-            $('#form1').submit();
-        });
-    });
-</script>
 </div>
+
 <!-- / jquery mobile events (for touch and slide) -->
 <script src='/jwcdd/Public/assets/javascripts/plugins/mobile_events/jquery.mobile-events.min.js' type='text/javascript'></script>
 <!-- / jquery migrate (for compatibility with new jquery) -->
@@ -619,6 +583,6 @@
 <script src='/jwcdd/Public/assets/javascripts/demo/inplace_editing.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/charts.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/demo.js' type='text/javascript'></script>
-<!--div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div-->
+<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>

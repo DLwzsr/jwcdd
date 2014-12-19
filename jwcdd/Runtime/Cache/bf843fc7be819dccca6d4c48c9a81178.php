@@ -55,7 +55,6 @@
     <link href='/jwcdd/Public/assets/stylesheets/demo.css' media='all' rel='stylesheet' type='text/css' />
     <!-- / jquery -->
     <script src='/jwcdd/Public/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
-    <script src='/jwcdd/Public/js/myfun.js' type='text/javascript'></script>
 </head>
 <body class='contrast-red fixed-header fixed-navigation'>
 <header>
@@ -265,20 +264,20 @@
         <span>通知</span>
     </a>
 </li-->
-<li id="umanager">
+<li>
     <a class='dropdown-collapse' href='#'>
         <i class='icon-user'></i>
         <span>人员管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li id="user">
+        <li class=''>
             <a href='<?php echo U('User/user');?>'>
                 <i class='icon-caret-right'></i>
                 <span>系统用户</span>
             </a>
         </li>
-        <li id="user_dd">
+        <li class=''>
             <a href='<?php echo U('User/user_dd');?>'>
                 <i class='icon-caret-right'></i>
                 <span>督导用户</span>
@@ -286,20 +285,20 @@
         </li>
     </ul>
 </li>
-<li id="tmanager">
+<li>
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-tasks'></i>
         <span>听课任务管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li id="task">
+        <li class=''>
             <a href='<?php echo U('Task/task');?>'>
                 <i class='icon-caret-right'></i>
                 <span>分配</span>
             </a>
         </li>
-        <li id="showTask">
+        <li class=''>
             <a href='<?php echo U('Task/showTask');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -307,20 +306,20 @@
         </li>
     </ul>
 </li>
-<li id="rmanager">
+<li class=''>
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-edit'></i>
         <span>听课记录</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li id="record">
+        <li class=''>
             <a href='<?php echo U('Record/record');?>'>
                 <i class='icon-caret-right'></i>
                 <span>填写</span>
             </a>
         </li>
-        <li id="showRecord">
+        <li class=''>
             <a href='<?php echo U('Record/showRecord');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -328,44 +327,44 @@
         </li>
     </ul>
 </li>
-<li id="smanager">
+<li>
     <a class='dropdown-collapse' href='#'>
         <i class='icon-table'></i>
         <span>数据报表</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li id="analysis">
+        <li class=''>
             <a href='<?php echo U('Analysis/analysis');?>'>
                 <i class='icon-caret-right'></i>
                 <span>数据检索</span>
             </a>
         </li>
-        <li id="department">
+        <li class=''>
             <a href='<?php echo U('Analysis/department');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系统计</span>
             </a>
         </li>
-        <li id="month">
+        <li class=''>
             <a href='<?php echo U('Analysis/month');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系月份统计</span>
             </a>
         </li>
-        <li id="supervisor">
+        <li class=''>
             <a href='<?php echo U('Analysis/supervisor');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按督导统计</span>
             </a>
         </li>
-        <li id="teacher">
+        <li class=''>
             <a href='<?php echo U('Analysis/teacher');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按教师职称统计</span>
             </a>
         </li>
-        <li id="course">
+        <li class=''>
             <a href='<?php echo U('Analysis/course');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按课程名统计</span>
@@ -377,333 +376,153 @@
 </div>
 </nav>
 <section id='content'>
-<div class='container-fluid'>
-<div class='row-fluid' id='content-wrapper'>
-<div class='span12'>
-<div class='row-fluid'>
-    <div class='span12'>
-        <div class='page-header'>
-            <h1 class='pull-left'>
-                <i class='icon-table'></i><span>数据报表</span></h1>
-            <div class='pull-right'>
-                <button class="btn btn-primary" id="cos" name="button" style="margin-bottom:5px">关闭检索</button>
-            </div>
-            <div class='pull-right'>
-                <ul class='breadcrumb'>
-                    <li>
-                        <a href="index.html"><i class='icon-bar-chart'></i>
-                        </a>
-                    </li>
-                    <li class='separator'>
-                        <i class='icon-angle-right'></i>
-                    </li>
-                    <li class='active'>数据检索</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--课程名称、学生院系、年级、课程类别 -->
-<div id="search">
-<form method="post" action="<?php echo U('Analysis/analysis');?>">
-<div class='row-fluid'>
-<div class='span3'>
-    <div class='row-fluid'>
-        <strong>学年学期</strong>
-        <select class='select2 input-block-level' name="yt" id="yterm">
-            <option value='-1' selected="selected"/>------请选择------
-        <?php if(is_array($yt)): $i = 0; $__LIST__ = $yt;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["yt"]); ?>"><?php echo ($vo["yt"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-        </select>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>组别</strong>
-        <select class='select2 input-block-level' name="group">
-            <option value='-1' selected="selected"/>------请选择------
-        <?php if(is_array($group)): $i = 0; $__LIST__ = $group;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["gId"]); ?>"><?php echo ($vo["gId"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-        </select>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>月份</strong>
-        <div id="mon1">
-            <select class='select2 input-block-level' name="month">
-                <option value='-1' selected="selected"/>------请选择------
-                <option value='2' />2
-                <option value='3' />3
-                <option value='4' />4
-                <option value='5' />5
-                <option value='6' />6
-                <option value='7' />7
-            </select>
-        </div>
-        <div id="mon2">
-            <select class="select2 input-block-level" name="month">
-                <option value='-1' selected="selected"/>------请选择------
-                <option value='8' />8
-                <option value='9' />9
-                <option value='10' />10
-                <option value='11' />11
-                <option value='12' />12
-                <option value='1' />1
-            </select>
-        </div>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>总体评价</strong>
-        <select class='select2 input-block-level' name="ztpj">
-            <option value='-1' selected="selected"/>------请选择------
-            <option value='5' />好
-            <option value='4' />较好
-            <option value='3' />一般
-            <option value='2' />较差
-            <option value='1' />差
-            <option value='0' />未评价
-        </select>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>听课专家</strong>
-        <select class='select2 input-block-level' name="dd">
-            <option value='-1' selected="selected"/>------请选择------
-        <?php if(is_array($dd)): $i = 0; $__LIST__ = $dd;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["dduid"]); ?>"><?php echo ($vo["dname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-        </select>
-    </div>
-</div>
-</div>
-
-<div class='row-fluid' style="margin-top:10px; margin-bottom:2px;">
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>教师名称</strong>
-        <select class='select2 input-block-level' name="teacher">
-            <option value='-1' selected="selected"/>------请选择------
-        <?php if(is_array($tea)): $i = 0; $__LIST__ = $tea;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["teaid"]); ?>"><?php echo ($vo["tname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-        </select>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>教师职称</strong>
-        <select class='select2 input-block-level' name="title">
-            <option value='-1' selected="selected"/>------请选择------
-            <option value='教授' />教授
-            <option value='副教授' />副教授
-            <option value='讲师' />讲师
-            <option value='高级工程师' />高级工程师
-            <option value='工程师' />工程师
-        </select>
-    </div>
-</div>
-<div class='span4'>
-    <div class='row-fluid'>
-        <strong>教师单位</strong>
-        <select class='select2 input-block-level' name="tcollege">
-            <option value='-1' selected="selected"/>------请选择------
-        <?php if(is_array($college)): $i = 0; $__LIST__ = $college;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["tcollege"]); ?>"><?php echo ($vo["tcollege"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-        </select>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>上课地点</strong>
-        <select class='select2 input-block-level' name="skplace">
-            <option value='-1' selected="selected"/>------请选择------
-        <?php if(is_array($place)): $i = 0; $__LIST__ = $place;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["skplace"]); ?>"><?php echo ($vo["skplace"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-        </select>
-    </div>
-</div>
-</div>
-
-<div class='row-fluid' style="margin-top:10px; margin-bottom:2px;">
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>课程名称</strong>
-        <select class='select2 input-block-level' name="course">
-            <option value='-1' selected="selected"/>------请选择------
-        <?php if(is_array($course)): $i = 0; $__LIST__ = $course;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["cname"]); ?>"><?php echo ($vo["cname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-        </select>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>课程类别</strong>
-        <select class='select2 input-block-level' name="topic">
-            <option value='-1' selected="selected"/>------请选择------
-        <?php if(is_array($topic)): $i = 0; $__LIST__ = $topic;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["topic"]); ?>"><?php echo ($vo["topic"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
-        </select>
-    </div>
-</div>
-<div class='span4'>
-    <div class='row-fluid'>
-        <strong>学生院系</strong>
-        <select class='select2 input-block-level' name="scollege">
-            <option value='-1' selected="selected"/>------请选择------
-            <option value='AK' />经济与工商管理学院
-            <option value='HI' />信息科学与技术学院
-            <option value='CA' />物理学系
-            <option value='NV' />数学系
-            <option value='OR' />化学学院
-            <option value='WA' />天文系
-        </select>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>年级</strong>
-        <select class='select2 input-block-level' name="grade">
-            <option value='-1' selected="selected"/>------请选择------
-            <option value='AK' />2014级
-            <option value='HI' />2013级
-            <option value='CA' />2012级
-            <option value='NV' />2011级
-        </select>
-    </div>
-</div>
-<button class="btn btn-defalut pull-right" style="margin:17px 0px 0px 0px;" type="submit">检索 | Search</button>
-</div>
-</form>
-</div>
-<div class='row-fluid'>
-<div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
-<div class='box-header green-background'>
-    <div class='text-center'><?php echo ($title); ?>&nbsp;&nbsp;督导听课汇总表</div>
-    <a class='btn btn-success btn-large' style='position:absolute; left:0px;top:2px;' data-toggle='modal' href='#addGroup' role='button'>
-        <i class='icon-share'>&nbsp;&nbsp;<strong>导入</strong></i>
-    </a>
-    <!--button class='btn btn-success ' name='button' style='position:absolute; left:0px;top:2px;'><i class='icon-share'>&nbsp;&nbsp;导入</i></button-->
-</div>
-<div class='box-content box-no-padding'>
-<div class='responsive-table'>
-<div class='scrollable-area'>
-<table class='data-table table table-bordered table-striped' style='margin-bottom:0;'>
-<thead>
-<tr>
-          <td><b>序号</b></td>
-          <td><b>组别</b></td>
-          <td><b>听课月份</b></td>
-          <td><b>教师姓名</b></td>
-          <td><b>教师职称</b></td>
-          <td><b>教师单位</b></td>
-          <td><b>课程名称</b></td>
-          <td><b>学生院系</b></td>
-          <td><b>年级</b></td>
-          <td><b>上课时间</b></td>
-          <td><b>上课地点</b></td>
-          <td><b>听课节数</b></td>
-          <td><b>绪论课（导航课）评价</b></td>
-          <td><b>助教工作情况</b></td>
-          <td><b>对课堂教学的具体评价</b></td>
-          <td><b>总体评价</b></td>
-          <td><b>对学生学习的建议</b></td>
-          <td><b>对教学环境的评价</b></td>
-          <td><b>课程类别</b></td>
-          <td><b>听课专家</b></td>
-</tr>
-</thead>
-<tbody>
-<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
-        <td><?php echo ($vo["rid"]); ?></td>
-        <td><?php echo ($vo["group"]); ?></td>
-        <td><?php echo ($vo["term"]); ?></td>
-        <td><?php echo ($vo["tname"]); ?></td>
-        <td><?php echo ($vo["title"]); ?></td>
-        <td><?php echo ($vo["tcollege"]); ?></td>
-        <td><?php echo ($vo["cname"]); ?></td>
-        <td><?php echo ($vo["sclass"]); ?></td>
-        <td><?php echo ($vo["sclass"]); ?></td>
-        <td><?php echo ($vo["sktime"]); ?></td>
-        <td><?php echo ($vo["skplace"]); ?></td>
-        <td><?php echo ($vo["tkjs"]); ?></td>
-        <td><?php echo ($vo["xlkpj"]); ?></td>
-        <td><?php echo ($vo["zjgz"]); ?></td>
-        <td><?php echo ($vo["pjjy"]); ?></td>
-        <td>
-        <?php if($vo["ztpj"] == 5): ?>好
-        <?php elseif($vo["ztpj"] == 4): ?>较好
-        <?php elseif($vo["ztpj"] == 3): ?>一般
-        <?php elseif($vo["ztpj"] == 2): ?>较差
-        <?php elseif($vo["ztpj"] == 1): ?>差
-        <?php else: ?>未评价<?php endif; ?>
-            </td>
-        <td><?php echo ($vo["xsjy"]); ?></td>
-        <td><?php echo ($vo["hjjy"]); ?></td>
-        <td><?php echo ($vo["topic"]); ?></td>
-        <td><?php echo ($vo["dname"]); ?></td>
-    </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<hr class='hr-double' />
-<div class='modal hide fade' id='addGroup' role='dialog' tabindex='-1'>
-    <div class='modal-header'>
-        <button class='close' data-dismiss='modal' type='button'>&times;</button>
-        <h3>文件导入——听课汇总表</h3>
-    </div> 
-    <form class='form form-horizontal' style='margin-bottom: 0;' enctype="multipart/form-data" method="post" action="<?php echo U('Analysis/importDd');?>">
-        <div class='modal-body'>
-                <div class='control-group'>
-                    <label class='control-label'>请选择督导听课汇总表</label>
-                    <div class='controls'>
-                        <input class='input-large' type='file' name="file1" />
+    <div class='container-fluid'>
+        <div class='row-fluid' id='content-wrapper'>
+            <div class='span12'>
+                <div class='page-header'>
+                    <h1 class='pull-left'>
+                        <i class='icon-user'></i>
+                        <span>用户信息</span>
+                    </h1>
+                    <div class='pull-right'>
+                        <ul class='breadcrumb'>
+                            <li>
+                                <a href="index.html"><i class='icon-bar-chart'></i>
+                                </a>
+                            </li>
+                            <li class='separator'>
+                                <i class='icon-angle-right'></i>
+                            </li>
+                            <li class='active'>用户信息</li>
+                        </ul>
                     </div>
                 </div>
-            
+                <div class='row-fluid'>
+                    <div class='span3 box'>
+                        <div class='box-content'>
+                            <img  src="/jwcdd/Public/assets/images/admin.ico" width='230px' height='230px' />
+                        </div>
+                    </div>
+                    <div class='span9 box'>
+                        <div class='box-content box-double-padding'>
+                            <form class='form' style='margin-bottom: 0;' />
+                                <fieldset>
+                                    <div class='span4'>
+                                        <div class='lead'>
+                                            <i class='icon-signin text-contrast'></i>
+                                            登录信息
+                                        </div>
+                                        <small class='muted'>亲爱的用户您可以修改登录督导数据分析系统的用户名和密码</small>
+                                    </div>
+                                    <div class='span7 offset1'>
+                                        <div class='control-group'>
+                                            <label class='control-label'>用户名</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='username' placeholder='用户名' type='text' />
+                                            </div>
+                                        </div>
+                                        <div class='control-group'>
+                                            <label class='control-label'>邮箱</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='email' placeholder='邮箱' type='text' />
+                                            </div>
+                                        </div>
+                                        <hr class='hr-normal' />
+                                        <div class='control-group'>
+                                            <div class='controls'>
+                                                <label class='checkbox'>
+                                                    <input data-target='#change-password' data-toggle='collapse' id='changepasswordcheck' type='checkbox' value='option1' />
+                                                    修改密码?
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class='collapse' id='change-password'>
+                                            <div class='control-group'>
+                                                <label class='control-label'>密码</label>
+                                                <div class='controls'>
+                                                    <input class='span12' id='password' placeholder='密码' type='password' />
+                                                </div>
+                                            </div>
+                                            <div class='control-group'>
+                                                <label class='control-label'>确认密码</label>
+                                                <div class='controls'>
+                                                    <input class='span12' id='password-confirmation' placeholder='确认密码' type='password' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <hr class='hr-normal' />
+                                <fieldset>
+                                    <div class='span4 box'>
+                                        <div class='lead'>
+                                            <i class='icon-user text-contrast'></i>
+                                            用户信息
+                                        </div>
+                                        <small class='muted'>亲爱的用户您可以浏览您的个人信息</small>
+                                    </div>
+                                    <div class='span7 offset1'>
+                                        <div class='control-group'>
+                                            <label class='control-label'>姓名</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='firstname' placeholder='姓名' type='text' />
+                                            </div>
+                                        </div>
+                                        <div class='control-group'>
+                                            <label class='control-label'>工作证号</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='lastname' placeholder='工作证号' type='text' />
+                                            </div>
+                                        </div>
+                                        <div class='control-group'>
+                                            <label class='control-label'>职称/职务</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='firstname' placeholder='First name' type='text' />
+                                            </div>
+                                        </div>
+                                        <div class='control-group'>
+                                            <label class='control-label'>院系/机构</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='firstname' placeholder='First name' type='text' />
+                                            </div>
+                                        </div>
+                                        <div class='control-group'>
+                                            <label class='control-label'>身份证号</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='firstname' placeholder='身份证号' type='text' />
+                                            </div>
+                                        </div>
+                                        <div class='control-group'>
+                                            <label class='control-label'>手机号码</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='firstname' placeholder='手机号码' type='text' />
+                                            </div>
+                                        </div>
+                                        <div class='control-group'>
+                                            <label class='control-label'>固定号码</label>
+                                            <div class='controls'>
+                                                <input class='span12' id='firstname' placeholder='First name' type='text' />
+                                            </div>
+                                        </div>
+                                </fieldset>
+                                <div class='form-actions' style='margin-bottom: 0;'>
+                                    <div class='text-right'>
+                                        <div class='btn btn-primary btn-large'>
+                                            <i class='icon-save'></i>
+                                            保存
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class='modal-footer'>
-            <button class='btn btn-primary' type="submit">导入</button>
-            <button class='btn' data-dismiss='modal'>关闭</button>
-        </div>
-    </form>
-</div>
+    </div>
 </section>
-<script type="text/javascript">
-    
-    $(document).ready(function(){
-        var term = '<?php echo ($term); ?>';
-        var vSearch = false;
-        if (term == '春季'){
-            $('#mon2').css('display','none');
-        }else{
-            $('#mon1').css('display','none'); 
-        };
-        $('#smanager').nav_slide('smanager','analysis');
-        $('#cos').click(function(){
-            vSearch = !vSearch;
-            if (vSearch) {
-                $('#search').css('display','none');
-                $(this).html('打开搜索');
-            }else{
-                $('#search').css('display','block');
-                $(this).html('关闭搜索');
-            }
-        });
-        $('#yterm').change(function(){
-            var option = $(this).val();
-            var a = '春季';
-            var b = '秋季';
-            if(option.indexOf(a) >= 0){ //寻找春季
-                $('#mon2').css('display','none');
-                $('#mon1').css('display','block');
-            }else if(option.indexOf(b) >= 0){   //寻找秋季
-                $('#mon1').css('display','none');
-                $('#mon2').css('display','block');
-            }else{};
-        });
-        
-    });
-</script>
 </div>
+
 <!-- / jquery mobile events (for touch and slide) -->
 <script src='/jwcdd/Public/assets/javascripts/plugins/mobile_events/jquery.mobile-events.min.js' type='text/javascript'></script>
 <!-- / jquery migrate (for compatibility with new jquery) -->
@@ -802,6 +621,6 @@
 <script src='/jwcdd/Public/assets/javascripts/demo/inplace_editing.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/charts.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/demo.js' type='text/javascript'></script>
-<!--div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div-->
+<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>

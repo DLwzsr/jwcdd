@@ -8,7 +8,7 @@
                     <div class='page-header'>
                         <h1 class='pull-left'>
                             <i class='icon-user'></i>
-                            <span>人员管理-编辑新用户</span>
+                            <span>人员管理-编辑用户</span>
                         </h1>
                     </div>
                 </div>  
@@ -21,79 +21,92 @@
                             </div>
                         </div>
                         <div class='box-content'>
-                            <form accept-charset="UTF-8" action="#" class="form form-horizontal" method="post" style="margin-bottom: 0;" /><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="CFC7d00LWKQsSahRqsfD+e/mHLqbaVIXBvlBGe/KP+I=" /></div>
-                                <div class='control-group'>
-                                    <label class='control-label' for='inputSelect'>用户角色</label>
-                                    <div class='controls'>
-                                        <select id='inputSelect'>
-                                            <option />督导
-                                            <option selected='selected' />系统管理员
-                                            <option/>学校&部门领导
-                                            <option />学院领导
-                                            <option />教师
-                                        </select>
-                                    </div>
+                            <form accept-charset="UTF-8" action="{:U('User/editUser')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
+                            <div class='control-group'>
+                                <label class='control-label' for='inputSelect'>用户角色</label>
+                                <div class='controls'>
+                                    <select id='inputSelect' name='role'>
+                                        <if condition="$euser['role'] eq 1">
+                                            <option value='1' selected="selected">系统管理员</option>
+                                            <else /><option value='1'>系统管理员</option>
+                                        </if>
+                                        <if condition="$euser['role'] eq 2">
+                                            <option value='2' selected="selected">督导</option>
+                                            <else /><option value='2'>督导</option>
+                                        </if>
+                                        <if condition="$euser['role'] eq 3">
+                                            <option value='3' selected="selected">学校领导</option>
+                                            <else /><option value='3'>学校领导</option>
+                                        </if>
+                                        <if condition="$euser['role'] eq 4">
+                                            <option value='4' selected="selected">教学院长</option>
+                                            <else /><option value='4'>教学院长</option>
+                                        </if>
+                                        <if condition="$euser['role'] eq 5">
+                                            <option value='5' selected="selected">教师</option>
+                                            <else /><option value='5'>教师</option>
+                                        </if>
+                                    </select>                                
                                 </div>
-                                <div class='control-group'>
-                                    <label class='control-label' for='inputNumber'>工作证号</label>
-                                    <div class='controls'>
-                                        <input id='inputText1' type='text' value='140001' />
+                            </div>
+                            <div class='control-group'>
+                                <label class='control-label' for='inputNumber'>工作证号</label>
+                                <div class='controls'>
+                                        <input id='inputNumber' type='text' name='teaid' value='{$euser.teaid}' />
                                     </div>
                                 </div>
                                 <div class='control-group'>
                                     <label class='control-label' for='inputText1'>用户姓名</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' value='张三' />
+                                        <input id='inputText1' type='text' name='name' value='{$euser.name}' />
                                     </div>
                                 </div>
                                 <div class='control-group'>
                                     <label class='control-label' for='inputText1'>职称/职务</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' value='' />
+                                        <input id='inputText1' type='text' name='title' value='{$euser.title}' />
                                     </div>
                                 </div>
                                 <div class='control-group'>
                                     <label class='control-label' for='inputText1'>院系/机构</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' value='教务处' />
+                                        <input id='inputText1' type='text' name='college' value='{$euser.college}' />
                                     </div>
                                 </div>
                                 <div class='control-group'>
                                     <label class='control-label' for='inputText1'>身份证号</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' value='1231231111111134321' />
+                                        <input id='inputText1' type='text' name='idcard' value='{$euser.idcard}' />
                                     </div>
                                 </div>
                                 <div class='control-group'>
                                     <label class='control-label' for='inputText1'>手机号码</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' value='1521521521' />
+                                        <input id='inputText1' type='text' name='mobi' value='{$euser.mobi}' />
                                     </div>
                                 </div>
                                 <div class='control-group'>
                                     <label class='control-label' for='inputText1'>固定电话</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' value='58806220' />
+                                        <input id='inputText1' type='text' name='phone' value='{$euser.phone}' />
                                     </div>
                                 </div>
                                 <div class='control-group'>
                                     <label class='control-label' for='inputText1'>电子邮件</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' value='zs@bnu.edu.cn' />
+                                        <input id='inputText1' type='text' name='email' value='{$euser.email}' />
                                     </div>
                                 </div>
-                                <div class='control-group'>
+                                <!--div class='control-group'>
                                     <label class='control-label' for='inputText1'>*督导职务</label>
                                     <div class='controls'>
                                         <input id='inputText1' placeholder='非督导用户请跳过' type='text' value='' />
                                     </div>
-                                </div>
+                                </div-->
                                 <div class='form-actions'>
-                                    <a class='btn btn-primary' type='submit' href='user_sys.html'>
-                                        <i class='icon-save'></i>
-                                        保存
-                                    </a>
-                                    <a class='btn' type='submit' href='user_sys.html'>取消</a>
+                                    <input type='hidden' name='uid' value='{$euser.uid}'>
+                                    <button class='btn btn-primary' type='submit'><i class='icon-save'></i>保存</button>
+                                    <button class='btn' type='reset'>取消</button>
                                 </div>
                             </form>
                         </div>
