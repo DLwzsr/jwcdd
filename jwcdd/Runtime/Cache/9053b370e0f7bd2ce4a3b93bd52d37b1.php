@@ -53,6 +53,9 @@
     <link href='/jwcdd/Public/assets/stylesheets/light-theme.css' id='color-settings-body-color' media='all' rel='stylesheet' type='text/css' />
     <!-- / demo -->
     <link href='/jwcdd/Public/assets/stylesheets/demo.css' media='all' rel='stylesheet' type='text/css' />
+    <!-- / jquery -->
+    <script src='/jwcdd/Public/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
+    <script src='/jwcdd/Public/js/myfun.js' type='text/javascript'></script>
 </head>
 <body class='contrast-red fixed-header fixed-navigation'>
 <header>
@@ -262,20 +265,20 @@
         <span>通知</span>
     </a>
 </li-->
-<li>
+<li id="umanager">
     <a class='dropdown-collapse' href='#'>
         <i class='icon-user'></i>
         <span>人员管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="user">
             <a href='<?php echo U('User/user');?>'>
                 <i class='icon-caret-right'></i>
                 <span>系统用户</span>
             </a>
         </li>
-        <li class=''>
+        <li id="user_dd">
             <a href='<?php echo U('User/user_dd');?>'>
                 <i class='icon-caret-right'></i>
                 <span>督导用户</span>
@@ -283,20 +286,20 @@
         </li>
     </ul>
 </li>
-<li>
+<li id="tmanager">
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-tasks'></i>
         <span>听课任务管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="task">
             <a href='<?php echo U('Task/task');?>'>
                 <i class='icon-caret-right'></i>
                 <span>分配</span>
             </a>
         </li>
-        <li class=''>
+        <li id="showTask">
             <a href='<?php echo U('Task/showTask');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -304,20 +307,20 @@
         </li>
     </ul>
 </li>
-<li class=''>
+<li id="rmanager">
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-edit'></i>
         <span>听课记录</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="record">
             <a href='<?php echo U('Record/record');?>'>
                 <i class='icon-caret-right'></i>
                 <span>填写</span>
             </a>
         </li>
-        <li class=''>
+        <li id="showRecord">
             <a href='<?php echo U('Record/showRecord');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -325,44 +328,44 @@
         </li>
     </ul>
 </li>
-<li>
+<li id="smanager">
     <a class='dropdown-collapse' href='#'>
         <i class='icon-table'></i>
         <span>数据报表</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="analysis">
             <a href='<?php echo U('Analysis/analysis');?>'>
                 <i class='icon-caret-right'></i>
                 <span>数据检索</span>
             </a>
         </li>
-        <li class=''>
+        <li id="department">
             <a href='<?php echo U('Analysis/department');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="month">
             <a href='<?php echo U('Analysis/month');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系月份统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="supervisor">
             <a href='<?php echo U('Analysis/supervisor');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按督导统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="teacher">
             <a href='<?php echo U('Analysis/teacher');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按教师职称统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="course">
             <a href='<?php echo U('Analysis/course');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按课程名统计</span>
@@ -573,9 +576,12 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#umanager').nav_slide('umanager','user');
+    });
+</script>
 </div>
-<!-- / jquery -->
-<script src='/jwcdd/Public/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
 <!-- / jquery mobile events (for touch and slide) -->
 <script src='/jwcdd/Public/assets/javascripts/plugins/mobile_events/jquery.mobile-events.min.js' type='text/javascript'></script>
 <!-- / jquery migrate (for compatibility with new jquery) -->
@@ -674,6 +680,6 @@
 <script src='/jwcdd/Public/assets/javascripts/demo/inplace_editing.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/charts.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/demo.js' type='text/javascript'></script>
-<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+<!--div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div-->
 </body>
 </html>

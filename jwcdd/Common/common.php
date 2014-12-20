@@ -16,7 +16,7 @@
     if(session("?username") && session("username") != null){
       return true;
     }else{
-      header("location: http://219.224.30.99:8081/jwcdd/index.php/Login/login");
+      //header("location: http://219.224.30.99:8081/jwcdd/index.php/Login/login");
     }
     return true;
   }
@@ -47,7 +47,7 @@
     }
 
     //upload file
-    function uploadFile($filePath){
+    function uploadExcelFile($filePath){
       import("ORG.Net.UploadFile");
       $upload = new UploadFile();
       $upload->maxSize = 3145728; //上传文件最大为3M
@@ -56,11 +56,29 @@
       $upload->saveRule = uniqid;
       $upload->allowExts = array("xls","xlsx"); //允许的文件后缀名
       if(!$upload->upload()){
-        Log::write("excel文件上传失败",ERR);
+        Log::write("文件上传失败",ERR);
         return false;
       }else{
         $info = $upload->getUploadFileInfo();
-        Log::write("excel文件上传成功",ERR);
+        Log::write("文件上传成功",ERR);
+        return $info;
+      }
+    }
+
+    function uploadDocFile($filePath){
+      import("ORG.Net.UploadFile");
+      $upload = new UploadFile();
+      $upload->maxSize = 3145728; //上传文件最大为3M
+      $upload->uploadReplace = true;  //替换相同的文件
+      $upload->savePath = $filePath;  //设置保存的路径
+      $upload->saveRule = '';
+      $upload->allowExts = array("doc","docx","pdf"); //允许的文件后缀名
+      if(!$upload->upload()){
+        Log::write("文件上传失败",ERR);
+        return false;
+      }else{
+        $info = $upload->getUploadFileInfo();
+        Log::write("文件上传成功",ERR);
         return $info;
       }
     }

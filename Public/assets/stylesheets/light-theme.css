@@ -1842,7 +1842,7 @@ header .navbar {
           background: #fcfcfc; }
 
 .main-nav-opened #content {
-  margin-left: 251px; }
+  margin-left: 191px; }
 
 .main-nav-closed #content {
   margin-left: 46px; }
@@ -1875,7 +1875,7 @@ body {
   overflow: hidden; }
 
 #content {
-  margin-left: 251px;
+  margin-left: 191px;
   background: #fbfbfb;
   min-width: 276px;
   background: #fbfbfb;
