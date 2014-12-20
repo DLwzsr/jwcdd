@@ -103,8 +103,9 @@
 			$rows = $sheet->getHighestRow();	//取得总行数
 			$cols = $sheet->getHighestColumn();	//取得总列数
 			array_shift($arrExcel);	//删除第一行
+			array_shift($arrExcel); //删除第二行
 			$data = array();
-			$data[0]["rows"] = $rows-1;	//已删除一行
+			$data[0]["rows"] = $rows-2;	//已删除一行
 			$data[1]["cols"] = $cols;
 			$data[2]["data"] = $arrExcel;
 			return $data;

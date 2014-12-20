@@ -53,6 +53,9 @@
     <link href='/jwcdd/Public/assets/stylesheets/light-theme.css' id='color-settings-body-color' media='all' rel='stylesheet' type='text/css' />
     <!-- / demo -->
     <link href='/jwcdd/Public/assets/stylesheets/demo.css' media='all' rel='stylesheet' type='text/css' />
+    <!-- / jquery -->
+    <script src='/jwcdd/Public/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
+    <script src='/jwcdd/Public/js/myfun.js' type='text/javascript'></script>
 </head>
 <body class='contrast-red fixed-header fixed-navigation'>
 <header>
@@ -262,20 +265,20 @@
         <span>通知</span>
     </a>
 </li-->
-<li>
+<li id="umanager">
     <a class='dropdown-collapse' href='#'>
         <i class='icon-user'></i>
         <span>人员管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="user">
             <a href='<?php echo U('User/user');?>'>
                 <i class='icon-caret-right'></i>
                 <span>系统用户</span>
             </a>
         </li>
-        <li class=''>
+        <li id="user_dd">
             <a href='<?php echo U('User/user_dd');?>'>
                 <i class='icon-caret-right'></i>
                 <span>督导用户</span>
@@ -283,20 +286,20 @@
         </li>
     </ul>
 </li>
-<li>
+<li id="tmanager">
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-tasks'></i>
         <span>听课任务管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="task">
             <a href='<?php echo U('Task/task');?>'>
                 <i class='icon-caret-right'></i>
                 <span>分配</span>
             </a>
         </li>
-        <li class=''>
+        <li id="showTask">
             <a href='<?php echo U('Task/showTask');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -304,20 +307,20 @@
         </li>
     </ul>
 </li>
-<li class=''>
+<li id="rmanager">
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-edit'></i>
         <span>听课记录</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="record">
             <a href='<?php echo U('Record/record');?>'>
                 <i class='icon-caret-right'></i>
                 <span>填写</span>
             </a>
         </li>
-        <li class=''>
+        <li id="showRecord">
             <a href='<?php echo U('Record/showRecord');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -325,44 +328,44 @@
         </li>
     </ul>
 </li>
-<li>
+<li id="smanager">
     <a class='dropdown-collapse' href='#'>
         <i class='icon-table'></i>
         <span>数据报表</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="analysis">
             <a href='<?php echo U('Analysis/analysis');?>'>
                 <i class='icon-caret-right'></i>
                 <span>数据检索</span>
             </a>
         </li>
-        <li class=''>
+        <li id="department">
             <a href='<?php echo U('Analysis/department');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="month">
             <a href='<?php echo U('Analysis/month');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系月份统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="supervisor">
             <a href='<?php echo U('Analysis/supervisor');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按督导统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="teacher">
             <a href='<?php echo U('Analysis/teacher');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按教师职称统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="course">
             <a href='<?php echo U('Analysis/course');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按课程名统计</span>
@@ -383,6 +386,9 @@
             <h1 class='pull-left'>
                 <i class='icon-table'></i><span>数据报表</span></h1>
             <div class='pull-right'>
+                <button class="btn btn-primary" id="cos" name="button" style="margin-bottom:5px">关闭检索</button>
+            </div>
+            <div class='pull-right'>
                 <ul class='breadcrumb'>
                     <li>
                         <a href="index.html"><i class='icon-bar-chart'></i>
@@ -399,87 +405,74 @@
 </div>
 
 <!--课程名称、学生院系、年级、课程类别 -->
-
+<div id="search">
+<form method="post" action="<?php echo U('Analysis/analysis');?>">
 <div class='row-fluid'>
 <div class='span3'>
     <div class='row-fluid'>
         <strong>学年学期</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <optgroup label='2014-2015 学年'>
-                <option value='AK' />2013-2014 学年第 1 学期
-                <option value='HI' />2013-2014 学年第 2 学期
-            </optgroup>
-            <optgroup label='2012-2013 学年'>
-                <option value='AK' />2012-2013 学年第 1 学期
-                 <option value='HI' />2012-2013 学年第 2 学期
-            </optgroup>
-            <optgroup label='2013-2014 学年'>
-                <option value='AK' />2011-2012 学年第 1 学期
-                <option value='HI' />2011-2012 学年第 2 学期
-            </optgroup>
+        <select class='select2 input-block-level' name="yt" id="yterm">
+            <option value='-1' selected="selected"/>------请选择------
+        <?php if(is_array($yt)): $i = 0; $__LIST__ = $yt;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["yt"]); ?>"><?php echo ($vo["yt"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>组别</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />督导小组-1
-            <option value='HI' />督导小组-2
-            <option value='CA' />督导小组-3
-            <option value='NV' />督导小组-4
-            <option value='OR' />督导小组-5
-            <option value='WA' />督导小组-6
+        <select class='select2 input-block-level' name="group">
+            <option value='-1' selected="selected"/>------请选择------
+        <?php if(is_array($group)): $i = 0; $__LIST__ = $group;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["gId"]); ?>"><?php echo ($vo["gId"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>月份</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />1
-            <option value='HI' />2
-            <option value='CA' />3
-            <option value='NV' />4
-            <option value='OR' />5
-            <option value='WA' />6
-            <option value='AK' />7
-            <option value='AK' />8
-            <option value='HI' />9
-            <option value='CA' />10
-            <option value='NV' />11
-            <option value='OR' />12
-        </select>
+        <div id="mon1">
+            <select class='select2 input-block-level' name="month">
+                <option value='-1' selected="selected"/>------请选择------
+                <option value='2' />2
+                <option value='3' />3
+                <option value='4' />4
+                <option value='5' />5
+                <option value='6' />6
+                <option value='7' />7
+            </select>
+        </div>
+        <div id="mon2">
+            <select class="select2 input-block-level" name="month">
+                <option value='-1' selected="selected"/>------请选择------
+                <option value='8' />8
+                <option value='9' />9
+                <option value='10' />10
+                <option value='11' />11
+                <option value='12' />12
+                <option value='1' />1
+            </select>
+        </div>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>总体评价</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />好
-            <option value='HI' />较好
-            <option value='CA' />一般
-            <option value='NV' />较差
-            <option value='OR' />差
-            <option value='WA' />未评价
+        <select class='select2 input-block-level' name="ztpj">
+            <option value='-1' selected="selected"/>------请选择------
+            <option value='5' />好
+            <option value='4' />较好
+            <option value='3' />一般
+            <option value='2' />较差
+            <option value='1' />差
+            <option value='0' />未评价
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>听课专家</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />李春生
-            <option value='HI' />张燕平
-            <option value='CA' />连慕兰
-            <option value='NV' />郑光宇
-            <option value='OR' />尹冬冬
-            <option value='WA' />谢文杰
+        <select class='select2 input-block-level' name="dd">
+            <option value='-1' selected="selected"/>------请选择------
+        <?php if(is_array($dd)): $i = 0; $__LIST__ = $dd;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["dduid"]); ?>"><?php echo ($vo["dname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select>
     </div>
 </div>
@@ -489,55 +482,40 @@
 <div class='span2'>
     <div class='row-fluid'>
         <strong>教师名称</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />林树明
-            <option value='HI' />陈燕
-            <option value='CA' />林明
-            <option value='NV' />赵三
-            <option value='OR' />王五
-            <option value='WA' />小李
+        <select class='select2 input-block-level' name="teacher">
+            <option value='-1' selected="selected"/>------请选择------
+        <?php if(is_array($tea)): $i = 0; $__LIST__ = $tea;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["teaid"]); ?>"><?php echo ($vo["tname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>教师职称</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />教授
-            <option value='HI' />副教授
-            <option value='CA' />讲师
-            <option value='NV' />高级工程师
-            <option value='OR' />工程师
+        <select class='select2 input-block-level' name="title">
+            <option value='-1' selected="selected"/>------请选择------
+            <option value='教授' />教授
+            <option value='副教授' />副教授
+            <option value='讲师' />讲师
+            <option value='高级工程师' />高级工程师
+            <option value='工程师' />工程师
         </select>
     </div>
 </div>
 <div class='span4'>
     <div class='row-fluid'>
         <strong>教师单位</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />经济与工商管理学院
-            <option value='HI' />信息科学与技术学院
-            <option value='CA' />物理学系
-            <option value='NV' />数学系
-            <option value='OR' />化学学院
-            <option value='WA' />天文系
+        <select class='select2 input-block-level' name="tcollege">
+            <option value='-1' selected="selected"/>------请选择------
+        <?php if(is_array($college)): $i = 0; $__LIST__ = $college;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["tcollege"]); ?>"><?php echo ($vo["tcollege"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>上课地点</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />电子楼103
-            <option value='HI' />教七304
-            <option value='CA' />教八404
-            <option value='NV' />教九301
-            <option value='OR' />敬文讲堂
-            <option value='WA' />教九502
+        <select class='select2 input-block-level' name="skplace">
+            <option value='-1' selected="selected"/>------请选择------
+        <?php if(is_array($place)): $i = 0; $__LIST__ = $place;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["skplace"]); ?>"><?php echo ($vo["skplace"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select>
     </div>
 </div>
@@ -547,40 +525,26 @@
 <div class='span2'>
     <div class='row-fluid'>
         <strong>课程名称</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />计算机体系结构
-            <option value='HI' />数理逻辑
-            <option value='CA' />概率论
-            <option value='NV' />历史文化赏析
-            <option value='OR' />英文电影赏析
-            <option value='WA' />数据库系统与应用
+        <select class='select2 input-block-level' name="course">
+            <option value='-1' selected="selected"/>------请选择------
+        <?php if(is_array($course)): $i = 0; $__LIST__ = $course;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["cname"]); ?>"><?php echo ($vo["cname"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>课程类别</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />实验课
-            <option value='HI' />双语课
-            <option value='CA' />新生研讨课
-            <option value='NV' />新生研讨课\双语课
-            <option value='OR' />新生研讨课\绪论课
-            <option value='HI' />绪论课
-            <option value='CA' />专业必修课
-            <option value='NV' />公共必修课
-            <option value='OR' />专业任选课
-            <option value='OR' />公共任选课
+        <select class='select2 input-block-level' name="topic">
+            <option value='-1' selected="selected"/>------请选择------
+        <?php if(is_array($topic)): $i = 0; $__LIST__ = $topic;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["topic"]); ?>"><?php echo ($vo["topic"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select>
     </div>
 </div>
 <div class='span4'>
     <div class='row-fluid'>
         <strong>学生院系</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
+        <select class='select2 input-block-level' name="scollege">
+            <option value='-1' selected="selected"/>------请选择------
             <option value='AK' />经济与工商管理学院
             <option value='HI' />信息科学与技术学院
             <option value='CA' />物理学系
@@ -593,8 +557,8 @@
 <div class='span2'>
     <div class='row-fluid'>
         <strong>年级</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
+        <select class='select2 input-block-level' name="grade">
+            <option value='-1' selected="selected"/>------请选择------
             <option value='AK' />2014级
             <option value='HI' />2013级
             <option value='CA' />2012级
@@ -602,13 +566,18 @@
         </select>
     </div>
 </div>
-<button class="btn btn-defalut pull-right" style="margin:17px 0px 0px 0px;">检索 | Search</button>
+<button class="btn btn-defalut pull-right" style="margin:17px 0px 0px 0px;" type="submit">检索 | Search</button>
+</div>
+</form>
 </div>
 <div class='row-fluid'>
 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
 <div class='box-header green-background'>
-    <div class='text-center'>2013-2014学年第二学期督导听课汇总表</div>
-    <button class='btn btn-success btn-large' name='button' style='position:absolute; left:0px;top:2px;'><i class='icon-share'>&nbsp;&nbsp;导入</i></button>
+    <div class='text-center'><?php echo ($title); ?>&nbsp;&nbsp;督导听课汇总表</div>
+    <a class='btn btn-success btn-large' style='position:absolute; left:0px;top:2px;' data-toggle='modal' href='#addGroup' role='button'>
+        <i class='icon-share'>&nbsp;&nbsp;<strong>导入</strong></i>
+    </a>
+    <!--button class='btn btn-success ' name='button' style='position:absolute; left:0px;top:2px;'><i class='icon-share'>&nbsp;&nbsp;导入</i></button-->
 </div>
 <div class='box-content box-no-padding'>
 <div class='responsive-table'>
@@ -639,37 +608,35 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-    <td>44</td><td>1</td><td>4月</td><td>毕少兰</td><td>教授</td><td>天文系</td><td>恒星大气</td><td>天文系</td><td>2011</td><td>周二1-2节</td><td>教十206</td><td>2</td><td></td><td>有1名助教，负责收发、批改作业。</td><td>教师授课讲解到位，内容丰富充实，注重基本概念与教学表达。建议适当增加一些互动环节，调动所有学生的学习积极性。</td><td>较好</td><td>无迟到，大部分学生听讲认真，能跟上教师的讲课进度，互动环节欠主动。</td><td>投影仪有些偏暗</td><td></td><td>张燕平</td>
-</tr>
-<tr>
-    <td>37</td><td>1</td><td>6月</td><td>曾少举</td><td>教授</td><td>生命科学学院</td><td>发育生物学与人类健康</td><td>生命科学学院</td><td>2013</td><td>周五5-6节</td><td>教八111</td><td>2</td><td></td><td>未见</td><td>基本情况：1、这门课的负责人提出，“以教师讲为主，介绍自己的学科”。曾少举老师作为团队一员，讲3次课，最后一节课时间给学生提问和讨论。2.神经发育内容复杂，一年级新生理解较困难。本次讲课的缺点是：主线不突出，基本发育过程讲的不透彻（可能是时间所限）压缩式，听不懂。加上教师语速快，条理不很清楚，显得匆匆忙忙的。3.从大小标题看，内容还是合适的有条理的，就是讲的不够清楚。</td><td>较好</td><td>到课15人，无迟到，比较专心听讲，2人瞌睡。向学校建议：研讨课选课应面向本院学生，尤其是理科院系更要如此。因为外系专业知识不够，无法“研讨”。</td><td>一般良好</td><td></td><td>连慕兰</td>
-</tr>
-<tr>
-    <td>56</td><td>1</td><td>3月</td><td>陈燕</td><td>副教授</td><td>经济与工商管理学院</td><td>组织行为学</td><td>经济学院国际经贸</td><td>2012</td><td>周五9-10节</td><td>教九404</td><td>2</td><td></td><td>本门课配备了研究生助教谢宇涛，全程听了本次课。</td><td>教师授课态度认真，课前准备充分，采用了多媒体教学手段，课件板书突出了教学内容的重点。教师讲授清晰，概念、理论与实例有很好的结合，学生较易理解。建议增加课堂上与学生的交流互动。</td><td>较好</td><td>5人迟到5分钟，1人迟到10分钟，2人迟到20分钟，2人在课堂上玩手机，2人玩电脑，在课堂上与教师交流互动少。</td><td>教学环境好，多媒体设施运转正常。</td><td></td><td>郑光宇</td>
-</tr>
-<tr>
-    <td>57</td><td>1</td><td>3月</td><td>陈阳</td><td>副教授</td><td>物理学系</td><td>量子物理学</td><td>天文系</td><td>2011.2012.2013辅修</td><td>周一3-4节</td><td>教八403</td><td>2</td><td></td><td>本门课配备了研究生助教，张聪慧，助教全程听了本次课。</td><td>教师授课态度认真，课前准备充分。对授课内容熟悉。采用了多媒体PPT，课件板书突出了教学内容中的重点，教师讲授较清晰，注重理论与实际的结合，建议在课堂上多与学生交流互动。</td><td>较好</td><td>无人迟到早退，学生听课注意力集中，课堂秩序好，在课堂上没有与教师交流互动。</td><td>教学环境好，多媒体设施运转正常。</td><td></td><td>郑光宇</td>
-</tr>
-<tr>
-    <td>16</td><td>1</td><td>4月</td><td>陈阳</td><td>副教授</td><td>天文系</td><td>星系天文学</td><td>天文学及辅修</td><td>2011、2012、2013、</td><td>周二5-6节</td><td>教四111</td><td>2</td><td></td><td>助教听课</td><td>优点：1.讲课清楚，条理性，逻辑性均好。2.讲法是提出问题，针对性的讲、好。不足之处：1.学生认为，该教师讲课比较平淡，虽然思路清晰，却缺乏“语言生动富有感染力”，课堂气氛不够活跃。</td><td>较好</td><td>学生11人全到，纪律尚可</td><td>良好</td><td></td><td>连慕兰</td>
-</tr>
-<tr>
-    <td>45</td><td>1</td><td>4月</td><td>陈阳</td><td>副教授</td><td>天文系</td><td>星系天文学</td><td>天文系</td><td>2011</td><td>4.15下午5-6节</td><td>教四111</td><td>2</td><td></td><td>无</td><td>教师能较清晰第讲授基本概念，讲授条理性清楚。教学内容充实，能反映学科发展的前沿及存在的问题，在教学过程中能设计互动环节，有一定的效果。但由于学生欠主动，没有达到预期的活跃课堂气氛的效果。教师讲课语言还欠生动，应在重点内容加重语气，注意抑扬顿挫。</td><td>较好</td><td>无迟到，绝大部分同学能认真听讲，小班上课教学效果较好，但与老师互动还欠主动</td><td>好</td><td></td><td>张燕平</td>
-</tr>
-<tr>
-    <td>50</td><td>1</td><td>6月</td><td>崔丽</td><td>副教授</td><td>数学科学学院</td><td>数学建模</td><td>数学与应用数学</td><td>2012</td><td>6.3下午5-6节</td><td>教八106</td><td>2</td><td></td><td></td><td>教师上课用ppt与板书相结合，讲课基本清楚，能够当堂给学生布置小作业，当堂回答问题，讲课表达上语言缺少抑扬顿挫，应突出重点，在重要概念时应加重语气或重复，避免平淡和语气过快。</td><td>较好</td><td>由21名学生迟到，部分同学注意力不够集中个，在用笔记本做别的事情，部分同学互动不主动</td><td>好</td><td></td><td>张燕平</td>
-</tr>
-<tr>
-    <td>2</td><td>1</td><td>3月</td><td>崔雪锋</td><td>副教授</td><td>全球变化与地球系统科学研究院</td><td>当代大学生对全球变化的认识与思辨</td><td>新生研讨课</td><td>2013</td><td>周二11-12节</td><td>教八212</td><td>2</td><td></td><td>不清楚</td><td>教学方式：教师讲一部分，学生分组准备选题，作报告，教师点评、提问，同学针对报告提问、讨论。优点：教师讲得好，内容科学性强，处于科学前沿。讲授清楚、态度亲和，比较随意。缺点：原定两组学生报告，有一组说“没有准备好”，不讲了。说明教学的组织工作未抓紧、落实。以致课堂时间多20及分钟浪费了，整个课堂气氛不紧凑。学生的ppt较草率，图注未写文字说明，发言也不连贯，说话偏少，效果不够好。</td><td>较好</td><td>总共约25人到课，迟到数人。同学作报告时，其他同学未专心听，做自己的事，瞌睡。</td><td>课桌抽屉里有垃圾。其他设施良好</td><td>新生研讨课</td><td>连慕兰</td>
-</tr>
-<tr>
-   <td>41</td><td>1</td><td>3月</td><td>邓富国</td><td>教授</td><td>物理学系</td><td>电磁学</td><td>天文系、物理系</td><td>2013</td><td>周二3-4节</td><td>教十111</td><td>2</td><td></td><td>1名助教，负责收发作业</td><td>教师讲述清晰，表达准确，语言生动，讲课有节奏，系统性强。能够很自然地与学生产生互动，边讲边提问，互动很自然，取得良好的教学效果</td><td>好</td><td>3人迟到，全体学生注意力集中，能跟上老师的讲解进度，效果很好。</td><td>教室稍小，前排多遮挡</td><td></td><td>张燕平</td>
-</tr>
-<tr>
-    <td>72</td><td>1</td><td>4月</td><td>狄承锋</td><td>副教授</td><td>经济与工商管理学院</td><td>外国经济思想史</td><td>经济学</td><td>2012</td><td>周二3-4节</td><td>教九301</td><td>2</td><td></td><td>本课程未配备研究生助教</td><td>教师教授态度认真，课前准备充分，课程讲授流利，使用了多媒体教学手段，课件板书突出了教学内容中的重点，注重拓宽学生的知识领域，对历史人物的全面评价，对学生的批判精神的语言有帮助。</td><td>较好</td><td>无人迟到早退，学生课堂听课注意力集中，课堂秩序好，课堂上与教师的教学互动较少。</td><td>教学环境好，多媒体设施运转正常。</td><td></td><td>郑光宇</td>
-</tr>
-
+<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
+        <td><?php echo ($vo["rid"]); ?></td>
+        <td><?php echo ($vo["group"]); ?></td>
+        <td><?php echo ($vo["term"]); ?></td>
+        <td><?php echo ($vo["tname"]); ?></td>
+        <td><?php echo ($vo["title"]); ?></td>
+        <td><?php echo ($vo["tcollege"]); ?></td>
+        <td><?php echo ($vo["cname"]); ?></td>
+        <td><?php echo ($vo["sclass"]); ?></td>
+        <td><?php echo ($vo["sclass"]); ?></td>
+        <td><?php echo ($vo["sktime"]); ?></td>
+        <td><?php echo ($vo["skplace"]); ?></td>
+        <td><?php echo ($vo["tkjs"]); ?></td>
+        <td><?php echo ($vo["xlkpj"]); ?></td>
+        <td><?php echo ($vo["zjgz"]); ?></td>
+        <td><?php echo ($vo["pjjy"]); ?></td>
+        <td>
+        <?php if($vo["ztpj"] == 5): ?>好
+        <?php elseif($vo["ztpj"] == 4): ?>较好
+        <?php elseif($vo["ztpj"] == 3): ?>一般
+        <?php elseif($vo["ztpj"] == 2): ?>较差
+        <?php elseif($vo["ztpj"] == 1): ?>差
+        <?php else: ?>未评价<?php endif; ?>
+            </td>
+        <td><?php echo ($vo["xsjy"]); ?></td>
+        <td><?php echo ($vo["hjjy"]); ?></td>
+        <td><?php echo ($vo["topic"]); ?></td>
+        <td><?php echo ($vo["dname"]); ?></td>
+    </tr><?php endforeach; endif; else: echo "" ;endif; ?>
 </tbody>
 </table>
 </div>
@@ -678,11 +645,65 @@
 </div>
 </div>
 <hr class='hr-double' />
-
-</section>
+<div class='modal hide fade' id='addGroup' role='dialog' tabindex='-1'>
+    <div class='modal-header'>
+        <button class='close' data-dismiss='modal' type='button'>&times;</button>
+        <h3>文件导入——听课汇总表</h3>
+    </div> 
+    <form class='form form-horizontal' style='margin-bottom: 0;' enctype="multipart/form-data" method="post" action="<?php echo U('Analysis/importDd');?>">
+        <div class='modal-body'>
+                <div class='control-group'>
+                    <label class='control-label'>请选择督导听课汇总表</label>
+                    <div class='controls'>
+                        <input class='input-large' type='file' name="file1" />
+                    </div>
+                </div>
+            
+        </div>
+        <div class='modal-footer'>
+            <button class='btn btn-primary' type="submit">导入</button>
+            <button class='btn' data-dismiss='modal'>关闭</button>
+        </div>
+    </form>
 </div>
-<!-- / jquery -->
-<script src='/jwcdd/Public/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
+</section>
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+        var term = '<?php echo ($term); ?>';
+        var vSearch = false;
+        if (term == '春季'){
+            $('#mon2').css('display','none');
+        }else{
+            $('#mon1').css('display','none'); 
+        };
+        $('#smanager').nav_slide('smanager','analysis');
+        $('#cos').click(function(){
+            vSearch = !vSearch;
+            if (vSearch) {
+                $('#search').css('display','none');
+                $(this).html('打开搜索');
+            }else{
+                $('#search').css('display','block');
+                $(this).html('关闭搜索');
+            }
+        });
+        $('#yterm').change(function(){
+            var option = $(this).val();
+            var a = '春季';
+            var b = '秋季';
+            if(option.indexOf(a) >= 0){ //寻找春季
+                $('#mon2').css('display','none');
+                $('#mon1').css('display','block');
+            }else if(option.indexOf(b) >= 0){   //寻找秋季
+                $('#mon1').css('display','none');
+                $('#mon2').css('display','block');
+            }else{};
+        });
+        
+    });
+</script>
+</div>
 <!-- / jquery mobile events (for touch and slide) -->
 <script src='/jwcdd/Public/assets/javascripts/plugins/mobile_events/jquery.mobile-events.min.js' type='text/javascript'></script>
 <!-- / jquery migrate (for compatibility with new jquery) -->
@@ -781,6 +802,6 @@
 <script src='/jwcdd/Public/assets/javascripts/demo/inplace_editing.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/charts.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/demo.js' type='text/javascript'></script>
-<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+<!--div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div-->
 </body>
 </html>

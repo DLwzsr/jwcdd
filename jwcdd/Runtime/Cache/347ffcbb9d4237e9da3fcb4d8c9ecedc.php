@@ -53,6 +53,9 @@
     <link href='/jwcdd/Public/assets/stylesheets/light-theme.css' id='color-settings-body-color' media='all' rel='stylesheet' type='text/css' />
     <!-- / demo -->
     <link href='/jwcdd/Public/assets/stylesheets/demo.css' media='all' rel='stylesheet' type='text/css' />
+    <!-- / jquery -->
+    <script src='/jwcdd/Public/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
+    <script src='/jwcdd/Public/js/myfun.js' type='text/javascript'></script>
 </head>
 <body class='contrast-red fixed-header fixed-navigation'>
 <header>
@@ -137,7 +140,7 @@
                     <li class='dropdown medium only-icon widget'>
                         <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
                             <i class='icon-rss'>提醒</i>
-                            <div class='label'>5</div>
+                            <span class='label'>5</span>
                         </a>
                         <ul class='dropdown-menu'>
                             <li>
@@ -262,20 +265,20 @@
         <span>通知</span>
     </a>
 </li-->
-<li>
+<li id="umanager">
     <a class='dropdown-collapse' href='#'>
         <i class='icon-user'></i>
         <span>人员管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="user">
             <a href='<?php echo U('User/user');?>'>
                 <i class='icon-caret-right'></i>
                 <span>系统用户</span>
             </a>
         </li>
-        <li class=''>
+        <li id="user_dd">
             <a href='<?php echo U('User/user_dd');?>'>
                 <i class='icon-caret-right'></i>
                 <span>督导用户</span>
@@ -283,20 +286,20 @@
         </li>
     </ul>
 </li>
-<li>
+<li id="tmanager">
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-tasks'></i>
         <span>听课任务管理</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="task">
             <a href='<?php echo U('Task/task');?>'>
                 <i class='icon-caret-right'></i>
                 <span>分配</span>
             </a>
         </li>
-        <li class=''>
+        <li id="showTask">
             <a href='<?php echo U('Task/showTask');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -304,20 +307,20 @@
         </li>
     </ul>
 </li>
-<li class=''>
+<li id="rmanager">
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-edit'></i>
         <span>听课记录</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="record">
             <a href='<?php echo U('Record/record');?>'>
                 <i class='icon-caret-right'></i>
                 <span>填写</span>
             </a>
         </li>
-        <li class=''>
+        <li id="showRecord">
             <a href='<?php echo U('Record/showRecord');?>'>
                 <i class='icon-caret-right'></i>
                 <span>查看</span>
@@ -325,44 +328,44 @@
         </li>
     </ul>
 </li>
-<li>
+<li id="smanager">
     <a class='dropdown-collapse' href='#'>
         <i class='icon-table'></i>
         <span>数据报表</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
     <ul class='nav nav-stacked'>
-        <li class=''>
+        <li id="analysis">
             <a href='<?php echo U('Analysis/analysis');?>'>
                 <i class='icon-caret-right'></i>
                 <span>数据检索</span>
             </a>
         </li>
-        <li class=''>
+        <li id="department">
             <a href='<?php echo U('Analysis/department');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="month">
             <a href='<?php echo U('Analysis/month');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按院系月份统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="supervisor">
             <a href='<?php echo U('Analysis/supervisor');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按督导统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="teacher">
             <a href='<?php echo U('Analysis/teacher');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按教师职称统计</span>
             </a>
         </li>
-        <li class=''>
+        <li id="course">
             <a href='<?php echo U('Analysis/course');?>'>
                 <i class='icon-caret-right'></i>
                 <span>按课程名统计</span>
@@ -403,28 +406,19 @@
 <div class='span4 pull-right'>
     <div class='row-fluid'>
         <strong>学年学期</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <optgroup label='2014-2015 学年'>
-                <option value='AK' />2013-2014 学年第 1 学期
-                <option value='HI' />2013-2014 学年第 2 学期
-            </optgroup>
-            <optgroup label='2012-2013 学年'>
-                <option value='AK' />2012-2013 学年第 1 学期
-                 <option value='HI' />2012-2013 学年第 2 学期
-            </optgroup>
-            <optgroup label='2013-2014 学年'>
-                <option value='AK' />2011-2012 学年第 1 学期
-                <option value='HI' />2011-2012 学年第 2 学期
-            </optgroup>
-        </select>
+        <form id="form1" method="post" action="<?php echo U('Analysis/course');?>">
+            <select class='select2 input-block-level' name="yt" id="selYt">
+                <option value='-1' selected="selected"/>------请选择------
+                <?php if(is_array($yt)): $i = 0; $__LIST__ = $yt;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["yt"]); ?>"><?php echo ($vo["yt"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+            </select>
+        </form>
     </div>
 </div>
 </div>
 <div class='row-fluid'>
     <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
         <div class='box-header green-background'>
-            <div class='text-center'>2013-2014学年第二学期督导听课统计总表（按课程名、被听课次数统计）</div>
+            <div class='text-center'><?php echo ($title); ?>&nbsp;&nbsp;督导听课统计总表（按课程名、被听课次数统计）</div>
             <button class='btn btn-success btn-large' name='button' style='position:absolute; left:0px;top:2px;'><i class='icon-share'>&nbsp;&nbsp;导出</i></button>
         </div>
         <div class='box-content box-no-padding'>
@@ -448,160 +442,27 @@
                         <th>较好</th>
                         <th>一般</th>
                         <th>较差</th>
+                        <th>差</th>
                         <th>未予评价</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>气候变化与文明</td>
-                        <td>地遥学院</td>
-                        <td>方修琦</td>
-                        <td>教授</td>
+                    <?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
+                        <td><?php echo ($i); ?></td>
+                        <td><?php echo ($vo["cname"]); ?></td>
+                        <td><?php echo ($vo["tcollege"]); ?></td>
+                        <td><?php echo ($vo["tname"]); ?></td>
+                        <td><?php echo ($vo["title"]); ?></td>
                         <td>15</td>
-                        <td>本专业0，文科7，理科8</td>
-                        <td>5</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>循环经济与可持续发展型企业</td>
-                        <td>环境学院</td>
-                        <td>毛建素</td>
-                        <td>教授</td>
-                        <td>30</td>
-                        <td>本专业5，文科21，理科4</td>
-                        <td>7</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>气候变化与文明</td>
-                        <td>地遥学院</td>
-                        <td>方修琦</td>
-                        <td>教授</td>
-                        <td>15</td>
-                        <td>本专业0，文科7，理科8</td>
-                        <td>5</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>循环经济与可持续发展型企业</td>
-                        <td>环境学院</td>
-                        <td>毛建素</td>
-                        <td>教授</td>
-                        <td>30</td>
-                        <td>本专业5，文科21，理科4</td>
-                        <td>7</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>气候变化与文明</td>
-                        <td>地遥学院</td>
-                        <td>方修琦</td>
-                        <td>教授</td>
-                        <td>15</td>
-                        <td>本专业0，文科7，理科8</td>
-                        <td>5</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>循环经济与可持续发展型企业</td>
-                        <td>环境学院</td>
-                        <td>毛建素</td>
-                        <td>教授</td>
-                        <td>30</td>
-                        <td>本专业5，文科21，理科4</td>
-                        <td>7</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>气候变化与文明</td>
-                        <td>地遥学院</td>
-                        <td>方修琦</td>
-                        <td>教授</td>
-                        <td>15</td>
-                        <td>本专业0，文科7，理科8</td>
-                        <td>5</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>循环经济与可持续发展型企业</td>
-                        <td>环境学院</td>
-                        <td>毛建素</td>
-                        <td>教授</td>
-                        <td>30</td>
-                        <td>本专业5，文科21，理科4</td>
-                        <td>7</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>气候变化与文明</td>
-                        <td>地遥学院</td>
-                        <td>方修琦</td>
-                        <td>教授</td>
-                        <td>15</td>
-                        <td>本专业0，文科7，理科8</td>
-                        <td>5</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>循环经济与可持续发展型企业</td>
-                        <td>环境学院</td>
-                        <td>毛建素</td>
-                        <td>教授</td>
-                        <td>30</td>
-                        <td>本专业5，文科21，理科4</td>
-                        <td>7</td>
-                        <td>4</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>1</td>
-                    </tr>
+                        <td><?php echo ($vo["sclass"]); ?></td>
+                        <td><?php echo ($vo["tkcs"]); ?></td>
+                        <td><?php echo ($vo["pj_h"]); ?></td>
+                        <td><?php echo ($vo["pj_jh"]); ?></td>
+                        <td><?php echo ($vo["pj_yb"]); ?></td>
+                        <td><?php echo ($vo["pj_jc"]); ?></td>
+                        <td><?php echo ($vo["pj_c"]); ?></td>
+                        <td><?php echo ($vo["pj_k"]); ?></td>
+                    </tr><?php endforeach; endif; else: echo "" ;endif; ?>
                   </tbody>
                 </table>
               </div>
@@ -610,9 +471,15 @@
     </div>
 </div>
 </section>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#smanager').nav_slide('smanager','course');
+        $('#selYt').change(function(){
+            $('#form1').submit();
+        });
+    });
+</script>
 </div>
-<!-- / jquery -->
-<script src='/jwcdd/Public/assets/javascripts/jquery/jquery.min.js' type='text/javascript'></script>
 <!-- / jquery mobile events (for touch and slide) -->
 <script src='/jwcdd/Public/assets/javascripts/plugins/mobile_events/jquery.mobile-events.min.js' type='text/javascript'></script>
 <!-- / jquery migrate (for compatibility with new jquery) -->
@@ -711,6 +578,6 @@
 <script src='/jwcdd/Public/assets/javascripts/demo/inplace_editing.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/charts.js' type='text/javascript'></script>
 <script src='/jwcdd/Public/assets/javascripts/demo/demo.js' type='text/javascript'></script>
-<div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
+<!--div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div-->
 </body>
 </html>
