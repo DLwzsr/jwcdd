@@ -127,25 +127,5 @@ class UserAction extends Action {
         $con['did'] = $did;
         $deldd->where($con)->delete();
         $this->redirect("User/user_dd");
-    }
-
-    //判断用户角色
-    private function user_role($role){
-        switch ($role) {
-            case '1':
-                $rolename = '系统用户';
-                break;
-            case '2':
-                $rolename = '督导';
-            case '3':
-                $rolename = '学校领导';
-                break;
-            case '4':
-                $rolename = '教学院长';
-            default:
-                $rolename = '教师';
-                break;
-        }
-        return $rolename;
-    }
+    }  
 }
