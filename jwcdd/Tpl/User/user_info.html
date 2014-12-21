@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class='box-content'>
-                            <form accept-charset="UTF-8" action="{:U('User/editUser')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
+                            <form accept-charset="UTF-8" action="{:U('User/editUser',array('flag'=>$flag))}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
                             <div class='control-group'>
                                 <label class='control-label' for='inputSelect'>用户角色</label>
                                 <div class='controls'>
@@ -106,7 +106,7 @@
                                 <div class='form-actions'>
                                     <input type='hidden' name='uid' value='{$euser.uid}'>
                                     <button class='btn btn-primary' type='submit'><i class='icon-save'></i>保存</button>
-                                    <button class='btn' type='reset'>取消</button>
+                                    <button class='btn' type='reset'><i class='icon-undo'></i>重置</button>
                                 </div>
                             </form>
                         </div>
@@ -117,4 +117,9 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#umanager').nav_slide('umanager','user_dd');
+    });
+</script> 
 <include file="./jwcdd/Tpl/footerTemp.html" />

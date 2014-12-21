@@ -16,17 +16,19 @@ class UserAction extends Action {
     }
 
     //显示要修改用户信息
-    public function user_info($uid=-1){
+    public function user_info($uid=-1,$flag){
         $user = M("Users");
         //查询要修改的用户
         $con['uid'] = $uid;
         $euser = $user->field('password', true)->where($con)->select();
-        $this->euser = $euser[0];   
+        $this->euser = $euser[0]; 
+        $this->flag = $flag; 
+        //dump($flag);
         $this->display();
     }
 
     //修改用户信息
-    public function editUser(){
+    public function editUser($flag=-1){
         $user = M("Users");
         $data['role'] = $this->_post('role');
         $data['teaid'] = $this->_post('teaid');
@@ -39,7 +41,13 @@ class UserAction extends Action {
         $data['email'] = $this->_post('email');      
         $con['uid'] = $this->_post('uid');
         $user->data($data)->where($con)->save();
-        $this->redirect("User/user_dd");
+        if ($flag==0) {
+            $this->redirect("User/user");
+        }
+        elseif ($flag==1) {
+            $this->redirect("User/user_dd");
+        }
+        else $this->redirect("User/user_info");    
     }
 
     //管理本学期督导

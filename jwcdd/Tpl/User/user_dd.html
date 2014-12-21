@@ -71,7 +71,7 @@
                                     </td>
                                     <td>
                                         <div class='text-right'>
-                                            <a class='btn btn-success btn-mini' href="{:U('User/user_info',array('uid'=>$vo1['uid']))}" style='margin-right:10px;'>
+                                            <a class='btn btn-success btn-mini' href="{:U('User/user_info',array('uid'=>$vo1['uid'],'flag'=>1))}" style='margin-right:10px;'>
                                                 <i class='icon-edit'></i>
                                             </a>
                                             <a class='btn btn-danger btn-mini' href="{:U('User/user_deldd',array('did'=>$vo1['did']))}">
@@ -179,5 +179,10 @@
                     }); 
         });
     });
-</script-->        
+</script-->      
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#umanager').nav_slide('umanager','user_dd');
+    });
+</script>  
 <include file="./jwcdd/Tpl/footerTemp.html" />
