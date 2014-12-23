@@ -68,7 +68,6 @@ class UserAction extends Action {
         $con2['uid'] = array('not in', $dduid);
         $dd = $users->field('password,role',true)->where($con2)->order('uid asc')->select();
         $this->dd = $dd;
-        //dump($dd);
         //查询已有的组别
         $dgroup = M("Dgroup");
         $dgroup = $dgroup->select();
