@@ -2,7 +2,113 @@
 // Task文件的Action类
 class TaskAction extends Action {
     public function task(){
-		$this->display();
+        checkLogin(); 
+        //$userRole = session('userRole');    //获取用户权限
+        $userRole = 1;
+        if ($userRole == 1) {
+            $con0 = array();
+            $con = array();
+            $course = M("Courses");
+            $year = session('year');
+            $term = session('term');
+            $year = 2014;
+            $term = '秋季';
+            if (!empty($_POST) && $this->isPost()) {
+                if ($this->_post('yt') != -1) {
+                    $yt = $this->_post('yt');
+                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
+                    $len = strlen($yt) - 6;
+                    $year = substr($yt, 0, $len);
+                    $con0['year'] = $year;
+                    $con0['term'] = $term;
+                }
+                if($this->_post('tname')!=-1){
+                    $tname = $this->_post('tname');
+                    $con['tname'] = $tname;
+                }
+                if($this->_post('tcollege')!=-1){
+                    $tcollege = $this->_post('tcollege');
+                    $con['tcollege'] = $tcollege;
+                }
+                if($this->_post('scollege')!=-1){
+                    $scollege = $this->_post('scollege');
+                    $con['scollege'] = $scollege;
+                }
+                if($this->_post('sclass')!=-1){
+                    $sclass = $this->_post('sclass');
+                    $con['sclass'] = $sclass;
+                }
+            }
+            else{
+                $con0['year'] = $year;
+                $con0['term'] = $term;
+            }
+            $clist=$course->where($con0)->where($con)->select();
+            $this->clist=$clist;
+            //dump($clist);
+
+            $this->yt = $this->getYearTerm('Courses');
+            $this->tname=$tname=$course->Distinct(true)->field('tname')->where($con0)->order('tname asc')->select();
+            $this->tcollege=$tcollege=$course->Distinct(true)->field('tcollege')->order('tcollege asc')->where($con0)->select();
+            $this->scollege=$scollege=$course->Distinct(true)->field('scollege')->where($con0)->order('scollege asc')->select();
+            $this->sclass=$sclass=$course->Distinct(true)->field('sclass')->where($con0)->order('sclass asc')->select();
+                       
+            $this->year = $year;
+            $this->term = $term;
+
+            $topiclist=M("Topic");
+            $topiclist=$topiclist->where($con0)->select();
+            $this->topiclist=$topiclist;
+
+            $dd=M("Dd");
+            $dd=$dd->join('dd_Users on dd_Users.uid=dd_Dd.uid')->field('teaid, did, name, title, college, mobi')->where($con0)->order('CONVERT(name USING gbk) asc')->select();
+            $this->dd=$dd;
+            //dump($dd);
+
+        }
+        else {
+            $this->error('亲~ 你不具备这样的能力哦~');
+        }
+        $this->display();
+    }
+
+    //获取学年学期
+    private function getYearTerm($tableName){
+        $hz = M($tableName);
+        $data = $hz->Distinct(true)->field(array('concat(year,term)'=>'yt'))->group('year,term')->order('year desc')->select();
+        return $data;
+    }
+
+    //分配本学期督导听课任务
+    public function assginTask(){
+        checkLogin();
+        $task = M("Tasks");
+        $taskdid = $this->_post('did');
+        $taskcid = $this->_post('cid');
+        //dump($taskdid);
+        //$taskc['tktime'] = $this->_post('tktime');
+        //$taskc['topicname'] = $this->_post('topicname');
+        $len1 = count($taskdid);
+        $len2 = count($taskcid);
+        for ($i=0; $i < $len1; $i++) { 
+            for ($j=0; $j < $len2; $j++) { 
+                $newtask['did'] = $taskdid[$i];
+                $newtask['cid'] = $taskcid[$j];
+                $newtask['check'] = 1;
+                $newtask['record'] = 0;
+                $newtask['tktime'] = NULL;
+                $newtask['topic'] = NULL;
+                $tktime = $this->_post('tktime'.$taskcid[$j]);
+                if (!empty($tktime)) {
+                    $newtask['tktime'] = $tktime;
+                }
+                if ($this->_post('topicname'.$taskcid[$j]) != -1) {
+                    $newtask['topic'] = $this->_post('topicname'.$taskcid[$j]);
+                }
+                $task->data($newtask)->add();
+            }
+        }
+        $this->redirect('Task/task');
     }
 
     //显示本学期督导听课任务

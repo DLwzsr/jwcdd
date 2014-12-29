@@ -179,14 +179,14 @@
         <div class='modal-body'> 
             <ul class="nav nav-list">
                 <strong>
-                    <div class="text-center pull-left" style="width:65px;">姓名&nbsp;</div><div class="text-center pull-left" style="width:55px;">职称&nbsp;</div><div class="text-center pull-left" style="width:90px;">手机&nbsp;</div><div class="pull-left" style="width:270px;">所在院系</div>
+                    <div class="text-center pull-left" style="width:65px;">姓名&nbsp;</div><div class="text-center pull-left" style="width:55px;">职称&nbsp;</div><div class="text-center pull-left" style="width:100px;">手机&nbsp;</div><div class="pull-left" style="width:280px;">所在院系</div>
                 </strong>
                     <hr style="margin:5px;"/>
                 <volist  name="dd" id="vo2">
                     <div style="clear:both; float:none;"></div>
                     <li>
                         <a href="{:U('Task/editTaskdd',array('tid'=>$vo1['tid'],'did'=>$vo2['did']))}" style="height:20px;">
-                        <div class="text-center pull-left" style="width:65px;">{$vo2.name}&nbsp;</div><div class="text-center pull-left" style="width:55px;">{$vo2.title}&nbsp;</div><div class="text-center pull-left" style="width:90px;">{$vo2.mobi}&nbsp;</div><div class="pull-left" style="width:270px;">{$vo2.college}</div>
+                        <div class="text-center pull-left" style="width:65px;">{$vo2.name}&nbsp;</div><div class="text-center pull-left" style="width:55px;">{$vo2.title}&nbsp;</div><div class="text-center pull-left" style="width:100px;">{$vo2.mobi}&nbsp;</div><div class="pull-left" style="width:280px;">{$vo2.college}</div>
                     </a><hr style="margin:5px;"/></li>
                 </volist>
             </ul>
