@@ -2361,6 +2361,7 @@ body {
     overflow-y: hidden; }
   .responsive-table table td {
     position: relative;
+    z-index: 1;
     white-space: nowrap;
     overflow: hidden; }
 

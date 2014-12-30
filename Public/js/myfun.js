@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$.fn.nav_slide=function(first,second){
+	$.fn.nav_slide = function(first,second){
         //移除页面上所有类名为active的class
         //$('.active').removeClass();
         $(this).attr('class','active');

@@ -24,22 +24,42 @@
 		        $files = M('files');
 		        $info = uploadDocFile($filepath);
 		        $data['fpath'] = $info[0]['savepath'].$info[0]['savename'];
-		        $data['fname'] = $info[0]['savename'];
+		        $data['fname'] = $con['fname'] = $info[0]['savename'];
 		        $data['upuid'] = 2;//session('userId');
 		        $data['uptime'] = date('Y-m-d H:i:s');
-		        $data['upip'] = $this->getIP();
-		        //dump($data);
-		        if($files->data($data)->add()){
-		        	$this->saveOperation($data['upuid'],'用户上传文件 ['.$data['fname'].']');
-		        	//将文件转换对应生成txt文档，便于后期检索
-		        	$realPath = realpath(__ROOT__);
-		        	$path = $realPath.str_replace('/','\\',substr($data['fpath'],1));
-					$execPath = $realPath.'\\Public\\xpdf\\pdftotext -layout -enc GBK ';
-		        	$cmd = $execPath.$path;	//cmd路径
-					shell_exec(mb_convert_encoding($cmd,'GBK','UTF-8'));
+		        $data['upip'] = get_client_ip();
+		        $isExist = $files->where($con)->getField('fname');
+		        if (!empty($isExist)) {
+		        	$data1['upuid'] = $data['upuid'];
+		        	$data1['uptime'] = $data['uptime'];
+		        	$data1['upip'] = $data['upip'];
+		        	if ($files->where($con)->save($data1)) {
+		        		$this->saveOperation($data['upuid'],'用户更新文件 ['.$data['fname'].']');
+		        		//将文件转换对应生成txt文档，便于后期检索
+			        	$realPath = realpath(__ROOT__);
+			        	$path = $realPath.str_replace('/','\\',substr($data['fpath'],1));
+						$execPath = $realPath.'\\Public\\xpdf\\pdftotext -layout -enc GBK ';
+			        	$cmd = $execPath.$path;	//cmd路径
+						shell_exec(mb_convert_encoding($cmd,'GBK','UTF-8'));
+		        	}else{
+		        		$this->error('文件上传更新失败！');
+		        	}
+
 		        }else{
-		        	$this->error('文件上传失败！');
+		        	if($files->data($data)->add()){
+			        	$this->saveOperation($data['upuid'],'用户上传文件 ['.$data['fname'].']');
+			        	//将文件转换对应生成txt文档，便于后期检索
+			        	$realPath = realpath(__ROOT__);
+			        	$path = $realPath.str_replace('/','\\',substr($data['fpath'],1));
+						$execPath = $realPath.'\\Public\\xpdf\\pdftotext -layout -enc GBK ';
+			        	$cmd = $execPath.$path;	//cmd路径
+						shell_exec(mb_convert_encoding($cmd,'GBK','UTF-8'));
+			        }else{
+			        	$this->error('文件上传失败！');
+			        }
 		        }
+		        //dump($data);
+		        
 		        $this->redirect('Index/index');
     		}
 	        
@@ -55,7 +75,7 @@
 			$found = 0;
 			if (!empty($keyword)) {
 				$file = M('files');
-				$data = $file->where('1=1')->order('uptime desc')->select();
+				$data = $file->field('fname,fpath')->where('1=1')->order('uptime desc')->select();
 				$result = array();
 				$kk = 0;
 				$stopflag = 0;
@@ -156,13 +176,13 @@
 			$logs = M('logs');
 			$data['loguid'] = $uid;
 			$data['logtime'] = date('Y-m-d H:i:s');
-			$data['logip'] =  $this->getIP();
+			$data['logip'] =  get_client_ip();
 			$data['operation'] = $operation;
 			$logs->data($data)->add();
 		}
 
 		// 定义一个函数getIP()
-		private function getIP(){
+		/*private function getIP(){
 			$ip = '';
 			if (getenv("HTTP_CLIENT_IP"))
 				$ip = getenv("HTTP_CLIENT_IP");
@@ -172,6 +192,6 @@
 				$ip = getenv("REMOTE_ADDR");
 			else $ip = "Unknow";
 			return $ip;
-		}
+		}*/
 	}
 ?>

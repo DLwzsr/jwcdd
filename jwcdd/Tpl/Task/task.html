@@ -119,8 +119,8 @@
             <td>{$vo.cplace}</td>
             <td>
                 <div>
-                    <div class='datepicker input-append' id='datepicker'>
-                        <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' name='tktime{$vo.cid}'/>
+                    <div class='datepicker input-append' id='datepicker' style="margin:0; padding:0;">
+                        <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' style="margin:0;" name='tktime{$vo.cid}'/>
                         <span class='add-on'>
                             <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
                         </span>
@@ -128,8 +128,8 @@
                 </div>
             </td>
             <td>
-                <select name='topicname{$vo.cid}' class='select2 input-block-level' style='width:150px;'>
-                    <option value='-1'></option>
+                <select name='topicname{$vo.cid}' class='select2 input-block-level' style="margin:0; padding:0; width:150px;">
+                    <option value='-1' selected="selected">---请选择---</option>
                     <volist name='topiclist' id='vo1'>
                     <option value='{$vo1.topicname}'>{$vo1.topicname}</option>
                     </volist>
