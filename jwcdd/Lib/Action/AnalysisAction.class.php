@@ -94,6 +94,7 @@ class AnalysisAction extends Action {
         $records = M('records');
         $info = uploadExcelFile($filepath);
         $file = $info[0]['savepath'].$info[0]['savename'];
+        $fileInfo = '[上传名称]：'.$info[0]['name'].',[存储名称]：'.$info[0]['savename'];   //获取原始名字相关信息
         $temp = $excel->returnExcelData($file);
         $rows = $temp[0]['rows'];   //行数
         $excelData = $temp[2]['data'];
@@ -105,6 +106,8 @@ class AnalysisAction extends Action {
                      '差'=>1,
                      '未评价'=>0);
         $data1 = array();
+        $uid = session('userId');
+        $uid = 2;
         for ($i=0; $i < $rows; $i++) { 
             $data2 = array(); 
             $con = array();
@@ -180,6 +183,7 @@ class AnalysisAction extends Action {
         }
         //dump($data1);
         M('records')->addAll($data1);
+        $this->saveOperation($uid,'用户更新文件 {'.$fileInfo.'}');
 
         $this->redirect('Analysis/analysis');
     }
@@ -483,6 +487,16 @@ class AnalysisAction extends Action {
     private function getDate(){
         $date = date('Y-m-d');
         return $date;
+    }
+
+    //记录用户操作
+    private function saveOperation($uid,$operation){
+        $logs = M('logs');
+        $data['loguid'] = $uid;
+        $data['logtime'] = date('Y-m-d H:i:s');
+        $data['logip'] =  get_client_ip();
+        $data['operation'] = $operation;
+        $logs->data($data)->add();
     }
 
 }
