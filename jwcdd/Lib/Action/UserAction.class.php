@@ -30,6 +30,8 @@ class UserAction extends Action {
     //修改用户信息
     public function editUser($flag=-1){
         $user = M("Users");
+        //$userid = session('userid');
+        $userid = 1;
         $data['role'] = $this->_post('role');
         $data['teaid'] = $this->_post('teaid');
         $data['name'] = $this->_post('name');
@@ -40,7 +42,11 @@ class UserAction extends Action {
         $data['phone'] = $this->_post('phone');
         $data['email'] = $this->_post('email');      
         $con['uid'] = $this->_post('uid');
-        $user->data($data)->where($con)->save();
+        if($user->data($data)->where($con)->save()) {
+            $this->saveOperation($userid,'用户修改用户信息 [uid='.$con['uid'].']');
+            }else{
+                $this->error('修改用户信息失败!');
+        } 
         if ($flag==0) {
             $this->redirect("User/user");
         }
@@ -78,13 +84,19 @@ class UserAction extends Action {
     //增加督导组别
     public function user_addgroup(){
         checkLogin();
+        //$userid = session('userid');
+        $userid = 1;
         $addgroup = M("Dgroup");     
         $data['gname'] = $this->_post('gname');
         $nowgroup = $addgroup->field('gname')->select();
         $nowgroup = i_array_column($nowgroup, 'gname');
         //dump($nowgroup);
         if (!empty($data['gname']) && !in_array($data['gname'], $nowgroup)) {
-            $addgroup->data($data)->add();         
+            if($addgroup->data($data)->add()) {
+            $this->saveOperation($userid,'用户增加督导组别 ['.$data['gname'].']');
+            }else{
+                $this->error('增加督导组别失败!');
+            }      
         }              
         //页面重定向
         $this->redirect("User/user_dd");
@@ -93,6 +105,8 @@ class UserAction extends Action {
     //选择本学期督导
     public function user_seldd(){
         checkLogin();
+        //$userid = session('userid');
+        $userid = 1;
         $nowdd = M("Dd");
         $data['year'] = 2014;
         $data['term'] = '秋季';
@@ -101,7 +115,11 @@ class UserAction extends Action {
         for ($i=0; $i<$length; $i++){
             $data['uid'] = $uid[$i];
             //将选择的督导添加到dd表中
-            $nowdd->data($data)->add();
+            if($nowdd->data($data)->add()) {
+            $this->saveOperation($userid,'用户添加本学期督导 [督导uid'.$data['uid'].']');
+            }else{
+                $this->error('添加本学期督导失败!');
+            } 
         }
         //页面重定向       
         $this->redirect("User/user_dd");
@@ -110,29 +128,53 @@ class UserAction extends Action {
     //修改督导组别
     public function user_mgroup($did=-1, $gname=-1){
         checkLogin();
+        //$userid = session('userid');
+        $userid = 1;
         $mgroup = M("Dd");
         $con['did'] = $did;
         $data['group'] = $gname;
-        $mgroup->data($data)->where($con)->save();    
+        if($mgroup->data($data)->where($con)->save()) {
+            $this->saveOperation($userid,'用户修改督导组别 [督导did'.$did.']');
+        }else{
+            $this->error('修改督导组别失败!');
+        }    
         $this->redirect("User/user_dd");
     }
 
     //修改督导职务
     public function user_mpos($did=-1, $pos=-1){
         checkLogin();
+        //$userid = session('userid');
+        $userid = 1;
         $mpos = M("Dd");
         $con['did'] = $did;
         $data['pos'] = $pos;
-        $mpos->data($data)->where($con)->save();    
+        if ($mpos->data($data)->where($con)->save()) {
+            $this->saveOperation($userid,'用户修改督导职务 [督导did'.$did.']');
+        }else{
+            $this->error('修改督导职务失败!');
+        }
         $this->redirect("User/user_dd");        
     }
 
     //删除本学期督导
     public function user_deldd($did=-1){
         checkLogin();
+        //$userid = session('userid');
+        $userid = 1;
         $deldd = M("Dd");
         $con['did'] = $did;
         $deldd->where($con)->delete();
         $this->redirect("User/user_dd");
+    }
+
+    //记录用户操作
+    private function saveOperation($uid,$operation){
+        $logs = M('logs');
+        $data['loguid'] = $uid;
+        $data['logtime'] = date('Y-m-d H:i:s');
+        $data['logip'] =  get_client_ip();
+        $data['operation'] = $operation;
+        $logs->data($data)->add();
     }  
 }
