@@ -82,6 +82,8 @@ class TaskAction extends Action {
     //分配本学期督导听课任务
     public function assginTask(){
         checkLogin();
+        //$userid = session('userid');
+        $userid = 1;
         $task = M("Tasks");
         $taskdid = $this->_post('did');
         $taskcid = $this->_post('cid');
@@ -105,7 +107,11 @@ class TaskAction extends Action {
                 if ($this->_post('topicname'.$taskcid[$j]) != -1) {
                     $newtask['topic'] = $this->_post('topicname'.$taskcid[$j]);
                 }
-                $task->data($newtask)->add();
+                if ($task->data($newtask)->add()) {
+                    $this->saveOperation($userid,'用户分配听课任务 [督导did'.$taskdid[$i].'课程cid'.$taskcid[$j].']');
+                }else{
+                    $this->error('给督导'.$taskdid[$i].'分配课程'.$taskcid[$j].'失败！');
+                }   
             }
         }
         $this->redirect('Task/task');
@@ -169,33 +175,68 @@ class TaskAction extends Action {
 
     //修改督导听课任务
     public function editTasktopic($tid=-1, $topic=-1){
+        //$userid = session('userid');
+        $userid = 1;
     	$task = M("Tasks");
     	$con['tid'] = $tid;
     	$data['topic'] = $topic;
-    	$task->where($con)->data($data)->save();
+    	if ($task->where($con)->data($data)->save()) {
+            $this->saveOperation($userid,'用户修改任务的听课专题 [tid='.$tid.']');
+        }else{
+            $this->error('修改听课专题失败！');
+        }
     	$this->redirect('Task/showTask');
     }
     public function editTaskcheck($tid=-1, $check=-1){
+        //$userid = session('userid');
+        $userid = 1;
         $task = M("Tasks");
         $con['tid'] = $tid;
         $data['check'] = $check;
-        $task->where($con)->data($data)->save();
+        if($task->where($con)->data($data)->save()) {
+           $this->saveOperation($userid,'用户审核通过听课任务 [tid='.$tid.']');
+        }else{
+            $this->error('审核听课任务失败！');
+        }
         $this->redirect('Task/showTask');
     }
     public function editTaskdd($tid=-1, $did=-1){
+        //$userid = session('userid');
+        $userid = 1;
         $task = M("Tasks");
         $con['tid'] = $tid;
         $data['did'] = $did;
-        $task->where($con)->data($data)->save();
+        if($task->where($con)->data($data)->save()) {
+            $this->saveOperation($userid,'用户修改听课督导 [tid='.$tid.']');
+        }else{
+            $this->error('修改听课督导失败！');
+        }
         $this->redirect('Task/showTask');
     }
 
     //删除听课任务记录
     public function deltask($tid=-1){
         checkLogin();
+        //$userid = session('userid');
+        $userid = 1;
         $deltask = M("Tasks");
         $con['tid'] = $tid;
-        $deltask->where($con)->delete();
+        $task = $deltask->where($con)->field('did, cid')->select();
+        if ($deltask->where($con)->delete()){
+            $this->saveOperation($userid,'用户删除听课任务 [督导did'.$task[0]['did'].'课程cid'.$task[0]['cid'].']');
+        }else{
+            $this->error('删除听课任务记录失败！');
+        }
         $this->redirect("Task/showTask");
     } 
+
+    //记录用户操作
+    private function saveOperation($uid,$operation){
+        $logs = M('logs');
+        $data['loguid'] = $uid;
+        $data['logtime'] = date('Y-m-d H:i:s');
+        $data['logip'] =  get_client_ip();
+        $data['operation'] = $operation;
+        $logs->data($data)->add();
+    }
 }
