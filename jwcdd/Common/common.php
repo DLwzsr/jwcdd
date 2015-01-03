@@ -13,10 +13,10 @@
   }
   //check that administritor is log in or not
   function checkLogin(){
-    if(session("?username") && session("username") != null){
+    if(session("?userName") && session("userName") != null){
       return true;
     }else{
-      //header("location: http://219.224.30.99:8081/jwcdd/index.php/Login/login");
+      //header("location: http://219.224.30.99:8081/jwcdd/Login/login");
     }
     return true;
   }

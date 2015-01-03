@@ -7,12 +7,49 @@ class UserAction extends Action {
 
     //显示个人信息
     public function user_profile(){
+        $users = M('users');
+        $userid = session('userId');
+        $userid = 1;
+        $con['uid'] = $userid;
+        $data = $users->where($con)->field('teaid,name,college,title,idcard,phone,mobi,email')->select();
+
+        $this->data = $data[0];
 		$this->display();
     }
 
     //修改个人信息
     public function user_modify(){
-        $this->display();
+        $users = M('users');
+        if(!empty($_POST) && $this->isPost()){
+            $data = array();
+            $data['teaid'] = $this->_post('teaid');
+            $data['name'] = $this->_post('name');
+            $data['title'] = $this->_post('title');
+            $data['college'] = $this->_post('college');
+            $data['idcard'] = $this->_post('idcard');
+            $data['mobi'] = $this->_post('mobi');
+            $data['phone'] = $this->_post('phone');
+            $data['email'] = $this->_post('email');
+            $data['password'] = $this->_post('password');
+            $con['uid'] = $this->_post('uid');
+            foreach ($data as $key => $value) {
+                if (empty($value)) {
+                    unset($data[$key]);
+                }
+            }
+            $users->where($con)->save($data);
+            $this->saveOperation($con['uid'],'用户修改用户信息');
+            $this->redirect('User/user_profile');
+        }else{
+            $data = array();
+            $userid = session('userId');
+            $userid = 1;
+            $con['uid'] = $userid;
+            $data = $users->where($con)->field('uid,teaid,name,college,title,idcard,phone,mobi,email')->select();
+
+            $this->data = $data[0];
+            $this->display();
+        }
     }
 
     //显示要修改用户信息
