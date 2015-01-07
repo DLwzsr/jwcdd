@@ -11,7 +11,7 @@ return array(
     'DB_PREFIX' => 'dd_',      //数据库表前缀
 
     //URL模式
-    'URL_MODEL' => 1,
+    'URL_MODEL' => 2,
     //'URL_PATHINFO_MODEL' => 2,
     'URL_PATHINFO_DEPR' => '/',
     'URL_HTML_SUFFIX' => '.html',   //URL后缀
@@ -28,6 +28,9 @@ return array(
     'DEFAULT_LANG' => 'zh-cn',
     'LANG_LIST' => 'zh-cn',
     'VAR_LANGUAGE' => '1',
+
+    //配置防SQL注入
+    'REQUEST_VARS_FILTER'=>true,
 
     //开启日志
     'LOG_RECORD' => true,
