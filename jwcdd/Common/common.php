@@ -13,10 +13,10 @@
   }
   //check that administritor is log in or not
   function checkLogin(){
-    if(session("?username") && session("username") != null){
+    if(session("?userName") && session("userName") != null){
       return true;
     }else{
-      //header("location: http://219.224.30.99:8081/jwcdd/index.php/Login/login");
+      //header("location: http://219.224.30.99:8081/jwcdd/Login/login");
     }
     return true;
   }
@@ -72,7 +72,7 @@
       $upload->uploadReplace = true;  //替换相同的文件
       $upload->savePath = $filePath;  //设置保存的路径
       $upload->saveRule = '';
-      $upload->allowExts = array("doc","docx","pdf"); //允许的文件后缀名
+      $upload->allowExts = array("pdf"); //允许的文件后缀名
       if(!$upload->upload()){
         Log::write("文件上传失败",ERR);
         return false;

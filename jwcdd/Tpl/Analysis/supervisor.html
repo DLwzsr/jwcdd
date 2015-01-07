@@ -43,12 +43,12 @@
 <div class='row-fluid'>
     <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
         <div class='box-header green-background'>
-            <div class='text-center'>{$title}&nbsp;&nbsp;督导听课次数统计表</div>
-            <button class='btn btn-success btn-large' name='button' style='position:absolute; left:0px;top:2px;'><i class='icon-share'>&nbsp;&nbsp;导出</i></button>          
+            <div class='text-center'>{$year}学年&nbsp;&nbsp;{$term}督导听课次数统计表</div>
+            <button class='btn btn-success btn-large' name='button' style='position:absolute; left:0px;top:2px;' id="exportBtn"><i class='icon-share'>&nbsp;&nbsp;导出</i></button>          
         </div>
         <div class='box-content box-no-padding' id="spring" style="display:<if condition='$term eq "春季"'>block<else />none</if>;">
             <div class='responsive-table'>
-              <div class='scrollable-area'>
+              <div class='scrollable-area' id="table_analysis">
                 <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
                   <thead>
                     <tr>
@@ -134,9 +134,12 @@
 <script type="text/javascript">
     $(document).ready(function(){
       $('#smanager').nav_slide('smanager','supervisor');
-        $('#selYt').change(function(){
-            $('#form1').submit();
-        });
+      $('#selYt').change(function(){
+          $('#form1').submit();
+      });
+      $('#exportBtn').click(function(){
+        $('#table_analysis').printArea();
+      });
     });
 </script>
 <include file="./jwcdd/Tpl/footerTemp.html" />

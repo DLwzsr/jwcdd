@@ -57,17 +57,17 @@
                                     <td>{$vo1.phone}</td>
                                     <td>{$vo1.email}</td>
                                     <td>
-                                        <div class='btn-group'><button class='btn dropdown-toggle' data-toggle='dropdown' style='margin-bottom:5px'>{$vo1.pos}<span class='caret'></span></button>
+                                        <div class='btn-group'><button class='btn dropdown-toggle' data-toggle='dropdown' style='margin-bottom:5px;'>{$vo1.pos}<span class='caret'></span></button>
                                         <ul class='dropdown-menu' style="z-index:100; position:relative;">
-                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'1.组员'))}">1.组员</li></a>
-                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'2.组长'))}">2.组长</li></a>
-                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'3.团长'))}">3.团长</li></a>
+                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'1.组员'))}">1.组员</a></li>
+                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'2.组长'))}">2.组长</a></li>
+                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'3.团长'))}">3.团长</a></li>
                                         </ul></div>
                                     </td>
                                     <td>
                                         <div class='btn-group'><button class='btn dropdown-toggle' data-toggle='dropdown' style='margin-bottom:5px'>{$vo1.group}<span class='caret'></span></button>
                                         <ul class='dropdown-menu' style="z-index:100; position:relative;">
-                                        <volist  name="dgroup" id="vo3"><li><a href="{:U('User/user_mgroup',array('did'=>$vo1['did'],'gname'=>$vo3['gname']))}">{$vo3.gname}</li></volist></a></ul></div>
+                                        <volist  name="dgroup" id="vo3"><li><a href="{:U('User/user_mgroup',array('did'=>$vo1['did'],'gname'=>$vo3['gname']))}">{$vo3.gname}</a></li></volist></ul></div>
                                     </td>
                                     <td>
                                         <div class='text-right'>
