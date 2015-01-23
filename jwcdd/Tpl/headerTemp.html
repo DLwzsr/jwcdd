@@ -196,6 +196,7 @@
         <span>通知</span>
     </a>
 </li-->
+<if condition="$Think.session.userRole eq 1">
 <li id="umanager">
     <a class='dropdown-collapse' href='#'>
         <i class='icon-user'></i>
@@ -217,6 +218,7 @@
         </li>
     </ul>
 </li>
+</if>
 <li id="tmanager">
     <a class='dropdown-collapse ' href='#'>
         <i class='icon-tasks'></i>
