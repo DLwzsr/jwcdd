@@ -39,9 +39,9 @@ class UserAction extends Action {
 		$data['mobi'] = $this->_post('mobi');
 		$data['email'] = $this->_post('email');
 		$user->data($data)->add();
-
-		$data['mobi'] = $this->_post('mobi');
-		$data['mobi'] = $this->_post('mobi');
+//<<<<<<< HEAD
+//		$data['mobi'] = $this->_post('mobi');
+//		$data['mobi'] = $this->_post('mobi');
 		//怎么根据新用户的id添加到督导表里？
 
 		$this->redirect("User/user");
@@ -60,7 +60,7 @@ class UserAction extends Action {
 
     //修改个人信息
     public function user_modify(){
-        $users = M('users');
+        /*$users = M('users');
         if(!empty($_POST) && $this->isPost()){
             $data = array();
             $data['teaid'] = $this->_post('teaid');
@@ -89,9 +89,11 @@ class UserAction extends Action {
             $data = $users->where($con)->field('uid,teaid,name,college,title,idcard,phone,mobi,email')->select();
 
             $this->data = $data[0];
-            $this->display();
-        }
+            
+        }*/
+		$this->display();
     }
+
 	//删除用户信息
     public function user_delete($uid=-1){
         checkLogin();
