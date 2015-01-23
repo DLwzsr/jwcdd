@@ -269,16 +269,6 @@ class UserAction extends Action {
         $logs->data($data)->add();
     }  
 
-//记录用户操作
-	private function saveOperation($uid,$operation){
-		$logs = M('logs');
-		$data['loguid'] = $uid;
-		$data['logtime'] = date('Y-m-d');
-		$data['logip'] =  $this->getIP();
-		$data['operation'] = $operation;
-		$logs->data($data)->add();
-	}
-
 	// 定义一个函数getIP()
 	private function getIP(){
 		$ip = '';
