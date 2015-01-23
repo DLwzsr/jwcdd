@@ -9,6 +9,7 @@ return array(
     'DB_PWD' => '',         //密码
     'DB_PORT' => '3306',        //服务器端口
     'DB_PREFIX' => 'dd_',      //数据库表前缀
+    'DB_CHARSET' => 'utf8',     //数据库编码
 
     //URL模式
     'URL_MODEL' => 2,

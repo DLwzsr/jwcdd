@@ -41,27 +41,29 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+								<volist name="userList" id="vo1">
                                 <tr>
-                                    <td>教师</td>   
-                                    <td>140007</td>
-                                    <td>梁七</td>
-                                    <td>副教授</td>
-                                    <td>心理学院</td>
-                                    <td>1231231111111134321</td>
-                                    <td>1521521521</td>
-                                    <td>58806220</td>
-                                    <td>lq@bnu.edu.cn</td>
+                                    <td>{$vo1.role}</td>   
+                                    <td>{$vo1.teaid}</td>
+                                    <td>{$vo1.name}</td>
+                                    <td>{$vo1.title}</td>
+                                    <td>{$vo1.college}</td>
+                                    <td>{$vo1.idcard}</td>
+                                    <td>{$vo1.mobi}</td>
+                                    <td>{$vo1.phone}</td>
+                                    <td>{$vo1.email}</td>
                                     <td>
                                         <div class='text-right'>
-                                            <a class='btn btn-success btn-mini' href="{:U('User/user_info',array('uid'=>1,'flag'=>0))}" style='margin-right:10px;'>
+                                            <a class='btn btn-success btn-mini' href="{:U('User/user_info',array('uid'=>$vo1['uid'],'flag'=>0))}" style='margin-right:10px;'>
                                                 <i class='icon-edit'></i>
                                             </a>
-                                            <a class='btn btn-danger btn-mini' href="{:U('User/user_deldd',array('did'=>1))}">
+                                            <a class='btn btn-danger btn-mini' href="{:U('User/user_delete',array('uid'=>$vo1['uid']))}">
                                                 <i class='icon-remove'></i>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
+								</volist>
                                 </tbody>
                                 </table>
                             </div>

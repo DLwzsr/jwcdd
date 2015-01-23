@@ -1,18 +1,59 @@
 <?php
 // User文件的Action类
 class UserAction extends Action {
+
+	//所有用户信息展示
     public function user(){
+		checkLogin();
+		$table=M("Users");
+		//取所有用户信息
+		$data=$table->select();
+		for($i=0;$i<count($data);$i++)
+		{
+			if ($data[$i]['role']==1)
+				$data[$i]['role']= '系统管理员';
+			if ($data[$i]['role']==2)
+				$data[$i]['role']= '督导';
+			if ($data[$i]['role']==3)
+				$data[$i]['role']= '学校领导';
+			if ($data[$i]['role']==4)
+				$data[$i]['role']= '教学院长';
+			if ($data[$i]['role']==5)
+				$data[$i]['role']= '教师';
+		}									
+		//发送到页面
+		$this->userList=$data;
 		$this->display();
     }
+	//添加新用户
+	public function addUser(){
+		checkLogin();
+		$user = M("Users");
+		$dd = M(Dd);
+		$data['teaid'] = $this->_post('teaid');
+		$data['name'] = $this->_post('name');
+		$data['title'] = $this->_post('title');
+		$data['college'] = $this->_post('college');
+		$data['idcard'] = $this->_post('idcard');
+		$data['phone'] = $this->_post('phone');
+		$data['mobi'] = $this->_post('mobi');
+		$data['email'] = $this->_post('email');
+		$user->data($data)->add();
 
-    //显示个人信息
+		$data['mobi'] = $this->_post('mobi');
+		$data['mobi'] = $this->_post('mobi');
+		//怎么根据新用户的id添加到督导表里？
+
+		$this->redirect("User/user");
+	}
+
+    //个人信息查看
     public function user_profile(){
         $users = M('users');
         $userid = session('userId');
         $userid = 1;
         $con['uid'] = $userid;
         $data = $users->where($con)->field('teaid,name,college,title,idcard,phone,mobi,email')->select();
-
         $this->data = $data[0];
 		$this->display();
     }
@@ -51,6 +92,18 @@ class UserAction extends Action {
             $this->display();
         }
     }
+	//删除用户信息
+    public function user_delete($uid=-1){
+        checkLogin();
+        $deldd = M("Users");
+        $con['uid'] = $uid;
+        $deldd->where($con)->delete();
+		$script = "<script>alert('Success!');location.href='http://localhost/jwcdd/index.php/User/user.html';</script>";
+		echo $script;
+		$userid = session('userId');
+		saveOperation($userid,'删除了Users表中id为'.$uid.'的字段');
+       // $this->redirect("User/user");
+    }
 
     //显示要修改用户信息
     public function user_info($uid=-1,$flag){
@@ -77,7 +130,8 @@ class UserAction extends Action {
         $data['idcard'] = $this->_post('idcard');
         $data['mobi'] = $this->_post('mobi');
         $data['phone'] = $this->_post('phone');
-        $data['email'] = $this->_post('email');      
+        $data['email'] = $this->_post('email');
+		
         $con['uid'] = $this->_post('uid');
         if($user->data($data)->where($con)->save()) {
             $this->saveOperation($userid,'用户修改用户信息 [uid='.$con['uid'].']');
@@ -214,4 +268,17 @@ class UserAction extends Action {
         $data['operation'] = $operation;
         $logs->data($data)->add();
     }  
+
+	// 定义一个函数getIP()
+	private function getIP(){
+		$ip = '';
+		if (getenv("HTTP_CLIENT_IP"))
+			$ip = getenv("HTTP_CLIENT_IP");
+		else if(getenv("HTTP_X_FORWARDED_FOR"))
+			$ip = getenv("HTTP_X_FORWARDED_FOR");
+		else if(getenv("REMOTE_ADDR"))
+			$ip = getenv("REMOTE_ADDR");
+		else $ip = "Unknow";
+		return $ip;
+	}
 }
