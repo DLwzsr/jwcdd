@@ -39,9 +39,9 @@ class UserAction extends Action {
 		$data['mobi'] = $this->_post('mobi');
 		$data['email'] = $this->_post('email');
 		$user->data($data)->add();
-
-		$data['mobi'] = $this->_post('mobi');
-		$data['mobi'] = $this->_post('mobi');
+//<<<<<<< HEAD
+//		$data['mobi'] = $this->_post('mobi');
+//		$data['mobi'] = $this->_post('mobi');
 		//怎么根据新用户的id添加到督导表里？
 
 		$this->redirect("User/user");
@@ -49,6 +49,12 @@ class UserAction extends Action {
 
     //个人信息查看
     public function user_profile(){
+        $users = M('users');
+        $userid = session('userId');
+        $userid = 1;
+        $con['uid'] = $userid;
+        $data = $users->where($con)->field('teaid,name,college,title,idcard,phone,mobi,email')->select();
+        $this->data = $data[0];
 		$this->display();
     }
 
@@ -87,17 +93,18 @@ class UserAction extends Action {
         }*/
 		$this->display();
     }
+
 	//删除用户信息
     public function user_delete($uid=-1){
         checkLogin();
         $deldd = M("Users");
         $con['uid'] = $uid;
         $deldd->where($con)->delete();
-		/*$script = "<script>alert('Success!');location.href='http://localhost/jwcdd/index.php/User/user.html';</script>";
+		$script = "<script>alert('Success!');location.href='http://localhost/jwcdd/index.php/User/user.html';</script>";
 		echo $script;
 		$userid = session('userId');
-		saveOperation($userid,'删除了Users表中id为'.$uid.'的字段');*/
-        $this->redirect("User/user");
+		saveOperation($userid,'删除了Users表中id为'.$uid.'的字段');
+       // $this->redirect("User/user");
     }
 
     //显示要修改用户信息
