@@ -1,649 +1,189 @@
 <include file="./jwcdd/Tpl/headerTemp.html" />
 <section id='content'>
-<div class='container-fluid'>
-<div class='row-fluid' id='content-wrapper'>
-<div class='span12'>
-<hr class='hr-normal' />
-<!--div class='row-fluid'>
-<div class='span6'>
+    <div class='container-fluid'>
+    <div class='row-fluid' id='content-wrapper'>
+    <div class='span12'>
     <div class='row-fluid'>
-        <div>
-            <div class='datepicker input-append' id='datepicker'>
-                <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
-                <span class='add-on'>
-                    <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
-                </span>
+        <div class='span12'>
+            <div class='page-header'>
+                <h1 class='pull-left'>
+                    <i class='icon-table'></i>
+                    <span>听课记录在线查看</span>
+                </h1>
             </div>
         </div>
-    </div>
-</div>
-</div-->
+<!--课程名称、学生院系、年级、课程类别 -->
+<div id="search">
+<form method="post" action="{:U('Record/showRecord')}">
+
 <div class='row-fluid'>
-<!--div class='span3'>
+<div class='span3'>
     <div class='row-fluid'>
         <strong>学年学期</strong>
-        <select class='select2 input-block-level'>
-            <optgroup label='2014-2015 学年'>
-                <option value='AK' />2013-2014 学年第 1 学期
-                <option value='HI' />2013-2014 学年第 2 学期
-            </optgroup>
-            <optgroup label='2012-2013 学年'>
-                <option value='AK' />2012-2013 学年第 1 学期
-                 <option value='HI' />2012-2013 学年第 2 学期
-            </optgroup>
-            <optgroup label='2013-2014 学年'>
-                <option value='AK' />2011-2012 学年第 1 学期
-                <option value='HI' />2011-2012 学年第 2 学期
-            </optgroup>
-        </select>
-    </div>
-</div-->
-<div class='span3'>
-    <div class='row-fluid'>
-        <strong>课程名称</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />生物化学
-            <option value='HI' />理论力学
-            <option value='CA' />计算机体系结构
-            <option value='NV' />数据挖掘与机器学习
-            <option value='OR' />概率与统计理论
-            <option value='WA' />生命科学技术
+        <select class='select2 input-block-level' name="yt" id="yterm">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="yt" id="vo">
+            <option value="{$vo.yt}">{$vo.yt}</option>
+        </volist>
         </select>
     </div>
 </div>
-<div class='span3'>
+</div>
+
+<div class='row-fluid' style="margin-top:10px; margin-bottom:2px;">
+<div class='span2'>
     <div class='row-fluid'>
         <strong>教师名称</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />林树明
-            <option value='HI' />陈燕
-            <option value='CA' />林明
-            <option value='NV' />赵三
-            <option value='OR' />王五
-            <option value='WA' />小李
+        <select class='select2 input-block-level' name="teacher">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="tea" id="vo">
+            <option value="{$vo.teaid}">{$vo.tname}</option>
+        </volist>
+        </select>
+    </div>
+</div>
+<div class='span2'>
+    <div class='row-fluid'>
+        <strong>教师职称</strong>
+        <select class='select2 input-block-level' name="title">
+            <option value='-1' selected="selected"/>------请选择------
+			<volist name="ttitle" id="vo">
+				<option value="{$vo.title}">{$vo.title}</option>
+			</volist>
         </select>
     </div>
 </div>
 <div class='span4'>
     <div class='row-fluid'>
         <strong>教师单位</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />生命科学与技术学院
-            <option value='HI' />信息科学与技术学院
-            <option value='CA' />物理学系
-            <option value='NV' />数学系
-            <option value='OR' />化学学院
-            <option value='WA' />天文系
+        <select class='select2 input-block-level' name="tcollege">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="tcollege" id="vo">
+            <option value="{$vo.tcollege}">{$vo.tcollege}</option>
+        </volist>
         </select>
     </div>
 </div>
-<!--div class='span1'>
+<div class='span2'>
     <div class='row-fluid'>
-        <strong>周次</strong>
-        <select class='select2 input-block-level'>
-            <option value='AK' />1
-            <option value='HI' />2
-            <option value='CA' />3
-            <option value='NV' />4
-            <option value='OR' />5
-            <option value='WA' />6
-            <option value='AK' />7
-            <option value='AK' />8
-            <option value='HI' />9
-            <option value='CA' />10
-            <option value='NV' />11
-            <option value='OR' />12
-            <option value='WA' />13
-            <option value='AK' />14
-            <option value='HI' />15
-            <option value='CA' />16
-            <option value='NV' />17
-            <option value='OR' />18
-            <option value='WA' />19
-            <option value='AK' />20
+        <strong>上课地点</strong>
+        <select class='select2 input-block-level' name="skplace">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="place" id="vo">
+            <option value="{$vo.cplace}">{$vo.cplace}</option>
+        </volist>
         </select>
     </div>
-</div-->
+</div>
 </div>
 
 <div class='row-fluid' style="margin-top:10px; margin-bottom:2px;">
-<div class='span5'>
+<div class='span2'>
     <div class='row-fluid'>
-        <strong>学生年级/院系</strong>
-        <select class='select2 input-block-level'>
-            <option value='-1' />------请选择------
-            <option value='AK' />2013级/计算机科学与技术专业
-            <option value='HI' />2013级/电子信息科学与技术专业
-            <option value='CA' />2013级/理论物理专业
-            <option value='NV' />2012级/统计学专业
-            <option value='OR' />2011级/生命学专业
-            <option value='WA' />2011级/遥感与应用专业
+        <strong>课程名称</strong>
+        <select class='select2 input-block-level' name="course">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="course" id="vo">
+            <option value="{$vo.cname}">{$vo.cname}</option>
+        </volist>
         </select>
     </div>
 </div>
-<!--div class='span4'>
+<div class='span2'>
+    <div class='row-fluid'>
+        <strong>课程类别</strong>
+        <select class='select2 input-block-level' name="topic">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="topic" id="vo">
+            <option value="{$vo.topic}">{$vo.topic}</option>
+        </volist>
+        </select>
+    </div>
+</div>
+<div class='span4'>
     <div class='row-fluid'>
         <strong>学生院系</strong>
-        <select class='select2 input-block-level'>
-            <option value='AK' />2014/国际经济与贸易
-            <option value='HI' />2013/计算机科学与技术
-            <option value='CA' />2012/电子信息科学与技术
-            <option value='NV' />2011/应用数学与统计
-            <option value='OR' />2012/化学系
-            <option value='WA' />2013/天文系
+        <select class='select2 input-block-level' name="scollege">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="scollege" id="vo">
+            <option value="{$vo.scollege}">{$vo.scollege}</option>
+        </volist>   
         </select>
     </div>
-</div-->
-<button class="btn btn-defalut pull-right" style="margin:17px 194px 0px 0px;">检索 | Search</button>
 </div>
+<div class='span2'>
+    <div class='row-fluid'>
+        <strong>年级</strong>
+        <select class='select2 input-block-level' name="sclass">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="sclass" id="vo">
+            <option value="{$vo.sclass}">{$vo.sclass}</option>
+        </volist>    
+        </select>
+    </div>
+</div>
+<button class="btn btn-defalut pull-right" style="margin:17px 0px 0px 0px;" type="submit">检索记录 | Search</button>
+</div>
+</form>
+</div>
+        
 
 <div class='row-fluid'>
-<div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
-<div class='box-header green-background'>
-    <div class='text-center'>2014-2015 第 1 学期听课记录列表</div>
-</div>
-<div class='box-content box-no-padding'>
-<div class='responsive-table'>
-<div class='scrollable-area'>
-<table class='data-table table table-bordered table-striped' style='margin-bottom:0;'>
-<thead>
-<tr>
-    <td><strong>课程名称</strong></td>
-    <td><strong>教师姓名</strong></td>
-    <td><strong>职称</strong></td>
-    <td><strong>教师单位</strong></td>
-    <td><strong>学生年级/院系</strong></td>
-    <td><strong>上课时间</strong></td>
-    <td><strong>上课地点</strong></td>
-    <td><strong>听课时间</strong></td>
-    <td><strong>填表时间</strong></td>
-    <td></td>
-</tr>
-</thead>
-<tbody>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>生物化学</td>
-    <td>林明强</td>
-    <td>教授</td>
-    <td>生命科学与技术学院</td>
-    <td>2013/生命科学与技术系</td>
-    <td>周三第5-7节</td>
-    <td>生1教室</td>
-    <td>2014-09-08 周三第5-7节</td>
-    <td>2014-09-09 09:30:00</td>
-    <td>
-        <div class='text-right'>
-            <a class='btn btn-success btn-mini' href='modifyRecord.html' role='button'>
-                <i class='icon-edit'></i>
-            </a>
-            <a class='btn btn-danger btn-mini' href='#'>
-                <i class='icon-remove'></i>
-            </a>
-        </div>
-    </td>
-</tr>
-</tbody>
-</table>
-<!--div class='modal hide fade' id='modal-example2' role='dialog' tabindex='-1'>
-    <div class='modal-header'>
-        <button class='close' data-dismiss='modal' type='button'>&times;</button>
-        <h3>修改日期</h3>
-    </div>
-    <div class='modal-body'>
-        <form class='form form-horizontal' style='margin-bottom: 0;' />
-            <div class='control-group'>
-                <label class='control-label'>日期</label>
-                <div class='controls'>
-                    <div class='datepicker input-append' id='datepicker'>
-                        <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' />
-                        <span class='add-on'>
-                            <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
-                        </span>
+	<div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
+		<div class='box-header green-background'>
+			<div class='text-center'>听课记录检索结果</div>
+		</div>
+	<div class='box-content box-no-padding'>
+		<div class='responsive-table'>
+			<div class='scrollable-area'>
+				<table class='data-table table table-bordered table-striped' style='margin-bottom:0;'>
+				<thead>
+				<tr>  
+					<td><strong>学年学期</strong></td> 
+					<td><strong>课程名称</strong></td>
+					<td><strong>课程类别</strong></td>
+					<td><strong>教师姓名</strong></td>
+					<td><strong>教师单位</strong></td>
+					<td><strong>教师职称</strong></td>
+					<td><strong>上课地点</strong></td>
+					<td><strong>上课时间</strong></td>
+					<td><strong>学生院系</strong></td>
+					<td><strong>学生年级</strong></td>
+					<td><strong>督导姓名</strong></td>
+					<td><strong>操作</strong></td>
+				</tr>
+				</thead>
+				<tbody>
+				<volist name="data" id="vo1">
+				<tr>
+					<td>{$vo1.year}{$vo1.term}</td>
+					<td>{$vo1.cname}</td>
+					<td>{$vo1.category}</td>
+					<td>{$vo1.tname}</td>
+					<td>{$vo1.tcollege}</td>
+					<td>{$vo1.title}</td>
+					<td>{$vo1.cplace}</td>
+					<td>{$vo1.ctime}</td>
+					<td>{$vo1.scollege}</td>
+					<td>{$vo1.sclass}</td>
+					<td>{$vo1.dname}</td>
+					<td>
+						<div class='text-left'>
+                            <a class='btn btn-success btn-mini' href="{:U('Record/editRecord',array('tid'=>$vo1['tid']))}" style='margin-right:10px;'>
+                                <i class='icon-edit'></i>
+                            </a>
+                            <a class='btn btn-danger btn-mini' href="{:U('Record/record_deldd',array('tid'=>$vo1['tid']))}">
+                                <i class='icon-remove'></i>
+                            </a>
                     </div>
-                </div>
-            </div>
-            <div class='control-group'>
-                <label class='control-label'>听课专题</label>
-                <div class='controls'>
-                    <select class='select2 input-block-level' style='width:150px;'>
-                        <option value='AK' />新生研讨课
-                        <option value='HI' />绪论课
-                        <option value='CA' />实验课
-                        <option value='NV' />双语课
-                        <option value='OR' />新生研讨课\绪论课
-                        <option value='WA' />新生研讨课\双语课
-                    </select>
-                </div>
-            </div>
-            <div class='control-group'>
-                <label class='control-label'>听课专家[督导]</label>
-                <div class='controls'>
-                    <select class='select2 input-block-level' style='width:90px;'>
-                        <option value='AK' />李春生
-                        <option value='HI' />张燕平
-                        <option value='CA' />连慕兰
-                        <option value='NV' />郑光宇
-                        <option value='OR' />熊立文
-                        <option value='WA' />尹冬冬
-                    </select>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class='modal-footer'>
-        <button class='btn btn-primary'>保存</button>
-        <button class='btn' data-dismiss='modal'>关闭</button>
-    </div>
-</div-->
-</div>
-</div>
-</div>
-</div>
-</div>      
-</div>
-</div>
+					</td>
+				</tr>
+				</volist>
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 </section>
 <include file="./jwcdd/Tpl/footerTemp.html" />
