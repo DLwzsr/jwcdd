@@ -9,6 +9,7 @@
             <h1 class='pull-left'>
                 <i class='icon-table'></i><span>数据报表</span>
             </h1>
+            <if condition="($Think.session.userRole eq 1) or ($Think.session.userRole eq 3)">
             <div class='pull-right'>
                 <button class="btn btn-primary" id="cos" name="button" style="margin-bottom:5px">打开检索</button>
             </div>
@@ -28,6 +29,7 @@
                     <li class='active'><a href="/jwcdd/Public/template/template.xlsx">下载汇总表模板</a></li>
                 </ul>
             </div>
+            </if>
         </div>
     </div>
 </div>
@@ -218,9 +220,11 @@
 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
 <div class='box-header green-background'>
     <div class='text-center'>{$title}&nbsp;&nbsp;督导听课汇总表</div>
+    <if condition="$Think.session.userRole eq 1">
     <a class='btn btn-success btn-large' style='position:absolute; left:0px;top:2px;' data-toggle='modal' href='#addGroup' role='button'>
         <i class='icon-share'>&nbsp;&nbsp;<strong>导入</strong></i>
     </a>
+    </if>
     <!--button class='btn btn-success ' name='button' style='position:absolute; left:0px;top:2px;'><i class='icon-share'>&nbsp;&nbsp;导入</i></button-->
 </div>
 <div class='box-content box-no-padding'>

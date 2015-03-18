@@ -1951,7 +1951,7 @@ body {
       .box .box-header.green-background .actions .btn-link {
         color: white; }
         .box .box-header.green-background .actions .btn-link:hover {
-          color: #49bf67 !important;
+          color: #026EA3 !important;
           background-color: white; }
     .box .box-header.red-background {
       color: white; }
@@ -4091,7 +4091,7 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
   color: #49bf67 !important; }
 
 .green-background {
-  background-color: #49bf67 !important; }
+  background-color: #026EA3 !important; }
 
 .green-border {
   border-color: #49bf67 !important; }
@@ -4204,13 +4204,13 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
   top: 50%; }
 
 .contrast-red header .navbar .navbar-inner {
-  background-color: #f34541; }
+  background-color: #0081c1; }
   .contrast-red header .navbar .navbar-inner .toggle-nav {
-    background-color: #f34541; }
+    background-color: #0081c1; }
     .contrast-red header .navbar .navbar-inner .toggle-nav:hover {
       background-color: #f01611; }
   .contrast-red header .navbar .navbar-inner .navbar-search button {
-    color: #f34541; }
+    color: #0081c1; }
     .contrast-red header .navbar .navbar-inner .navbar-search button:hover {
       color: #aa0e0b; }
   .contrast-red header .navbar .navbar-inner .navbar-search input {
@@ -4255,66 +4255,66 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
     .contrast-red header .navbar .navbar-inner .dark:hover > a, .contrast-red header .navbar .navbar-inner .dark:active > a, .contrast-red header .navbar .navbar-inner .dark:focus > a {
       background-color: #b60f0b; }
   .contrast-red header .navbar .navbar-inner .widget .dropdown-menu > li.widget-footer a:hover {
-    background-color: #f34541; }
+    background-color: #0081c1; }
 .contrast-red header .navbar .nav li .label {
-  color: #f34541; }
+  color: #0081c1; }
 .contrast-red #main-nav .navigation > .nav > li > a.in [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li > a.in [class*=" icon-"] {
-  color: #f34541; }
+  color: #0081c1; }
 .contrast-red #main-nav .navigation > .nav > li:hover > a [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li:hover > a [class*=" icon-"], .contrast-red #main-nav .navigation > .nav > li:focus > a [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li:focus > a [class*=" icon-"], .contrast-red #main-nav .navigation > .nav > li.active > a [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li.active > a [class*=" icon-"] {
-  color: #f34541 !important; }
+  color: #0081c1 !important; }
 .contrast-red #main-nav .navigation > .nav > li .nav > li.active > a [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li .nav > li.active > a [class*=" icon-"] {
-  color: #f34541; }
+  color: #0081c1; }
 .contrast-red #main-nav .navigation > .nav > li .nav > li > a:hover [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li .nav > li > a:hover [class*=" icon-"], .contrast-red #main-nav .navigation > .nav > li .nav > li > a:focus [class^="icon-"], .contrast-red #main-nav .navigation > .nav > li .nav > li > a:focus [class*=" icon-"] {
-  color: #f34541; }
+  color: #0081c1; }
 .contrast-red .box .box-header.contrast-background .actions .btn-link:hover {
-  color: #f34541 !important; }
+  color: #0081c1 !important; }
 .contrast-red.contrast-background, .contrast-red .contrast-background {
-  background: #f34541 !important; }
+  background: #0081c1 !important; }
 .contrast-red .text-contrast, .contrast-red .contrast {
-  color: #f34541 !important; }
+  color: #0081c1 !important; }
 .contrast-red .contrast-border {
-  border-color: #f34541 !important; }
+  border-color: #0081c1 !important; }
 .contrast-red .accordion.accordion-contrast .accordion-group {
-  border-color: #f34541;
+  border-color: #0081c1;
   border-bottom-color: #f9a3a1; }
 .contrast-red .accordion.accordion-contrast .accordion-heading .accordion-toggle {
   color: white;
-  background-color: #f34541; }
+  background-color: #0081c1; }
 .contrast-red .box-quick-link.contrast-background a:active .header {
   background: #f01611; }
 .contrast-red .box-quick-link.contrast-background:hover .header {
   background: #f12e29; }
 .contrast-red .box-statistic.contrast-background .title, .contrast-red .box-statistic.contrast-background small, .contrast-red .box-statistic.contrast-background [class*="icon-"] {
-  color: #f34541 !important; }
+  color: #0081c1 !important; }
 .contrast-red .breadcrumb li:first-child > a:hover {
-  color: #f34541 !important; }
+  color: #0081c1 !important; }
 .contrast-red h1 [class^="icon-"] {
-  color: #f34541; }
+  color: #0081c1; }
 .contrast-red .dropdown-menu > .active > a, .contrast-red .dropdown-menu > .active > a:hover, .contrast-red .dropdown-menu > .active > a:focus, .contrast-red .dropdown-menu > li > a:hover, .contrast-red .dropdown-menu > li > a:focus, .contrast-red .dropdown-submenu:hover > a, .contrast-red .dropdown-submenu:focus > a {
-  background-color: #f34541 !important; }
+  background-color: #0081c1 !important; }
 .contrast-red .box .box-header .actions .btn-link:hover {
-  color: #f34541; }
+  color: #0081c1; }
 .contrast-red .fuelux .wizard ul li.active {
-  background-color: #f34541; }
+  background-color: #0081c1; }
 .contrast-red .fc-event .fc-event-inner {
-  background-color: #f34541; }
+  background-color: #0081c1; }
 .contrast-red .contrast-caret {
-  border-top-color: #f34541 !important;
-  border-bottom-color: #f34541 !important; }
+  border-top-color: #0081c1 !important;
+  border-bottom-color: #0081c1 !important; }
 .contrast-red .select2-results .select2-highlighted {
-  background: #f34541; }
+  background: #0081c1; }
 .contrast-red .daterangepicker .ranges li.active, .contrast-red .daterangepicker .ranges li:hover {
-  background: #f34541; }
+  background: #0081c1; }
 .contrast-red .daterangepicker td.active, .contrast-red .daterangepicker td.active:hover {
-  background: #f34541; }
+  background: #0081c1; }
 .contrast-red .datepicker td span.active:hover, .contrast-red .datepicker td span.active:hover:hover, .contrast-red .datepicker td span.active.disabled:hover, .contrast-red .datepicker td span.active.disabled:hover:hover, .contrast-red .datepicker td span.active:active, .contrast-red .datepicker td span.active:hover:active, .contrast-red .datepicker td span.active.disabled:active, .contrast-red .datepicker td span.active.disabled:hover:active, .contrast-red .datepicker td span.active.active, .contrast-red .datepicker td span.active:hover.active, .contrast-red .datepicker td span.active.disabled.active, .contrast-red .datepicker td span.active.disabled:hover.active, .contrast-red .datepicker td span.active.disabled, .contrast-red .datepicker td span.active:hover.disabled, .contrast-red .datepicker td span.active.disabled.disabled, .contrast-red .datepicker td span.active.disabled:hover.disabled, .contrast-red .datepicker td span.active[disabled], .contrast-red .datepicker td span.active:hover[disabled], .contrast-red .datepicker td span.active.disabled[disabled], .contrast-red .datepicker td span.active.disabled:hover[disabled], .contrast-red .datepicker td.active:hover, .contrast-red .datepicker td.active:hover:hover, .contrast-red .datepicker td.active.disabled:hover, .contrast-red .datepicker td.active.disabled:hover:hover, .contrast-red .datepicker td.active:active, .contrast-red .datepicker td.active:hover:active, .contrast-red .datepicker td.active.disabled:active, .contrast-red .datepicker td.active.disabled:hover:active, .contrast-red .datepicker td.active.active, .contrast-red .datepicker td.active:hover.active, .contrast-red .datepicker td.active.disabled.active, .contrast-red .datepicker td.active.disabled:hover.active, .contrast-red .datepicker td.active.disabled, .contrast-red .datepicker td.active:hover.disabled, .contrast-red .datepicker td.active.disabled.disabled, .contrast-red .datepicker td.active.disabled:hover.disabled, .contrast-red .datepicker td.active[disabled], .contrast-red .datepicker td.active:hover[disabled], .contrast-red .datepicker td.active.disabled[disabled], .contrast-red .datepicker td.active.disabled:hover[disabled] {
-  background: #f34541; }
+  background: #0081c1; }
 .contrast-red .dropdown-menu > .active > a, .contrast-red .dropdown-menu > .active > a:hover, .contrast-red .dropdown-menu > .active > a:focus {
-  background: #f34541; }
+  background: #0081c1; }
 .contrast-red .dd-handle:hover {
-  color: #f34541; }
+  color: #0081c1; }
 .contrast-red .dd-placeholder {
-  border-color: #f34541; }
+  border-color: #0081c1; }
 
 .contrast-orange header .navbar .navbar-inner {
   background-color: #f8a326; }

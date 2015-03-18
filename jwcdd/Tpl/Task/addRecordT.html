@@ -19,7 +19,7 @@
             <div class='text-center'>北京师范大学本科教学督导团专家听课记录表（2014版）</div>
         </div>
         <div class=''>
-        <form accept-charset="UTF-8" action="{:U('Record/record_add_save')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
+		<form accept-charset="UTF-8" action="{:U('Task/saveRecordT')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
             <div class='responsive-table'>
                 <div class='scrollable-area'>
                     <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
@@ -29,13 +29,13 @@
                                 <input class='span12' id='full-name' type='text' disabled="disabled" name='cname' value='{$data_course.cname}' />
                             </td>
                             <th>学生院系/年级</th>
-                            <td >
+                            <td>
                                 <input class='span12' id='full-name' type='text' disabled="disabled" name='sc' value='{$data_course.scollege}{$data_course.sclass}' />
                             </td>
                             <th colspan="2">上课地点</th>
                             <td colspan="3">
                                 <input class='span12' id='full-name' type='text' disabled="disabled" name='cplase' value='{$data_course.cplace}' />
-                            </td>
+                            </td>  
                         </tr>
                         <tr>
                             <th>教师姓名</th>
@@ -275,9 +275,9 @@
                             </td>
                         </tr>-->                                              
                     </table>
-                    <input type='hidden' name='cid' value='{$cid}'>
+					<input type='hidden' name='tid' value='{$task_course.tid}'>
                     <button class='btn btn-success' type='submit' style='margin-right:20px;'><i class='icon-save'></i>保存</button>
-                    <button class='btn'><a href="{:U('Record/record')}">取消</a></button>
+                    <button class='btn'><a href="{:U('Task/showTask')}">取消</a></button>
                 </div>
                 </div>
             </form>

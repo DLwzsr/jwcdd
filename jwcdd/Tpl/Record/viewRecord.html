@@ -8,7 +8,7 @@
             <div class='page-header'>
                 <h1 class='pull-left'>
                     <i class='icon-table'></i>
-                    <span>听课记录在线表单修改</span>
+                    <span>听课记录在线表单查看</span>
                 </h1>
             </div>
         </div>
@@ -19,7 +19,6 @@
             <div class='text-center'>北京师范大学本科教学督导团专家听课记录表（2014版）</div>
         </div>
         <div class=''>
-		<form accept-charset="UTF-8" action="{:U('Record/record_edit_save')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
             <div class='responsive-table'>
                 <div class='scrollable-area'>
                     <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
@@ -42,13 +41,13 @@
                             <td>
                                 <input class='span12' id='full-name' type='text' disabled="disabled" name='tname' value='{$course.tname}' />
                             </td>
-                            <th >教师单位</th>
-                            <td colspan="2">
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='tcollege' value='{$data_course.tcollege}' />
+                            <th rowspan="2">教师单位</th>
+                            <td rowspan="2">
+                                <textarea class="form-control" rows="5" disabled="disabled">生命科学与技术学院</textarea>
                             </td>
-                            <th colspan="2">上课时间</th>
-                            <td colspan="3">
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='ctime' value='{$data_course.ctime}' />
+                            <th>上课时间（第x-x节）</th>
+                            <td colspan="5">
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='ctime' value='{$course.ctime}' />
                             </td>
                         </tr>
                         <tr>
@@ -56,31 +55,25 @@
                             <td>
                                 <input class='span12' id='full-name' type='text' disabled="disabled" name='title' value='{$course.title}' />
                             </td>
-                            <th>听课时间</th>
-                            <td colspan="2">
-                                <!--<input class='span12' id='full-name' type='text' value='' name='tktime' required data-msg-required="x"/>-->
-                                <div>
-                                    <div class='datepicker input-append' id='datepicker'>
-                                        <input class='input-medium' data-format='yyyy-MM-dd' type='text' name='tktime' value='{$record.tktime}' required/>
-                                        <span class='add-on'>
-                                        <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <th colspan="2">听课节数</th>
-                            <td colspan="3">
-                                <input class='span12' id='full-name' type='text' name='tkjs' value='{$record.tkjs}' required/>
+
+
+                            <th>听课时间（第x、x节）</th>
+                            <td colspan="5">
+                                <input class='span12' id='full-name' type='text' value='{$record.tktime}' name='tktime' value='{$record.tktime}'/>
+
                             </td>
                         </tr>   
                         <tr>
                             <th>主要授课内容</th>
                             <td colspan="9">
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="content" required><?php echo $record[content];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="content"><?php echo $record[content];?></textarea>
                                 </div>
                             </td>
                         </tr> 
+        
+        <!--以下各种选框都要设成不可编辑-->
+
                         <tr>
                             <th>评价指标</th>
                             <th colspan="4" style="text-align:center">主要观察点及A级（好）评价标准</th>
@@ -95,11 +88,11 @@
                             <th colspan="4">*教学态度认真，爱岗敬业，精神饱满，仪表端庄</th>
 								<switch name="record.jxtd_rz" value = "{$record.jxtd_rz}">
 								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxtd_rz' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_rz'/></td>
-									<td><input id='' type='radio' value='3' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_rz'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_rz'/></td>
+									<td><input type='radio' readonly="readonly" value='1' name='jxtd_rz' checked /></td>
+									<td><input type='radio' disabled="disabled" value='2' name='jxtd_rz'/></td>
+									<td><input type='radio' disabled="disabled" value='3' name='jxtd_rz' /></td>
+									<td><input id='' type='radio' disabled="disabled" value='4' name='jxtd_rz'/></td>                           
+									<td><input id='' type='radio' disabled="disabled" value='5' name='jxtd_rz'/></td>
 								</case>
 								<case value='2'>
 									<td><input id='' type='radio' value='1' name='jxtd_rz' /></td>
@@ -510,7 +503,7 @@
                             <td colspan="9">
                                 <div class="form-group">
                                     <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="xlkpj" required><?php echo $record[xlkpj];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="xlkpj"><?php echo $record[xlkpj];?></textarea>
                                 </div>
                             </td>
                         </tr> 
@@ -519,7 +512,7 @@
                             <td colspan="9">
                                 <div class="form-group">
                                     <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="zjgz" required><?php echo $record[zjgz];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="zjgz"><?php echo $record[zjgz];?></textarea>
                                 </div>
                             </td>
                         </tr> 
@@ -528,7 +521,7 @@
                             <td colspan="9">
                                 <div class="form-group">
                                     <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="pjjy" required><?php echo $record[pjjy];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="pjjy"><?php echo $record[pjjy];?></textarea>
                                 </div>
                             </td>
                         </tr> 
@@ -667,7 +660,7 @@
                             <td colspan="9">
                                 <div class="form-group">
                                     <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="xsjy" required><?php echo $record[xsjy];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="xsjy"><?php echo $record[xsjy];?></textarea>
                                 </div>
                             </td>
                         </tr> 
@@ -676,7 +669,7 @@
                             <td colspan="9">
                                 <div class="form-group">
                                     <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="hjjy" required><?php echo $record[hjjy];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="hjjy"><?php echo $record[hjjy];?></textarea>
                                 </div>
                             </td>
                         </tr>  
@@ -704,12 +697,10 @@
 						
                     </table>
 					<input type='hidden' name='rid' value='{$record.rid}'>
-                    <button class='btn btn-success' type='submit' style='margin-right:20px;'>
-					<i class='icon-save' type='submit'></i>保存</button>
-                    <button class='btn'><a href="{:U('Record/showRecord')}">取消</a></button>
+                    <a href="{:U('Record/showRecord')}" class='btn btn-info' style='margin-right:20px;'>
+					<i class='icon-rotate-left'></i>返回</a>
                 </div>
 				</div>
-			</form>
         </div>
     </div>
 </div>

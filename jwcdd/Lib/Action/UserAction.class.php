@@ -39,19 +39,13 @@ class UserAction extends Action {
 		$data['mobi'] = $this->_post('mobi');
 		$data['email'] = $this->_post('email');
 		$user->data($data)->add();
-//<<<<<<< HEAD
-//		$data['mobi'] = $this->_post('mobi');
-//		$data['mobi'] = $this->_post('mobi');
-		//怎么根据新用户的id添加到督导表里？
-
 		$this->redirect("User/user");
 	}
 
     //个人信息查看
     public function user_profile(){
-        $users = M('users');
+        $users = M('Users');
         $userid = session('userId');
-        $userid = 1;
         $con['uid'] = $userid;
         $data = $users->where($con)->field('teaid,name,college,title,idcard,phone,mobi,email')->select();
         $this->data = $data[0];
@@ -60,7 +54,7 @@ class UserAction extends Action {
 
     //修改个人信息
     public function user_modify(){
-        /*$users = M('users');
+        $users = M('Users');
         if(!empty($_POST) && $this->isPost()){
             $data = array();
             $data['teaid'] = $this->_post('teaid');
@@ -84,13 +78,12 @@ class UserAction extends Action {
         }else{
             $data = array();
             $userid = session('userId');
-            $userid = 1;
             $con['uid'] = $userid;
             $data = $users->where($con)->field('uid,teaid,name,college,title,idcard,phone,mobi,email')->select();
 
             $this->data = $data[0];
             
-        }*/
+        }
 		$this->display();
     }
 
@@ -122,8 +115,8 @@ class UserAction extends Action {
     //修改用户信息
     public function editUser($flag=-1){
         $user = M("Users");
-        //$userid = session('userid');
-        $userid = 1;
+        $userid = session('userId');
+        //$userid = 1;
         $data['role'] = $this->_post('role');
         $data['teaid'] = $this->_post('teaid');
         $data['name'] = $this->_post('name');
@@ -146,7 +139,7 @@ class UserAction extends Action {
         elseif ($flag==1) {
             $this->redirect("User/user_dd");
         }
-        else $this->redirect("User/user_info");    
+        else $this->redirect("User/user_info");  
     }
 
     //管理本学期督导
@@ -156,7 +149,7 @@ class UserAction extends Action {
         $nowdd = M("Dd");
         //先固定学年学期取值，后面再设成变量传参
         $con1['year'] = 2014;
-        $con1['term'] = '秋季';
+        $con1['term'] = '春季';
         $con2['role'] = 2;
         $ddinfo = $nowdd->join('dd_Users on dd_Dd.uid = dd_Users.uid')->field('dd_Users.uid, teaid, name, title, college, idcard, mobi, phone, email, pos, group, did')->where($con1)->where($con2)->order('`group` asc, pos desc')->select();
         $this->ddinfo = $ddinfo;
@@ -176,9 +169,9 @@ class UserAction extends Action {
 
     //增加督导组别
     public function user_addgroup(){
-        checkLogin();
-        //$userid = session('userid');
-        $userid = 1;
+        //checkLogin();
+        $userid = session('userId');
+        //$userid = 1;
         $addgroup = M("Dgroup");     
         $data['gname'] = $this->_post('gname');
         $nowgroup = $addgroup->field('gname')->select();
@@ -198,11 +191,11 @@ class UserAction extends Action {
     //选择本学期督导
     public function user_seldd(){
         checkLogin();
-        //$userid = session('userid');
-        $userid = 1;
+        $userid = session('userId');
+        //$userid = 1;
         $nowdd = M("Dd");
         $data['year'] = 2014;
-        $data['term'] = '秋季';
+        $data['term'] = '春季';
         $uid = $this->_post('uid');
         $length = count($uid);
         for ($i=0; $i<$length; $i++){
@@ -221,8 +214,8 @@ class UserAction extends Action {
     //修改督导组别
     public function user_mgroup($did=-1, $gname=-1){
         checkLogin();
-        //$userid = session('userid');
-        $userid = 1;
+        $userid = session('userId');
+        //$userid = 1;
         $mgroup = M("Dd");
         $con['did'] = $did;
         $data['group'] = $gname;
@@ -237,8 +230,8 @@ class UserAction extends Action {
     //修改督导职务
     public function user_mpos($did=-1, $pos=-1){
         checkLogin();
-        //$userid = session('userid');
-        $userid = 1;
+        $userid = session('userId');
+        //$userid = 1;
         $mpos = M("Dd");
         $con['did'] = $did;
         $data['pos'] = $pos;
@@ -253,8 +246,8 @@ class UserAction extends Action {
     //删除本学期督导
     public function user_deldd($did=-1){
         checkLogin();
-        //$userid = session('userid');
-        $userid = 1;
+        $userid = session('userId');
+        //$userid = 1;
         $deldd = M("Dd");
         $con['did'] = $did;
         $deldd->where($con)->delete();

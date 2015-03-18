@@ -1,4 +1,4 @@
-﻿<include file="./jwcdd/Tpl/headerTemp.html" />
+<include file="./jwcdd/Tpl/headerTemp.html" />
 <section id='content'>
     <div class='container-fluid'>
     <div class='row-fluid' id='content-wrapper'>
@@ -19,7 +19,7 @@
             <div class='text-center'>北京师范大学本科教学督导团专家听课记录表（2014版）</div>
         </div>
         <div class=''>
-		<form accept-charset="UTF-8" action="{:U('Record/record_edit_save')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
+		<form accept-charset="UTF-8" action="{:U('Task/saveEditRecordT')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
             <div class='responsive-table'>
                 <div class='scrollable-area'>
                     <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
@@ -44,11 +44,11 @@
                             </td>
                             <th >教师单位</th>
                             <td colspan="2">
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='tcollege' value='{$data_course.tcollege}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='tcollege' value='{$course.tcollege}' />
                             </td>
                             <th colspan="2">上课时间</th>
                             <td colspan="3">
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='ctime' value='{$data_course.ctime}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='ctime' value='{$course.ctime}' />
                             </td>
                         </tr>
                         <tr>
@@ -706,7 +706,7 @@
 					<input type='hidden' name='rid' value='{$record.rid}'>
                     <button class='btn btn-success' type='submit' style='margin-right:20px;'>
 					<i class='icon-save' type='submit'></i>保存</button>
-                    <button class='btn'><a href="{:U('Record/showRecord')}">取消</a></button>
+                    <button class='btn'><a href="{:U('Task/showTask')}">取消</a></button>
                 </div>
 				</div>
 			</form>
