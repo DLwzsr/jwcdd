@@ -11,7 +11,7 @@
                 <div class='input-append span10'>
                     <input class='span8' name='keyword' type='text' placeholder='请输入检索关键词&nbsp;&nbsp;[不同检索词以空格分开]' />
                     <button class='btn btn-primary' type='submit'>查询</button>
-                    <if condition='$role eq 1'>
+                    <if condition='$Think.session.userRole eq 1'>
 	                    <a class='btn' style='margin-left:20px;' data-toggle='modal' href='#uploadfile' role='button'>
 	        				<i class='icon-share'>&nbsp;&nbsp;<strong>上传文件</strong></i>
 	    				</a>

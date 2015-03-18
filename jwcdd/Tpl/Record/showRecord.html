@@ -15,7 +15,7 @@
 <!--课程名称、学生院系、年级、课程类别 -->
 <div id="search">
 <form method="post" action="{:U('Record/showRecord')}">
-
+<if condition="$Think.session.userRole lt 3">
 <div class='row-fluid'>
 <div class='span3'>
     <div class='row-fluid'>
@@ -122,8 +122,10 @@
         </select>
     </div>
 </div>
+
 <button class="btn btn-defalut pull-right" style="margin:17px 0px 0px 0px;" type="submit">检索记录 | Search</button>
 </div>
+</if>
 </form>
 </div>
         
@@ -142,7 +144,9 @@
 					<td><strong>学年学期</strong></td> 
 					<td><strong>课程名称</strong></td>
 					<td><strong>课程类别</strong></td>
+                    <if condition="$Think.session.userRole lt 3">
 					<td><strong>教师姓名</strong></td>
+                    </if>
 					<td><strong>教师单位</strong></td>
 					<td><strong>教师职称</strong></td>
 					<td><strong>上课地点</strong></td>
@@ -159,7 +163,9 @@
 					<td>{$vo1.year}{$vo1.term}</td>
 					<td>{$vo1.cname}</td>
 					<td>{$vo1.category}</td>
+                    <if condition="$Think.session.userRole lt 3">
 					<td>{$vo1.tname}</td>
+                    </if>
 					<td>{$vo1.tcollege}</td>
 					<td>{$vo1.title}</td>
 					<td>{$vo1.cplace}</td>
@@ -169,13 +175,20 @@
 					<td>{$vo1.dname}</td>
 					<td>
 						<div class='text-left'>
-                            <a class='btn btn-success btn-mini' href="{:U('Record/editRecord',array('tid'=>$vo1['tid']))}" style='margin-right:10px;'>
-                                <i class='icon-edit'></i>
-                            </a>
-                            <a class='btn btn-danger btn-mini' href="{:U('Record/record_deldd',array('tid'=>$vo1['tid']))}">
-                                <i class='icon-remove'></i>
-                            </a>
-                    </div>
+                            <if condition="$Think.session.userRole lt 3">
+                                <a class='btn btn-success btn-mini' href="{:U('Record/editRecord',array('tid'=>$vo1['tid']))}" style='margin-right:10px;'>
+                                    <i class='icon-edit'></i>
+                                </a>
+                                <a class='btn btn-danger btn-mini' href="{:U('Record/record_deldd',array('tid'=>$vo1['tid']))}">
+                                    <i class='icon-remove'></i>
+                                </a>
+                            </if>
+                            <if condition="$Think.session.userRole gt 2">
+                                <a class='btn btn-info btn-mini' href="{:U('Record/viewRecord',array('tid'=>$vo1['tid']))}">
+                                    <i class='icon-file-alt'></i>
+                                </a>
+                            </if>
+                        </div>
 					</td>
 				</tr>
 				</volist>

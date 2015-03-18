@@ -4,20 +4,24 @@ class AnalysisAction extends Action {
     public function analysis(){
     	checkLogin();
     	$userRole = session('userRole');	//获取用户权限
-    	$userRole = 1;
-    	if ($userRole == 1) {
-            $con = array();
-            $hz = M('hz_tkrecord');
-            $year = null;
-            $term = null;
+        $userid = session('userId');
+        $user = M('Users');
+        $hz = M('hz_tkrecord');
+
+        $con = array(); 
+        $con0 = array();
+        $year = session('year');
+        $term = session('term');
+        $year = 2014;
+        $term = '春季';
+
+    	if ($userRole == 1 | 3) {
             if (!empty($_POST) && $this->isPost()) {
                 if ($this->_post('yt') != -1) {
                     $yt = $this->_post('yt');
                     $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
                     $len = strlen($yt) - 6;
                     $year = substr($yt, 0, $len);
-                    $con['year'] = $year;
-                    $con['term'] = $term;
                 }
                 if($this->_post('group') != -1){
                     $con['group'] = $this->_post('group');
@@ -55,33 +59,43 @@ class AnalysisAction extends Action {
                 if($this->_post('grade') != -1){
                     $con['sclass'] = $this->_post('grade');
                 }
-            }else{
-                $year = session('year');
-                $term = session('term');
-                $year = 2014;
-                $term = '春季';
-                $con['year'] = $year;
-                $con['term'] = $term;
             }
-    		
-    		$data = $hz->where($con)->order('rid asc')->select();
+        }
+            
+        $con['year'] = $year;
+        $con['term'] = $term;
+           
+        if ($userRole == 5) {
+            $con0['uid'] = $userid;
+            $tea = $user->where($con0)->select();
+            $con['teaid'] = $tea[0]['teaid'];
+        }
 
-    		$this->yt = $this->getYearTerm('hz_tkrecord');
-    		$this->group = $this->getGroup($year,$term,'hz_tkrecord');
-            $this->dd = $this->getDd($year,$term,'hz_tkrecord');
-            $this->tea = $this->getTeacher($year,$term,'hz_tkrecord');
-            $this->college = $this->getCollege($year,$term,'hz_tkrecord');
-            $this->place = $this->getPlace($year,$term,'hz_tkrecord');
-            $this->course = $this->getCourse($year,$term,'hz_tkrecord');
-            $this->topic = $this->getTopic($year,$term,'hz_tkrecord');
-    		$this->data = $data;
-            $this->year = $year;
-            $this->term = $term;
-            $this->term = $term;
-    	}else{
-    		$this->error('亲~ 你不具备这样的能力哦~');
-    	}
-		$this->display();
+        if ($userRole == 4) {
+            $con0['uid'] = $userid;
+            $collegeData = $user->where($con0)->select();
+            //$con2['scollege'] = $collegeData[0]['college'];
+            $con2['tcollege'] = $collegeData[0]['college'];
+            $con2['_logic'] = 'OR';
+            $con['_complex']= $con2;
+        }
+        
+    	$data = $hz->where($con)->order('rid asc')->select();
+
+    	$this->yt = $this->getYearTerm('hz_tkrecord');
+    	$this->group = $this->getGroup($year,$term,'hz_tkrecord');
+        $this->dd = $this->getDd($year,$term,'hz_tkrecord');
+        $this->tea = $this->getTeacher($year,$term,'hz_tkrecord');
+        $this->college = $this->getCollege($year,$term,'hz_tkrecord');
+        $this->place = $this->getPlace($year,$term,'hz_tkrecord');
+        $this->course = $this->getCourse($year,$term,'hz_tkrecord');
+        $this->topic = $this->getTopic($year,$term,'hz_tkrecord');
+    	$this->data = $data;
+        $this->year = $year;
+        $this->term = $term;
+        $this->term = $term;
+        
+        $this->display();
     }
 
     //导入督导汇总表
@@ -192,74 +206,87 @@ class AnalysisAction extends Action {
     public function department(){
         checkLogin();
         $userRole = session('userRole');    //获取用户权限
-        $userRole = 1;
-        if ($userRole == 1) {
-            $con = array();
-            $year = null;
-            $term = null;
-            $hz_college = M('hz_college');
-            if(!empty($_POST) && $this->isPost()){
-                if ($this->_post('yt') != -1) {
-                    $yt = $this->_post('yt');
-                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                    $len = strlen($yt) - 6;
-                    $year = substr($yt, 0, $len);
-                    $con['year'] = $year;
-                    $con['term'] = $term;
-                }
-            }else{
-                $year = session('year');
-                $term = session('term');
-                $year = 2014;
-                $term = '春季';
-                $con['year'] = $year;
-                $con['term'] = $term;
-            }
-            $data = $hz_college->where($con)->order('tcollege asc')->select();
+        $userid = session('userId');
+        $con = array();
+        $con0 = array();
+        $year = session('year');
+        $term = session('term');
+        $year = 2014;
+        $term = '春季';
+        $hz_college = M('hz_college');
+        $user = M('Users');
 
-            $this->yt = $this->getYearTerm('hz_college');
-            $this->year = $year;
-            $this->term = $term;
-            $this->data = $data;
-            $this->display();
+        if(!empty($_POST) && $this->isPost()){
+            if ($this->_post('yt') != -1) {
+                $yt = $this->_post('yt');
+                $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
+                $len = strlen($yt) - 6;
+                $year = substr($yt, 0, $len);
+            }
         }
+
+        $con['year'] = $year;
+        $con['term'] = $term;
+
+        if ($userRole == 4) {
+            $con0['uid'] = $userid;
+            $collegeData = $user->where($con0)->select();
+            //$con2['scollege'] = $collegeData[0]['college'];
+            $con2['tcollege'] = $collegeData[0]['college'];
+            $con2['_logic'] = 'OR';
+            $con['_complex']= $con2;
+        }
+        
+        $data = $hz_college->where($con)->order('tcollege asc')->select();
+
+        $this->yt = $this->getYearTerm('hz_college');
+        $this->year = $year;
+        $this->term = $term;
+        $this->data = $data;
+        $this->display();
+        
     }
 
     //获取按院系月份统计
     public function month(){
         checkLogin();
         $userRole = session('userRole');    //获取用户权限
-        $userRole = 1;
-        if ($userRole == 1) {
-            $con = array();
-            $year = null;
-            $term = null;
-            $hz_month = M('hz_colmonth');
-            if(!empty($_POST) && $this->isPost()){
-                if ($this->_post('yt') != -1) {
-                    $yt = $this->_post('yt');
-                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                    $len = strlen($yt) - 6;
-                    $year = substr($yt, 0, $len);
-                    $con['year'] = $year;
-                    $con['term'] = $term;
-                }
-            }else{
-                $year = session('year');
-                $term = session('term');
-                $year = 2014;
-                $term = '春季';
-                $con['year'] = $year;
-                $con['term'] = $term;
-            }
-            $data = $hz_month->where($con)->order('tcollege asc,tkmonth asc')->select();
+        $userid = session('userId');
+        $con = array();
+        $con0 = array();
+        $year = session('year');
+        $term = session('term');
+        $year = 2014;
+        $term = '春季';
+        $hz_month = M('hz_colmonth');
+        $user = M('Users');
 
-            $this->yt = $this->getYearTerm('hz_colmonth');
-            $this->year = $year;
-            $this->term = $term;
-            $this->data = $data;
-            $this->display();
+        if(!empty($_POST) && $this->isPost()){
+            if ($this->_post('yt') != -1) {
+                $yt = $this->_post('yt');
+                $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
+                $len = strlen($yt) - 6;
+                $year = substr($yt, 0, $len);
+            }
         }
+        $con['year'] = $year;
+        $con['term'] = $term;
+
+        if ($userRole == 4) {
+            $con0['uid'] = $userid;
+            $collegeData = $user->where($con0)->select();
+            //$con2['scollege'] = $collegeData[0]['college'];
+            $con2['tcollege'] = $collegeData[0]['college'];
+            $con2['_logic'] = 'OR';
+            $con['_complex']= $con2;
+        }
+        $data = $hz_month->where($con)->order('tcollege asc,tkmonth asc')->select();
+
+        $this->yt = $this->getYearTerm('hz_colmonth');
+        $this->year = $year;
+        $this->term = $term;
+        $this->data = $data;
+        $this->display();
     }
 
     //获取督导统计表
@@ -303,74 +330,94 @@ class AnalysisAction extends Action {
     public function teacher(){
         checkLogin();
         $userRole = session('userRole');    //获取用户权限
-        $userRole = 1;
-        if ($userRole == 1) {
-            $con = array();
-            $year = null;
-            $term = null;
-            $hz_title = M('hz_title');
-            if(!empty($_POST) && $this->isPost()){
-                if ($this->_post('yt') != -1) {
-                    $yt = $this->_post('yt');
-                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                    $len = strlen($yt) - 6;
-                    $year = substr($yt, 0, $len);
-                    $con['year'] = $year;
-                    $con['term'] = $term;
-                }
-            }else{
-                $year = session('year');
-                $term = session('term');
-                $year = 2014;
-                $term = '春季';
-                $con['year'] = $year;
-                $con['term'] = $term;
-            }
-            $data = $hz_title->where($con)->order('tcollege asc')->select();
+        $userid = session('userId');
+        $hz_title = M('hz_title');
+        $user = M('Users');
 
-            $this->yt = $this->getYearTerm('hz_title');
-            $this->year = $year;
-            $this->term = $term;
-            $this->data = $data;
-            $this->display();
+        $con = array(); 
+        $con0 = array();
+        $year = session('year');
+        $term = session('term');
+        $year = 2014;
+        $term = '春季';
+
+        if(!empty($_POST) && $this->isPost()){
+            if ($this->_post('yt') != -1) {
+                $yt = $this->_post('yt');
+                $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
+                $len = strlen($yt) - 6;
+                $year = substr($yt, 0, $len);
+            }
         }
+
+        $con['year'] = $year;
+        $con['term'] = $term;
+
+        if ($userRole == 4) {
+            $con0['uid'] = $userid;
+            $collegeData = $user->where($con0)->select();
+            //$con2['scollege'] = $collegeData[0]['college'];
+            $con2['tcollege'] = $collegeData[0]['college'];
+            $con2['_logic'] = 'OR';
+            $con['_complex']= $con2;
+        }
+     
+        $data = $hz_title->where($con)->order('tcollege asc')->select();
+
+        $this->yt = $this->getYearTerm('hz_title');
+        $this->year = $year;
+        $this->term = $term;
+        $this->data = $data;
+        $this->display();
     }
 
     //获取课程名统计表
     public function course(){
         checkLogin();
         $userRole = session('userRole');    //获取用户权限
-        $userRole = 1;
-        if ($userRole == 1) {
-            $con = array();
-            $year = null;
-            $term = null;
-            $hz_cname = M('hz_cname');
-            if(!empty($_POST) && $this->isPost()){
-                if ($this->_post('yt') != -1) {
-                    $yt = $this->_post('yt');
-                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                    $len = strlen($yt) - 6;
-                    $year = substr($yt, 0, $len);
-                    $con['year'] = $year;
-                    $con['term'] = $term;
-                }
-            }else{
-                $year = session('year');
-                $term = session('term');
-                $year = 2014;
-                $term = '春季';
-                $con['year'] = $year;
-                $con['term'] = $term;
-            }
-            $data = $hz_cname->where($con)->order('tcollege asc,cname asc,tname asc')->select();
+        $userid = session('userId');
+        $user = M('Users');
+        $hz_cname = M('hz_cname');
 
-            $this->yt = $this->getYearTerm('hz_cname');
-            $this->year = $year;
-            $this->term = $term;
-            $this->data = $data;
-            $this->display();
+        $con = array(); 
+        $year = session('year');
+        $term = session('term');
+        $year = 2014;
+        $term = '春季';
+
+        if(!empty($_POST) && $this->isPost()){
+            if ($this->_post('yt') != -1) {
+                $yt = $this->_post('yt');
+                $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
+                $len = strlen($yt) - 6;
+                $year = substr($yt, 0, $len);
+            }
         }
+        $con['year'] = $year;
+        $con['term'] = $term;
+
+        if ($userRole == 5) {
+            $con0['uid'] = $userid;
+            $tea = $user->where($con0)->select();
+            $con['teaid'] = $tea[0]['teaid'];
+        }
+
+        if ($userRole == 4) {
+            $con0['uid'] = $userid;
+            $collegeData = $user->where($con0)->select();
+            //$con2['scollege'] = $collegeData[0]['college'];
+            $con2['tcollege'] = $collegeData[0]['college'];
+            $con2['_logic'] = 'OR';
+            $con['_complex']= $con2;
+        }
+        
+        $data = $hz_cname->where($con)->order('tcollege asc,cname asc,tname asc')->select();
+
+        $this->yt = $this->getYearTerm('hz_cname');
+        $this->year = $year;
+        $this->term = $term;
+        $this->data = $data;
+        $this->display();
     }
 
     //获取学年学期
