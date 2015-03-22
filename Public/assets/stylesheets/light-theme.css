@@ -3654,13 +3654,13 @@ a, a:hover, .btn-link, .btn-link:hover {
     background-color: #f01611; }
 
 .btn-group.open .btn-success.dropdown-toggle, .btn.btn-success {
-  background-color: #49bf67; }
+  background-color: #026EA3; }
   .btn-group.open .btn-success.dropdown-toggle:focus, .btn-group.open .btn-success.dropdown-toggle:active, .btn-group.open .btn-success.dropdown-toggle.active, .btn-group.open .btn-success.dropdown-toggle.disabled, .btn-group.open .btn-success.dropdown-toggle[disabled], .btn.btn-success:focus, .btn.btn-success:active, .btn.btn-success.active, .btn.btn-success.disabled, .btn.btn-success[disabled] {
-    background-color: #49bf67; }
+    background-color: #026EA3; }
   .btn-group.open .btn-success.dropdown-toggle.disabled:hover, .btn-group.open .btn-success.dropdown-toggle[disabled]:hover, .btn.btn-success.disabled:hover, .btn.btn-success[disabled]:hover {
-    background-color: #49bf67; }
+    background-color: #026EA3; }
   .btn-group.open .btn-success.dropdown-toggle:hover, .btn.btn-success:hover {
-    background-color: #379e51; }
+    background-color: #005A86; }
 
 .btn-group.open .btn-info.dropdown-toggle, .btn.btn-info {
   background-color: #9564e2; }
@@ -4243,17 +4243,17 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
     .contrast-red header .navbar .navbar-inner .light:hover > a, .contrast-red header .navbar .navbar-inner .light:active > a, .contrast-red header .navbar .navbar-inner .light:focus > a {
       background-color: #d8120e; }
   .contrast-red header .navbar .navbar-inner .medium {
-    background: #d8120e; }
+    background: #0081C1; }
     .contrast-red header .navbar .navbar-inner .medium .label {
       color: #d8120e; }
     .contrast-red header .navbar .navbar-inner .medium:hover > a, .contrast-red header .navbar .navbar-inner .medium:active > a, .contrast-red header .navbar .navbar-inner .medium:focus > a {
-      background-color: #cb110d; }
+      background-color: #00699D; }
   .contrast-red header .navbar .navbar-inner .dark {
-    background: #c3100c; }
+    background: #0081C1; }
     .contrast-red header .navbar .navbar-inner .dark .label {
       color: #c3100c; }
     .contrast-red header .navbar .navbar-inner .dark:hover > a, .contrast-red header .navbar .navbar-inner .dark:active > a, .contrast-red header .navbar .navbar-inner .dark:focus > a {
-      background-color: #b60f0b; }
+      background-color: #00699D; }
   .contrast-red header .navbar .navbar-inner .widget .dropdown-menu > li.widget-footer a:hover {
     background-color: #0081c1; }
 .contrast-red header .navbar .nav li .label {
