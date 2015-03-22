@@ -1,14 +1,18 @@
 <?php
 	
 	class IndexAction extends Action{
-		
+		/*public function oracle(){
+			$course = new CourseModel('Course', 'syn_', 'DB_CONFIG');
+			dump($course);
+		}*/
+
 		//初始函数
 		public function index(){
 			checkLogin();
 
 			//successful
 			$role = session('userRole');
-			$role = 1;
+			//$role = 1;
 			$this->role = $role;
 			$this->display();
 		}
@@ -18,7 +22,7 @@
 			checkLogin();
 	        //set_time_limit(0);
 			$userRole = session('userRole');	//获取用户权限
-    		$userRole = 1;
+    		//$userRole = 1;
     		if ($userRole == 1) {
     			$filepath = './Uploads/dd_files/jb/';
 		        $files = M('files');
