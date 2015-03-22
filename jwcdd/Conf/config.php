@@ -10,6 +10,15 @@ return array(
     'DB_PORT' => '3306',        //服务器端口
     'DB_PREFIX' => 'dd_',      //数据库表前缀
     'DB_CHARSET' => 'utf8',     //数据库编码
+    'DB_CONFIG' => array(
+        'DB_TYPE' => 'oracle',       //数据库类型
+        'DB_HOST' => '172.16.181.13',   //服务地址
+        'DB_NAME' => '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 172.16.181.13)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = gbklicdc)))',         //数据库名称
+        'DB_USER' => 'LICDC_2_JW',        //用户名
+        'DB_PWD' => 'bnu4jwdd',         //密码
+        'DB_PORT' => '1521',        //服务器端口
+        'DB_PREFIX' => 'syn_'     //数据库表前缀
+    ),
 
     //URL模式
     'URL_MODEL' => 2,
