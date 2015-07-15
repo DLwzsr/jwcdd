@@ -1,4 +1,4 @@
-<include file="./jwcdd/Tpl/headerTemp.html" />
+<include file="./jwcdd/tpl/headertemp.html" />
 <section id='content'>
     <div class='container-fluid'>
     <div class='row-fluid' id='content-wrapper'>
@@ -12,14 +12,14 @@
                 </h1>
             </div>
         </div>
-	
+    
 <div class='row-fluid'>
     <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
         <div class='box-header green-background'>
             <div class='text-center'>北京师范大学本科教学督导团专家听课记录表（2014版）</div>
         </div>
         <div class=''>
-        <form accept-charset="UTF-8" action="{:U('Record/record_add_save')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
+        <form accept-charset="utf-8" action="{:U('Record/record_add_save')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
             <div class='responsive-table'>
                 <div class='scrollable-area'>
                     <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
@@ -30,7 +30,7 @@
                             </td>
                             <th>学生院系/年级</th>
                             <td >
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='sc' value='{$data_course.scollege}{$data_course.sclass}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='sc' value='{$data_course.scollege}/{$data_course.sclass}' />
                             </td>
                             <th colspan="2">上课地点</th>
                             <td colspan="3">
@@ -63,7 +63,7 @@
                                 <!--<input class='span12' id='full-name' type='text' value='' name='tktime' required data-msg-required="x"/>-->
                                 <div>
                                     <div class='datepicker input-append' id='datepicker'>
-                                        <input class='input-medium' data-format='yyyy-MM-dd' type='text' name='tktime' required/>
+                                        <input class='input-medium' data-format='yyyy-mm-dd' type='text' name='tktime' required/>
                                         <span class='add-on'>
                                         <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
                                         </span>
@@ -72,7 +72,7 @@
                             </td>
                             <th colspan="2">听课节数</th>
                             <td colspan="3">
-                                <input class='span12' id='full-name' type='text' name='tkjs' required/>
+                                <input class='span12' id='full-name' type='text' name='tkjs' placeholder="听课的总节数" required/>
                             </td>
                         </tr>   
                         <tr>
@@ -85,7 +85,7 @@
                         </tr> 
                         <tr>
                             <th>评价指标</th>
-                            <th colspan="4" style="text-align:center">主要观察点及A级（好）评价标准</th>
+                            <th colspan="4" style="text-align:center">主要观察点及a级（好）评价标准</th>
                             <th>好</th>
                             <th>较好</th>
                             <th>一般</th>
@@ -266,7 +266,7 @@
                             <td colspan="6">
                             <div>
                                 <div class='datepicker input-append' id='datepicker'>
-                                    <input class='input-medium' data-format='yyyy-MM-dd' type='text' required/>
+                                    <input class='input-medium' data-format='yyyy-mm-dd' type='text' required/>
                                 <span class='add-on'>
                                 <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
                                 </span>
@@ -277,7 +277,7 @@
                     </table>
                     <input type='hidden' name='cid' value='{$cid}'>
                     <button class='btn btn-success' type='submit' style='margin-right:20px;'><i class='icon-save'></i>保存</button>
-                    <button class='btn'><a href="{:U('Record/record')}">取消</a></button>
+                    <a class="btn" href="{:u('Record/record')}">取消</a>
                 </div>
                 </div>
             </form>
@@ -290,4 +290,4 @@
 </div>
 </div>
 </section>
-<include file="./jwcdd/Tpl/footerTemp.html" />
+<include file="./jwcdd/tpl/footertemp.html" />

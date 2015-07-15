@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="span3 pull-right">
-                    <a class='btn btn-success' type='submit' style='margin-top:30px;' href='addUser.html'>
+                    <a class='btn btn-success' style='margin-top:30px;' href="{:U('User/add_user')}">
                         <i class='icon-plus'>&nbsp;&nbsp;<strong>添加新用户</strong></i>
                     </a>
                 </div>
@@ -25,9 +25,14 @@
                     <div class='box-content box-no-padding'>
                         <div class='responsive-table'>
                             <div class='scrollable-area'>
-                                <table class='data-table table table-bordered table-striped' style='margin-bottom:0;'>
+                                <form id="form1" action="{:U('User/user')}" method="post" class="form-inline pull-right" style="margin:10px;">
+                                    <input type="text" name="name" class="input-medium" placeholder="姓名">
+                                    <input type="text" name="teaid" class="input-medium" placeholder="职工证号">
+                                    <button type="submit" class="btn">检索</button>
+                                </form>
+                                <table class='table table-bordered table-striped' style='margin-bottom:0;'>
                                 <thead>
-                                <tr>  
+                                <tr>
                                     <td><strong>用户角色</strong></td>    
                                     <td><strong>工作证号</strong></td>
                                     <td><strong>用户姓名</strong></td>
@@ -66,6 +71,7 @@
 								</volist>
                                 </tbody>
                                 </table>
+                                <div class="pagination" style="margin: auto; width:725px;">{$page}</div>
                             </div>
                         </div>
                     </div>

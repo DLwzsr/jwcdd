@@ -16,9 +16,8 @@
     if(session("?userName") && session("userName") != null){
       return true;
     }else{
-      //header("location: http://219.224.30.99:8081/jwcdd/Login/login");
+      header("location: http://172.16.14.73:8081/jwcdd/Login/login");
     }
-    return true;
   }
   //upload image
   function uploadImage($imagePath,$thumbWidth,$thumbHeight){
@@ -121,5 +120,31 @@
          }else{
              return array_column($input, $columnKey, $indexKey);
          }
+     }
+
+     /**
+     *实现二维数组下标装换大小写
+     *
+     **/
+     function change_array_index(&$arr,$case = CASE_LOWER){
+        foreach ($arr as $key => $item) {
+            $arr[$key] = array_change_key_case($item,$case);
+        }
+     }
+    //获取学年学期
+     function get_year_term(){
+        $yt = array();
+        $year = date("Y");
+        $begin = 2009;
+        $length = $year - $begin + 1;
+        $k = -1;
+        for ($i=0; $i < $length; $i++) {
+            $k++;
+            $yt[$k]['value'] = ($year-$i).',0';
+            $yt[$k]['item'] = ($year-$i).'-'.($year-$i+1).'学年第1学期';
+            $yt[++$k]['value'] = ($year-$i).',1';
+            $yt[$k]['item'] = ($year-$i).'-'.($year-$i+1).'学年第2学期';
+        }
+        return $yt;
      }
 ?>

@@ -9,11 +9,9 @@
                 <div class='container'>
                     <div class="new-todo">
                         <div class="span12"></div>
-                        <button class='btn'>
-                            <a href="{:U('Index/index')}">
+                            <a class="btn pull-right" href="{:U('Index/index')}">
                                 <i class='icon-chevron-sign-left'>&nbsp;&nbsp;<strong>返回</strong></i>
                             </a>
-                        </button>
                     </div>
                     <div class='date text-contrast'><strong>符合要求的文件:【查询时间是:&nbsp;&nbsp;{$runtime}s】</strong></div>
                     <if condition="$found eq 0">

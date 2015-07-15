@@ -9,76 +9,84 @@ class RecordAction extends Action {
 
         if ($userRole == 2) {//权限控制,督导
             $con = array();//定义一个数组
-            $add = M('record_add');
+            import('ORG.Util.Page');
+            //$add = M('record_add');
+            $add = new CourseModel("Course","syn_","DB_CONFIG");
             $year = null;
             $term = null;
             if (!empty($_POST) && $this->isPost()) {
                 if ($this->_post('yt') != -1) {//如果选择了学年学期
                     $yt = $this->_post('yt');
-                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                    $len = strlen($yt) - 6;
-                    $year = substr($yt, 0, $len);
-                    $con['year'] = $year;
-                    $con['term'] = $term;
+                    $arr = explode(",", $arr);
+                    $con['YEAR'] = $arr[0];
+                    $con['TERM'] = $arr[1];
                 }
                 else
                 {
                 $year = session('year');
                 $term = session('term');
-                $year = 2014;
-                $term = '春季';
-                $con['year'] = $year;
-                $con['term'] = $term;
+                $year = 2009;
+                $term = 0;
+                $con['YEAR'] = $year;
+                $con['TERM'] = $term;
                 }
-                if($this->_post('teacher') != -1){//教师名称
-                    $con['teaid'] = $this->_post('teacher');
+                if($this->_post('teacher') != NULL){//教师名称
+                    $con['TEAID'] = $this->_post('teacher');
                 }
                 if($this->_post('title') != -1){//教师职称
-                    $con['title'] = $this->_post('title');
+                    $con['TITLE'] = $this->_post('title');
                 }
                 if($this->_post('tcollege') != -1){//教师单位
-                    $con['tcollege'] = $this->_post('tcollege');
+                    $con['TCOLLEGE'] = $this->_post('tcollege');
                 }
-                if($this->_post('skplace') != -1){//上课地点
-                    $con['cplace'] = $this->_post('skplace');
+                if($this->_post('skplace') != NULL){//上课地点
+                    $con['CPLACE1'] = $this->_post('skplace');
                 }
-                if($this->_post('course') != -1){//课程名称
-                    $con['cname'] = $this->_post('course');
+                if($this->_post('course') != NULL){//课程名称
+                    $con['CNAME'] = $this->_post('course');
                 }
-                if($this->_post('topic') != -1){//课程类别
-                    $con['topic'] = $this->_post('topic');
+                if($this->_post('category1') != -1){//课程类别1
+                    $con['CATEGORY1'] = $this->_post('category1');
+                }
+                if($this->_post('category2') != -1){//课程类别2
+                    $con['CATEGORY2'] = $this->_post('category2');
                 }
                 if($this->_post('scollege') != -1){//学生院系
-                    $con['scollege'] = $this->_post('scollege');
+                    $con['SCOLLEGE'] = $this->_post('scollege');
                 }
-                if($this->_post('sclass') != -1){//年级
-                    $con['sclass'] = $this->_post('sclass');
+                if($this->_post('sclass') != -1){//班级
+                    $con['SCLASSID'] = $this->_post('sclass');
                 }
             }
             else{//如果啥也没选
                     $year = session('year');
                     $term = session('term');
-                    $year = 2014;
-                    $term = '春季';
-                    $con['year'] = $year;
-                    $con['term'] = $term;
+                    $year = 2009;
+                    $term = 1;
+                    $con['YEAR'] = $year;
+                    $con['TERM'] = $term;
             }
             //echo $con['term'];
-            $data = $add->where($con)->order('cid asc')->select();
-            //var_dump($data);
+            $count = $add->where($con)->count();
+            $Page = new Page($count,10);
+            $Page->setConfig("theme","<ul class='pagination'><li><span>%nowPage%/%totalPage% 页</span></li> %first% %prePage% %linkPage% %nextPage% %end%</ul>");
+            $data = $add->where($con)->field('cid,year,term+1 as term,cname,category1,category2,teaname as tname,tcollege,title,cplace1 as cplace,ctime1||ctime2 as ctime,scollege,sclass')->order('cid asc')->limit($Page->firstRow.','.$Page->listRows)->select();
+            change_array_index($data);
+            $college = M("college");
             //下拉菜单显示
-            $this->yt = $this->getYearTerm('record_add');//学年学期
+            //$this->yt = $this->getYearTerm('record_add');//学年学期
+            $this->yt = get_year_term();
             //$this->tea = $this->getTeacher($year,$term,'record_add');//教师姓名
             $this->ttitle = $this->getTitle($year,$term,'record_add');//教师职称
-            $this->tcollege = $this->getTcollege($year,$term,'record_add');//教师单位
-            $this->place = $this->getPlace($year,$term,'record_add');//上课地点
-            $this->course = $this->getCourse($year,$term,'record_add');//课程名称
-            $this->topic = $this->getTopic($year,$term,'record_add');//课程类型
-            $this->scollege = $this->getScollege($year,$term,'record_add');//学生院系
-            $this->sclass = $this->getSclass($year,$term,'record_add');//年级（班级）
-        
+            $this->tcollege = $college->field("college")->order('CONVERT(college USING gbk) asc')->select();//教师单位
+            $this->scollege = $college->where("tea = 0")->field("college")->order('CONVERT(college USING gbk) asc')->select();//学生院系
+            //$this->sclass = $this->getSclass($year,$term,'record_add');//年级（班级）
+            $sclass=$add->Distinct(true)->field('sclass')->where($con0)->order('sclass asc')->select();
+            change_array_index($sclass);
+            $this->sclass = $sclass;
             $this->title = $year.$term;
             $this->term = $term;
+            $this->page = $Page->show();
             //课程信息显示
             $this->data = $data;
         }else{
@@ -91,19 +99,26 @@ class RecordAction extends Action {
     public function addRecord($cid){
         checkLogin();
         //这里是听课记录添加界面  参数cid为课程id
-        $course = M("record_add");
+        //$course = M("record_add");
+        $course = new CourseModel("Course","syn_","DB_CONFIG");
         $task= M("task_course");
         $dd = M("Dd");//督导dd表
         $userRole = session("userRole");
 
         if($userRole == '2')//如果角色是督导，只有督导才会用这个函数，通过查找课程直接填写
         {
-            $con1['cid'] = $cid;
-            $data_course = $course->where($con1)->select();
+            $con1['CID'] = "$cid";
+            $data_course = $course->where($con1)->limit("0,1")->select();
+
             $con2['uid'] = session('userId');//需要did，首先取出uid
-            $con2['year'] = $data_course[0]['year'];
-            $con2['term'] = $data_course[0]['term'];
+            //echo $con2['uid'];
+            $con2['year'] = $data_course[0]['YEAR'];
+            $con2['term'] = $data_course[0]['TERM'];
+            //echo $con2['year'];
+            //echo $con2['term'];
             $data_dd = $dd->where($con2)->select();//查出当前督导id
+            //dump($data_dd);
+            //exit(0);
 
             $did = $data_dd[0]['did'];//取出did
             $con3['did'] = $did;//查看是否已经有这一听课记录
@@ -114,8 +129,9 @@ class RecordAction extends Action {
                 $this->error('该记录已填写，请在“我的任务”中修改或查看');                
             }
             else{
-                $con['cid'] = $cid;
-                $data_course = $course->where($con)->select();//取出cid这一条课程记录
+                $con['CID'] = $cid;
+                $data_course = $course->where($con)->field('cid,YEAR as year,TERM+1 as term,CNAME as cname,CATEGORY1 as category1,CATEGORY2 as category2,TEANAME as tname,TCOLLEGE as tcollege,TITLE as title,CPLACE1 as cplace,CTIME1||CTIME2 as ctime,SCOLLEGE as scollege,sclass')->select();//取出cid这一条课程记录
+                change_array_index($data_course);
                 $this->cid=$cid;
                 $this->data_course=$data_course[0]; 
                 $this->display();
@@ -131,25 +147,27 @@ class RecordAction extends Action {
         checkLogin();   
         
         $record = M("records");//record表
-        $course = M("record_add");//course视图
+        $course = new CourseModel("Course","syn_","DB_CONFIG");
         $task_course = M("task_course");//task视图
         $task = M("tasks");//task表
         $dd = M("Dd");//督导dd表
 
-        $con1['cid'] = $this->_post('cid');
+        $con1['CID'] = $this->_post('cid');
         $data_course = $course->where($con1)->select();//查出cid的那条课程信息
-        $data['courseid'] = $data_course[0]['courseid'];
-        $data['cname'] = $data_course[0]['cname'];
-        $data['sclass'] = $data_course[0]['sclass'];
-        $data['teaid'] = $data_course[0]['teaid'];
-        $data['teaname'] = $data_course[0]['tname'];
-        $data['teacollege'] = $data_course[0]['tcollege'];
-        $data['teatitle'] = $data_course[0]['title'];
+        $data['courseid'] = $data_course[0]['COURSEID'];
+        $data['cname'] = $data_course[0]['CNAME'];
+        $data['sclass'] = $data_course[0]['SCLASS'];
+        $data['sclassid'] = $data_course[0]['SCLASSID'];
+        $data['teaid'] = $data_course[0]['TEAID'];
+        $data['teaname'] = $data_course[0]['TEANAME'];
+        $data['teacollege'] = $data_course[0]['TCOLLEGE'];
+        $data['teatitle'] = $data_course[0]['TITLE'];
         $data['content'] = $this->_post('content');//听课内容
-        $data['skplace'] = $data_course[0]['cplace'];
-        $data['sktime'] = $data_course[0]['ctime'];
+        $data['skplace'] = $data_course[0]['CPLACE1'];
+        $data['sktime'] = $data_course[0]['CTIME1'].$data_course[0]['CTIME2'];
+        $data['scollege'] = $data_course[0]['SCOLLEGE']; 
         $data['tktime'] = $this->_post('tktime');//听课时间
-        $data['tkjs'] = $this->_post('tktime'); //听课节数-这里要做两个框-开始节次，结束节次
+        $data['tkjs'] = $this->_post('tkjs'); //听课节数-这里要做两个框-开始节次，结束节次
 
         //$data['tbtime'] = $this->_post('tbtime');//填表时间
         $data['tbtime'] = date('Y-m-d');//获取填表日期
@@ -171,8 +189,8 @@ class RecordAction extends Action {
         $data['hjjy'] = $this->_post('hjjy');//环境建议
         
         $con2['uid'] = session('userId');//需要did，首先取出uid
-        $con2['year'] = $data_course[0]['year'];
-        $con2['term'] = $data_course[0]['term'];
+        $con2['year'] = $data_course[0]['YEAR'];
+        $con2['term'] = $data_course[0]['TERM'];
         $data_dd = $dd->where($con2)->select();//查出当前督导id
         $did = $data_dd[0]['did'];//取出did
         $con3['did'] = $did;//查看是否已经有这一听课任务
@@ -474,16 +492,16 @@ class RecordAction extends Action {
         $userRole = session('userRole');    //获取用户权限
         if ($userRole <= 2 ){
             $record = M('records');
-            $course = M('record_add');
+            //$course = new CourseModel("Course","syn_","DB_CONFIG");
 
             $con1['tid'] = $tid;
             $data_record = $record->where($con1)->select();//从记录表中找到记录信息
             $this->record=$data_record[0];
             
-            $con2['courseid'] = $data_record[0]['courseid'];
-            $data_course = $course->where($con2)->select();//从视图中找到课程信息
+            //$con2['ID'] = $data_record[0]['courseid'];
+            //$data_course = $course->where($con2)->select();//从course中找到课程信息
 
-            $this->course=$data_course[0];
+            //$this->course=$data_course[0];
         }
         else{
             $this->error('亲~ 你不具备这样的能力哦~');

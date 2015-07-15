@@ -1,23 +1,57 @@
 <?php
 	
 	class IndexAction extends Action{
-		/*public function oracle(){
-			$course = new CourseModel('Course', 'syn_', 'DB_CONFIG');
-			dump($course);
-		}*/
+		/**
+		*对接公共资源服务中心的数据接口，将课程数据下载到本地存储
+		*/
+		public function download_course(){
+			$length = count($data,0);
+			$course_data = array();
+			$i = 0;
+			$users = M('users');
+			$loc_course = M('courses');
+			$course = M('brw_kbinfo_graduate', 'v_', 'DB_CONFIG');
+			$data = $course->where('PYCC_M = 1')->select();
+			foreach ($data as $key => $value) {
+				$course_data[$i]['year'] = $value['XN'];
+				if ('0' == $value['XQ_M']){
+					$course_data[$i]['term'] = '秋季';
+				}else {
+					$course_data[$i]['term'] = '春季';
+				}
+				$course_data[$i]['week'] = $value['周次'];
+				$course_data[$i]['courseid'] = $value['课程代码'];
+				$course_data[$i]['cname'] = $value['课程名称'];
+				$course_data[$i]['category1'] = $value['课程类别'];
+				$course_data[$i]['category2'] = $value['课程性质'];
+				$course_data[$i]['ctime'] = $value['节次'];
+				$course_data[$i]['cplace'] = $value['上课地点'];
+				$course_data[$i]['teaid'] = $value['第一任课教师工号'];
+				$course_data[$i]['tname'] = $value['第一任课教师姓名'];
+				$course_data[$i]['tcollege'] = '';
+				//获取教师所在的院系
+				$con['teaid'] = $value['第一任课教师工号'];
+				$scollege = $users->where($con)->getField('college');
+				$course_data[$i]['scollege'] = $scollege;
+				$course_data[$i]['sclass'] = $value['上课班号'];
+				$course_data[$i]['content'] = '';
+				$i++;
+			}
+			dump($course_data);
+			//$loc_course->addAll($course_data);
+			//$this->saveOperation(session('userId'),'管理员用户下载了公资中心接口课程数据');
+			//$this->success('操作成功','Index/index');
+		}
+		public function update_course(){
 
+		}
 		//初始函数
 		public function index(){
 			checkLogin();
-
-			//successful
-			$role = session('userRole');
-			//$role = 1;
-			$this->role = $role;
 			$this->display();
 		}
 
-		//文件上传函数
+		/*//文件上传函数
 		public function uploadFile(){
 			checkLogin();
 	        //set_time_limit(0);
@@ -67,7 +101,7 @@
 		        $this->redirect('Index/index');
     		}
 	        
-		}
+		}*/
 
 		//搜索函数
 		public function search(){
@@ -91,7 +125,7 @@
 					$stop = 0;
 					$path = $realPath.str_replace('/','\\',substr($data[$i]['fpath'],1));
 					$tPath = str_replace('.pdf', '.txt', $path);
-					$http_path = '/jwcdd/'.substr($data[$i]['fpath'],1);
+					$http_path = '/jwcdd'.substr($data[$i]['fpath'],1);
 					$name = $data[$i]['fname'];
 					$numofspaces = substr_count($keyword," ");
 					$cont_array = array();

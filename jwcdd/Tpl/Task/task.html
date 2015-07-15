@@ -16,13 +16,13 @@
 
 <form method="post" action="{:U('Task/task')}">
 <div class='row-fluid'>
-    <div class='span2'>
+    <div class='span3'>
         <div class='row-fluid' style="margin-bottom:10px">
             <strong>学年学期</strong>
             <select class='select2 input-block-level' name="yt" id="yterm">
                 <option value='-1' selected="selected"/>------请选择------
             <volist name="yt" id="vo">
-                <option value="{$vo.yt}">{$vo.yt}</option>
+                <option value="{$vo.value}">{$vo.item}</option>
             </volist>
             </select>
         </div>
@@ -30,12 +30,7 @@
     <div class='span2'>
         <div class='row-fluid' style="margin-bottom:10px">
             <strong>教师名称</strong>
-            <select class='select2 input-block-level' name="tname">
-                <option value='-1' selected="selected"/>------请选择------
-            <volist name="tname" id="vo">
-                <option value="{$vo.tname}">{$vo.tname}</option>
-            </volist>
-            </select>
+            <input class='input-block-level' name="teaname" type="text" />
         </div>
     </div>
     <div class='span3'>
@@ -44,7 +39,7 @@
             <select class='select2 input-block-level' name="tcollege">
                 <option value='-1' selected="selected"/>------请选择------
             <volist name="tcollege" id="vo">
-                <option value="{$vo.tcollege}">{$vo.tcollege}</option>
+                <option value="{$vo.college}">{$vo.college}</option>
             </volist>
             </select>
         </div>
@@ -57,12 +52,12 @@
             <select class='select2 input-block-level' name="scollege">
                 <option value='-1' selected="selected"/>------请选择------
             <volist name="scollege" id="vo">
-                <option value="{$vo.scollege}">{$vo.scollege}</option>
+                <option value="{$vo.college}">{$vo.college}</option>
             </volist>
             </select>
         </div>
     </div>
-    <div class='span2'>
+    <div class='span3'>
         <div class='row-fluid' style="margin-bottom:10px">
             <strong>行政班级</strong>
             <select class='select2 input-block-level' name="sclass">
@@ -81,7 +76,7 @@
 <div class='row-fluid'>
 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
 <div class='box-header green-background'>
-    <div class='text-center'>{$year}学年 {$term}学期 课程信息
+    <div class='text-center'>{$year}学年 第{$term+1}学期 课程信息
         <!--a href="#dd" class="btn btn-default pull-right">下一步</a-->
     </div>
 </div>
@@ -95,7 +90,8 @@
     <th>教师单位</th>
     <th>教师姓名</th>
     <th>课程名称</th>
-    <th>课程类别</th>
+    <th>课程类别1</th>
+    <th>课程类别2</th>
     <th>学生院系</th>
     <th>上课时间</th>
     <th>上课地点</th>
@@ -109,18 +105,19 @@
 <tbody>
     <volist name='clist' id='vo'>
         <tr>
-            <td><input type='checkbox' value='{$vo.cid}' name='cid[]' /></td>
+            <td><input type='checkbox' value='{$vo.id}' name='id[]' /></td>
             <td>{$vo.tcollege}</td>
-            <td>{$vo.tname}</td>
+            <td>{$vo.teaname}</td>
             <td>{$vo.cname}</td>
-            <td>{$vo.category}</td>
+            <td>{$vo.category1}</td>
+            <td>{$vo.category2}</td>
             <td>{$vo.scollege}</td>
-            <td>{$vo.ctime}</td>
-            <td>{$vo.cplace}</td>
+            <td>{$vo.ctime2}</td>
+            <td>{$vo.cplace1}</td>
             <td>
                 <div>
                     <div class='datepicker input-append' id='datepicker' style="margin:0; padding:0;">
-                        <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' style="margin:0;" name='tktime{$vo.cid}'/>
+                        <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' style="margin:0;" name='tktime{$vo.id}'/>
                         <span class='add-on'>
                             <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
                         </span>
@@ -128,7 +125,7 @@
                 </div>
             </td>
             <td>
-                <select name='topicname{$vo.cid}' class='select2 input-block-level' style="margin:0; padding:0; width:150px;">
+                <select name='topicname{$vo.id}' class='select2 input-block-level' style="margin:0; padding:0; width:150px;">
                     <option value='-1' selected="selected">---请选择---</option>
                     <volist name='topiclist' id='vo1'>
                     <option value='{$vo1.topicname}'>{$vo1.topicname}</option>

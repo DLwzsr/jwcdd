@@ -21,23 +21,13 @@
     <div class='span3'>
         <div class='row-fluid'>
             <strong>课程名称</strong>
-            <select class='select2 input-block-level' name='cname'>
-                <option value='-1' />------请选择------
-                <volist name="cname" id="vo1">
-                    <option value="{$vo1.cname}">{$vo1.cname}</option>
-                </volist>
-            </select>
+            <input class='input-block-level' name="cname" type="text" />
         </div>
     </div>
     <div class='span3'>
         <div class='row-fluid'>
             <strong>教师名称</strong>
-            <select class='select2 input-block-level' name='tname'>
-                <option value='-1' />------请选择------
-                <volist name="tname" id="vo2">
-                    <option value="{$vo2.tname}">{$vo2.tname}</option>
-                </volist>
-            </select>
+            <input class='input-block-level' name="teaname" type="text" />
         </div>
     </div>
     <if condition="$Think.session.userRole lt 4">
@@ -47,7 +37,7 @@
             <select class='select2 input-block-level' name='tcollege'>
                 <option value='-1' />------请选择------
                 <volist name="tcollege" id="vo3">
-                    <option value="{$vo3.tcollege}">{$vo3.tcollege}</option>
+                    <option value="{$vo3.college}">{$vo3.college}</option>
                 </volist>
             </select>
         </div>
@@ -61,9 +51,18 @@
             <strong>听课月份</strong>
             <select class='select2 input-block-level' name='tkmonth'>
                 <option value='-1' />------请选择------
-                <volist name="tkmonth" id="vo4">
-                    <option value="{$vo4.tkmonth}">{$vo4.tkmonth}</option>
-                </volist>
+                <option value="1">1月</option>
+                <option value="2">2月</option>
+                <option value="3">3月</option>
+                <option value="4">4月</option>
+                <option value="5">5月</option>
+                <option value="6">6月</option>
+                <option value="7">7月</option>
+                <option value="8">8月</option>
+                <option value="9">9月</option>
+                <option value="10">10月</option>
+                <option value="10">10月</option>
+                <option value="12">12月</option>
             </select>
         </div>
     </div>
@@ -74,7 +73,7 @@
             <select class='select2 input-block-level' name='scollege'>
                 <option value='-1' />------请选择------
                 <volist name="scollege" id="vo5">
-                    <option value="{$vo5.scollege}">{$vo5.scollege}</option>
+                    <option value="{$vo5.college}">{$vo5.college}</option>
                 </volist>
             </select>
         </div>
@@ -106,7 +105,7 @@
 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
 <div class='box-header green-background'>
     <div class='text-center'>
-        {$year}学年 {$term}学期 听课任务列表
+        {$year}学年 第{$term+1}学期 听课任务列表
     </div>   
 </div>
 <div class='box-content box-no-padding'>
@@ -122,7 +121,8 @@
                     <td><strong>教师姓名</strong></td>
                     <td><strong>教师单位</strong></td>
                     <td><strong>学生院系</strong></td>
-                    <td><strong>课程类别</strong></td>                    
+                    <td><strong>课程类别1</strong></td> 
+                    <td><strong>课程类别2</strong></td>                    
                     <td><strong>听课时间</strong></td>
                     <td><strong>听课专题</strong></td>
                     <td><strong>听课专家[督导]</strong></td>
@@ -141,13 +141,14 @@
                 <volist name='tlist' id='vo1'>
                     <tr>
                         <td>{$vo1.week}</td>
-                        <td>{$vo1.ctime}</td>
-                        <td>{$vo1.cplace}</td>
+                        <td>{$vo1.ctime2}</td>
+                        <td>{$vo1.cplace1}</td>
                         <td>{$vo1.cname}</td>
-                        <td>{$vo1.tname}</td>
+                        <td>{$vo1.teaname}</td>
                         <td>{$vo1.tcollege}</td>                        
                         <td>{$vo1.scollege}</td>
-                        <td>{$vo1.category}</td>
+                        <td>{$vo1.category1}</td>
+                        <td>{$vo1.category2}</td>
                         <td>{$vo1.tktime}
                             <!--div class='controls'>
                                 <div class='datepicker input-append' id='datepicker'>

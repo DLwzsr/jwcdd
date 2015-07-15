@@ -3,55 +3,59 @@
 class TaskAction extends Action {
     public function task(){
         checkLogin(); 
-        //$userRole = session('userRole');    //获取用户权限
-        $userRole = 1;
+        $userRole = session('userRole');    //获取用户权限
         if ($userRole == 1) {
             $con0 = array();
             $con = array();
-            $course = M("Courses");
+            $course = new CourseModel('Course', 'syn_', 'DB_CONFIG');
             $year = session('year');
             $term = session('term');
-            $year = 2014;
-            $term = '春季';
+            $con0['YEAR'] = $year = 2013;
+            $con0['TERM'] = $term = 0;
             if (!empty($_POST) && $this->isPost()) {
                 if ($this->_post('yt') != -1) {
                     $yt = $this->_post('yt');
-                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                    $len = strlen($yt) - 6;
-                    $year = substr($yt, 0, $len);
-                    $con0['year'] = $year;
-                    $con0['term'] = $term;
+                    dump($yt);
+                    //exit(0);
+                    $arr = explode(',', $yt);
+                    $con0['YEAR'] = $arr[0];
+                    $con0['TERM'] = $arr[1];
                 }
-                if($this->_post('tname')!=-1){
-                    $tname = $this->_post('tname');
-                    $con['tname'] = $tname;
+                if($this->_post('teaname')!=NULL){
+                    $teaname = $this->_post('teaname');
+                    $con['TEANAME'] = $teaname;
                 }
                 if($this->_post('tcollege')!=-1){
                     $tcollege = $this->_post('tcollege');
-                    $con['tcollege'] = $tcollege;
+                    $con['TCOLLEGE'] = $tcollege;
                 }
                 if($this->_post('scollege')!=-1){
                     $scollege = $this->_post('scollege');
-                    $con['scollege'] = $scollege;
+                    $con['SCOLLEGE'] = $scollege;
                 }
                 if($this->_post('sclass')!=-1){
                     $sclass = $this->_post('sclass');
-                    $con['sclass'] = $sclass;
+                    $con['SCLASS'] = $sclass;
                 }
             }
             else{
-                $con0['year'] = $year;
-                $con0['term'] = $term;
+                $con0['YEAR'] = $year;
+                $con0['TERM'] = $term;
             }
-            $clist=$course->where($con0)->where($con)->select();
-            $this->clist=$clist;
-            //dump($clist);
+            $con['COURSETYPE'] = '本科生课程';
 
-            $this->yt = $this->getYearTerm('Courses');
-            $this->tname=$tname=$course->Distinct(true)->field('tname')->where($con0)->order('tname asc')->select();
-            $this->tcollege=$tcollege=$course->Distinct(true)->field('tcollege')->order('tcollege asc')->where($con0)->select();
-            $this->scollege=$scollege=$course->Distinct(true)->field('scollege')->where($con0)->order('scollege asc')->select();
-            $this->sclass=$sclass=$course->Distinct(true)->field('sclass')->where($con0)->order('sclass asc')->select();
+            $clist = $course->where($con)->where($con0)->limit(500)->select();
+            //exit(0);
+            change_array_index($clist);
+            $this->clist = $clist;
+            
+            $this->yt = get_year_term();
+            $college = M("college");
+            $this->tcollege=$tcollege=$college->field('college')->order('CONVERT(college USING gbk) asc')->select();
+            $this->scollege=$scollege=$college->field('college')->order('CONVERT(college USING gbk) asc')->where('tea=0')->select();
+            $sclass=$course->Distinct(true)->field('sclass')->where($con0)->order('sclass asc')->select();
+            change_array_index($sclass);
+            $this->sclass=$sclass;
                        
             $this->year = $year;
             $this->term = $term;
@@ -64,7 +68,6 @@ class TaskAction extends Action {
             $dd=$dd->join('dd_Users on dd_Users.uid=dd_Dd.uid')->field('teaid, did, name, title, college, mobi')->where($con0)->order('CONVERT(name USING gbk) asc')->select();
             $this->dd=$dd;
             //dump($dd);
-
         }
         else {
             $this->error('亲~ 你不具备这样的能力哦~');
@@ -82,12 +85,12 @@ class TaskAction extends Action {
     //分配本学期督导听课任务
     public function assginTask(){
         checkLogin();
-        //$userid = session('userid');
-        $userid = 1;
+        $userid = session('userId');
         $task = M("Tasks");
         $taskdid = $this->_post('did');
-        $taskcid = $this->_post('cid');
-        //dump($taskdid);
+        $taskcid = $this->_post('id');
+        //dump($taskcid);
+        //exit(0);
         //$taskc['tktime'] = $this->_post('tktime');
         //$taskc['topicname'] = $this->_post('topicname');
         $len1 = count($taskdid);
@@ -125,38 +128,39 @@ class TaskAction extends Action {
         $userid = session('userId');
         $flag = 0;
         $con = array();
-        $task = M("Task_course");
+        $task = M("Task_user");
+        $course = new CourseModel('Course', 'syn_', 'DB_CONFIG');
         $topiclist=M("Topic");
         $dd=M("Dd");
 
-        $this->year = $con0['year'] = 2014;
-        $this->term = $con0['term'] = '春季';
+        $this->year = $con0['YEAR'] = 2013;
+        $this->term = $con0['TERM'] = 0;
 
         if ($userRole == 1) {
             if (!empty($_POST) && $this->isPost()) {
-                if($this->_post('cname')!=-1){
+                if($this->_post('cname')!=NULL){
                     $cname = $this->_post('cname');
-                    $con['cname'] = $cname;
+                    $con['CNAME'] = $cname;
                 }
-                if($this->_post('tname')!=-1){
-                    $tname = $this->_post('tname');
-                    $con['tname'] = $tname;
+                if($this->_post('teaname')!=NULL){
+                    $teaname = $this->_post('teaname');
+                    $con['TEANAME'] = $teaname;
                 }
                 if($this->_post('tcollege')!=-1){
                     $tcollege = $this->_post('tcollege');
-                    $con['tcollege'] = $tcollege;
+                    $con['TCOLLEGE'] = $tcollege;
                 }
                 if($this->_post('tkmonth')!=-1){
                     $tkmonth = $this->_post('tkmonth');
-                    $con['tkmonth'] = $tkmonth;
+                    $con['TKMONTH'] = $tkmonth;
                 }
                 if($this->_post('scollege')!=-1){
                     $scollege = $this->_post('scollege');
-                    $con['scollege'] = $scollege;
+                    $con['SCOLLEGE'] = $scollege;
                 }
                 if($this->_post('dname')!=-1){
                     $dname = $this->_post('dname');
-                    $con['dname'] = $dname;
+                    $con['DNAME'] = $dname;
                 }
             }
         }
@@ -176,13 +180,35 @@ class TaskAction extends Action {
         }
 
         $tlist=$task->where($con0)->where($con)->order('`tktime` asc, tid asc')->select();
+        // 根据tlist中的cid从oracle数据库中查询出课程信息
+        $con['COURSETYPE'] = '本科生课程';
+        $cid = i_array_column($tlist, 'cid');
+        for ($i=0; $i < count($cid); $i++) { 
+            $con1['ID'] = $cid[$i];
+            $clist = $course->where($con)->where($con0)->where($con1)->SELECT();
+            $tlist[$i]['cname'] = $clist[0]['CNAME'];
+            $tlist[$i]['category1'] = $clist[0]['CATEGORY1']; 
+            $tlist[$i]['category2'] = $clist[0]['CATEGORY2']; 
+            $tlist[$i]['ctime1'] = $clist[0]['CTIME1']; 
+            $tlist[$i]['ctime2'] = $clist[0]['CTIME2'];  
+            $tlist[$i]['week'] = $clist[0]['WEEK']; 
+            $tlist[$i]['cplace1'] = $clist[0]['CPLACE1']; 
+            $tlist[$i]['cplace2'] = $clist[0]['CPLACE2']; 
+            $tlist[$i]['teaid'] = $clist[0]['TEAID'];
+            $tlist[$i]['teaname'] = $clist[0]['TEANAME']; 
+            $tlist[$i]['tcollege'] = $clist[0]['TCOLLEGE']; 
+            $tlist[$i]['title'] = $clist[0]['TITLE']; 
+            $tlist[$i]['scollege'] = $clist[0]['SCOLLEGE'];
+            $tlist[$i]['sclassid'] = $clist[0]['SCLASSID'];
+            $tlist[$i]['sclass'] = $clist[0]['SCOLLEGE']; 
+        }      
+
         $this->tlist=$tlist;
-                
-        $this->cname=$cname=$task->Distinct(true)->field('cname')->where($con0)->order('cname asc')->select();
-        $this->tname=$tname=$task->Distinct(true)->field('tname')->where($con0)->order('tname asc')->select();
-        $this->tcollege=$tcollege=$task->Distinct(true)->field('tcollege')->order('tcollege asc')->where($con0)->select();
-        $this->tkmonth=$tkmonth=$task->Distinct(true)->field('tkmonth')->order('tkmonth asc')->where($con0)->select();
-        $this->scollege=$scollege=$task->Distinct(true)->field('scollege')->where($con0)->order('scollege asc')->select();
+        // 获取院系列表  
+        $college = M("college");
+        $this->tcollege=$tcollege=$college->field('college')->order('CONVERT(college USING gbk) asc')->select();
+        $this->scollege=$scollege=$college->field('college')->order('CONVERT(college USING gbk) asc')->where('tea=0')->select();
+        // 获取当前有任务的督导名
         $this->dname=$dname=$task->Distinct(true)->field('dname')->where($con0)->order('CONVERT(dname USING gbk) asc')->select();
 
         $topiclist=$topiclist->field('topicname')->Distinct(true)->select();
@@ -220,8 +246,8 @@ class TaskAction extends Action {
         checkLogin();
         $task = M("Tasks");
         $task_course = M("Task_course");
-        $con0['year'] = '2014';
-        $con0['term'] = '春季';
+        $con0['year'] = 2013;
+        $con0['term'] = 0;
 
         $con['tid'] = $tid;
         $task_course = $task_course->where($con)->select();

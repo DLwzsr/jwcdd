@@ -1,0 +1,76 @@
+<include file="./jwcdd/Tpl/noticeHeader.html" />
+        <div class="context-warrp"><!--整个内容部分-->
+        	<div class="column-rows"><!--第一行内容-->
+            	<div class="column-item item-xwdt"><!--第一行第一列内容-->
+        			<div class="column-title"><!--title-->
+           				<b class="title-icon icon-arrow"></b>
+            			<span class="title-text">通知公告</span>
+            			<a class="title-more" href="{:U('Notice/notice_more')}" target="_blank"></a>
+        			</div>
+                    <div class="column-list">
+                    <ul>
+                        <volist name="list" id="vo">
+                            <li>
+                                <span class="time">{$vo.date}</span> 
+                                <b class="icon-triangle"></b>
+                                <a href="{:U('Notice/view',array('id'=>$vo['id']))}" target="_blank">{$vo.title}</a>
+                            </li> 
+                        </volist>
+                    </ul>
+                	</div>
+    			</div>
+                
+                <div class="column-item item-xwdt2"><!--第一行第二列内容-->
+        			<div class="column-title"><!--title-->
+           				<b class="title-icon icon-arrow"></b>
+            			<span class="title-text">督导简报</span>
+            			<a class="title-more" href="{:U('Notice/jb_more')}" target="_blank"></a>
+        			</div>
+                    <div class="column-list">
+                    <ul>
+                        <volist name="jbList" id="vo">
+                            <li>
+                                <span class="time">{$vo.uptime}</span> 
+                                <b class="icon-triangle"></b>
+                                <a href="{$vo.fpath}" target="_blank">{$vo.ftitle}</a>
+                            </li> 
+                        </volist>
+                    </ul>
+                	</div>
+    			</div>
+             </div>
+             <div class="column-rows column-rows2"><!--第二行内容-->
+             	<div class="column-item item-calendar"><!--第一列内容-->
+                    <div id="calendar" style="margin-top: 10px;">
+                    </div>
+             	</div>
+                <div class="column-item item-block1"><!--第二列内容-->
+                    <a href="http://172.22.80.41:8080/bnujw/public/dykb.kckb.html">
+            			<div class="column-item item-img">
+            			</div>
+                    </a>
+                    <a href="{:U('Record/showRecord')}">
+                        <div class="column-item item-img1">
+                        </div>
+                    </a>
+                </div>
+                <div class="column-item item-block2"><!--第三列内容-->
+                    <a href="{:U('Task/showTask')}">
+                        <div class="column-item item-img2">
+                        </div>
+                    </a>
+        			<a href="{:U('Analysis/analysis')}">
+                        <div class="column-item item-img3">
+                        </div>
+                    </a>
+                </div>
+             </div>
+        </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#calendar').glDatePicker({
+            showAlways:true
+        });
+    });
+</script>
+<include file="./jwcdd/Tpl/noticeFooter.html" />

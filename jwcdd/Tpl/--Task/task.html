@@ -1,0 +1,220 @@
+<include file="./jwcdd/Tpl/headerTemp.html" />
+<section id='content'>
+<div class='container-fluid'>
+<div class='row-fluid' id='content-wrapper'>
+<div class='span12'>
+<div class='row-fluid'>
+    <div class='span12'>
+        <div class='page-header'>
+            <h1 class='pull-left'>
+                <i class='icon-check'></i>
+                <span>分配听课任务</span>
+            </h1>
+        </div>
+    </div>
+</div>
+
+<form method="post" action="{:U('Task/task')}">
+<div class='row-fluid'>
+    <div class='span2'>
+        <div class='row-fluid' style="margin-bottom:10px">
+            <strong>学年学期</strong>
+            <select class='select2 input-block-level' name="yt" id="yterm">
+                <option value='-1' selected="selected"/>------请选择------
+            <volist name="yt" id="vo">
+                <option value="{$vo.yt}">{$vo.yt}</option>
+            </volist>
+            </select>
+        </div>
+    </div>
+    <div class='span2'>
+        <div class='row-fluid' style="margin-bottom:10px">
+            <strong>教师名称</strong>
+            <select class='select2 input-block-level' name="tname">
+                <option value='-1' selected="selected"/>------请选择------
+            <volist name="tname" id="vo">
+                <option value="{$vo.tname}">{$vo.tname}</option>
+            </volist>
+            </select>
+        </div>
+    </div>
+    <div class='span3'>
+        <div class='row-fluid' style="margin-bottom:10px">
+            <strong>教师单位</strong>
+            <select class='select2 input-block-level' name="tcollege">
+                <option value='-1' selected="selected"/>------请选择------
+            <volist name="tcollege" id="vo">
+                <option value="{$vo.tcollege}">{$vo.tcollege}</option>
+            </volist>
+            </select>
+        </div>
+    </div>
+</div>
+<div class='row-fluid'>
+    <div class='span3'>
+        <div class='row-fluid' style="margin-bottom:10px">
+            <strong>学生院系</strong>
+            <select class='select2 input-block-level' name="scollege">
+                <option value='-1' selected="selected"/>------请选择------
+            <volist name="scollege" id="vo">
+                <option value="{$vo.scollege}">{$vo.scollege}</option>
+            </volist>
+            </select>
+        </div>
+    </div>
+    <div class='span2'>
+        <div class='row-fluid' style="margin-bottom:10px">
+            <strong>行政班级</strong>
+            <select class='select2 input-block-level' name="sclass">
+                <option value='-1' selected="selected"/>------请选择------
+            <volist name="sclass" id="vo">
+                <option value="{$vo.sclass}">{$vo.sclass}</option>
+            </volist>
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-defalut pull-right" style="margin:17px 194px 0px 0px;" type="submit">检索 | Search</button>
+</div>
+</form>
+
+<form method="post" action="{:U('Task/assginTask')}">
+<div class='row-fluid'>
+<div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
+<div class='box-header green-background'>
+    <div class='text-center'>{$year}学年 {$term}学期 课程信息
+        <!--a href="#dd" class="btn btn-default pull-right">下一步</a-->
+    </div>
+</div>
+<div class='box-content box-no-padding'>
+<div class='responsive-table'>
+<div class='scrollable-area'>
+<table class='data-table table table-bordered table-hover' style='margin-bottom:0;'>
+<thead Background=#336699>
+<tr>
+    <th><!--button id="check" class="btn btn-primary btn-mini">全选</button--></th>
+    <th>教师单位</th>
+    <th>教师姓名</th>
+    <th>课程名称</th>
+    <th>课程类别</th>
+    <th>学生院系</th>
+    <th>上课时间</th>
+    <th>上课地点</th>
+    <th>听课时间</th>
+    <th>听课专题</th>
+    <!--th>听课专家[督导]</th>
+    <th>确认修改</th>
+    <th>取消修改</th-->
+</tr>
+</thead>
+<tbody>
+    <volist name='clist' id='vo'>
+        <tr>
+            <td><input type='checkbox' value='{$vo.cid}' name='cid[]' /></td>
+            <td>{$vo.tcollege}</td>
+            <td>{$vo.tname}</td>
+            <td>{$vo.cname}</td>
+            <td>{$vo.category}</td>
+            <td>{$vo.scollege}</td>
+            <td>{$vo.ctime}</td>
+            <td>{$vo.cplace}</td>
+            <td>
+                <div>
+                    <div class='datepicker input-append' id='datepicker' style="margin:0; padding:0;">
+                        <input class='input-medium' data-format='yyyy-MM-dd' placeholder='选择日期' type='text' style="margin:0;" name='tktime{$vo.cid}'/>
+                        <span class='add-on'>
+                            <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
+                        </span>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <select name='topicname{$vo.cid}' class='select2 input-block-level' style="margin:0; padding:0; width:150px;">
+                    <option value='-1' selected="selected">---请选择---</option>
+                    <volist name='topiclist' id='vo1'>
+                    <option value='{$vo1.topicname}'>{$vo1.topicname}</option>
+                    </volist>
+                </select>
+            </td>
+            <!--td>
+                <select class='select2 input-block-level' style='width:90px;'>
+                    <volist name='dd' id='vo2'>
+                    <option value='{$vo2.name}'>{$vo2.name}</option>
+                    </volist>
+                </select>
+            </td>
+            <td>
+                <div class='text-center'>
+                    <a class='btn btn-success btn-mini' href='#'>
+                        <i class='icon-ok'></i>
+                    </a>
+                </div>
+            </td>
+            <td>
+                <div class='text-center'>
+                    <a class='btn btn-danger btn-mini' href='#'>
+                        <i class='icon-undo'></i>
+                    </a>
+                </div>
+            </td-->
+        </tr>
+    </volist>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='row-fluid' style="margin-top:20px; margin-bottom:50px;" name="dd" id="dd">
+    <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
+        <div class='box-header green-background'>
+            <div class='text-center'>督导基本信息
+                <button id="assginTask" class="btn btn-default pull-right" type='submit'>分配</button>
+            </div>
+        </div>
+        <div class='box-content box-no-padding'>
+            <div class='responsive-table'>
+                <div class='scrollable-area'>
+                    <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+                        <thead>
+                            <tr>
+                                <th>选择</th>
+                                <th>姓名</th>
+                                <th>单位</th>
+                                <th>职称</th>
+                                <th>手机</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="dd" id="vo">
+                            <tr>
+                                <td>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="did[]" value="{$vo.did}"></label>
+                                    </div>
+                                </td>
+                                <td>{$vo.name}</td>
+                                <td>{$vo.college}</td>
+                                <td>{$vo.title}</td>
+                                <td>{$vo.mobi}</td> 
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>     
+</form>
+
+</div>
+</div>
+</div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#umanager').nav_slide('tmanager','task');
+    });
+</script>  
+<include file="./jwcdd/Tpl/footerTemp.html" />

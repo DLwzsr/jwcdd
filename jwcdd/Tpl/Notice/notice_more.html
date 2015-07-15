@@ -1,0 +1,24 @@
+<include file="./jwcdd/Tpl/noticeHeader.html" />
+	<div class="context-warrp"><!--整个内容部分-->
+        <div class="column-rows"><!--第一行内容-->
+        	<div class="column-item item-all"><!--第一行第一列内容-->
+        			<div class="column-title"><!--title-->
+           				<b class="title-icon icon-arrow"></b>
+            			<span class="title-text">通知公告</span>
+        			</div>
+                    <div class="column-list">
+                    <ul>
+                        <volist name="list" id="vo">
+                            <li>
+                                <span class="time">{$vo.date}</span> 
+                                <b class="icon-triangle"></b>
+                                <a href="{:U('Notice/view',array('id'=>$vo['id']))}" target="_blank">{$vo.title}</a>
+                            </li> 
+                        </volist>
+                    </ul>
+                	</div>
+                	<div class="pagination" style="margin: auto;">{$page}</div>
+    			</div>
+        </div>
+    </div>
+<include file="./jwcdd/Tpl/noticeFooter.html" />

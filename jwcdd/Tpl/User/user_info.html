@@ -107,7 +107,12 @@
                                     <input type='hidden' name='uid' value='{$euser.uid}'>
                                     <button class='btn btn-primary' type='submit'><i class='icon-save'></i>&nbsp;保存</button>
                                     <button class='btn btn-danger' type='reset' style="margin-left: 20px;"><i class='icon-undo'></i>&nbsp;重置</button>
-                                    <button class='btn' style="margin-left: 20px;" formaction="{:U('User/user_dd')}"><i class='icon-remove'></i>&nbsp;取消</button>
+                                    <if condition="$flag eq 0">
+                                        <a class='btn' style="margin-left: 20px;" href="{:U('User/user')}"><i class='icon-remove'></i>&nbsp;取消</a>
+                                    <else />
+                                        <a class='btn' style="margin-left: 20px;" href="{:U('User/user_dd')}"><i class='icon-remove'></i>&nbsp;取消</a>
+                                    </if>
+                                    
                                 </div>
                             </form>
                         </div>
