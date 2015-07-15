@@ -3,6 +3,7 @@
 class AnalysisAction extends Action {
     public function analysis(){
     	checkLogin();
+        import('ORG.Util.Page');
     	$userRole = session('userRole');	//获取用户权限
         $userid = session('userId');
         $user = M('Users');
@@ -19,9 +20,9 @@ class AnalysisAction extends Action {
             if (!empty($_POST) && $this->isPost()) {
                 if ($this->_post('yt') != -1) {
                     $yt = $this->_post('yt');
-                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                    $len = strlen($yt) - 6;
-                    $year = substr($yt, 0, $len);
+                    $arr = explode(",", $arr);
+                    $year = $arr[0];
+                    $term = $arr[1];
                 }
                 if($this->_post('group') != -1){
                     $con['group'] = $this->_post('group');
@@ -79,21 +80,25 @@ class AnalysisAction extends Action {
             $con2['_logic'] = 'OR';
             $con['_complex']= $con2;
         }
-        
-    	$data = $hz->where($con)->order('rid asc')->select();
-
-    	$this->yt = $this->getYearTerm('hz_tkrecord');
+        $count = $hz->where($con)->count();
+        $Page = new Page($count,10);
+        $Page->setConfig("theme","<ul class='pagination'><li><span>%nowPage%/%totalPage% 页</span></li> %first% %prePage% %linkPage% %nextPage% %end%</ul>");
+    	$data = $hz->where($con)->order('rid asc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $college = M("College");
+    	//$this->yt = $this->getYearTerm('hz_tkrecord');
+        $this->yt = get_year_term();
     	$this->group = $this->getGroup($year,$term,'hz_tkrecord');
         $this->dd = $this->getDd($year,$term,'hz_tkrecord');
         $this->tea = $this->getTeacher($year,$term,'hz_tkrecord');
-        $this->college = $this->getCollege($year,$term,'hz_tkrecord');
+        $this->college = $college->field("college")->order('CONVERT(college USING gbk) asc')->select();
+        $this->scollege = $college->where("tea = 0")->field("college")->order('CONVERT(college USING gbk) asc')->select();
         $this->place = $this->getPlace($year,$term,'hz_tkrecord');
         $this->course = $this->getCourse($year,$term,'hz_tkrecord');
         $this->topic = $this->getTopic($year,$term,'hz_tkrecord');
     	$this->data = $data;
         $this->year = $year;
         $this->term = $term;
-        $this->term = $term;
+        $this->page = $Page->show();
         
         $this->display();
     }

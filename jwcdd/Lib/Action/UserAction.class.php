@@ -5,9 +5,24 @@ class UserAction extends Action {
 	//所有用户信息展示
     public function user(){
 		checkLogin();
+        import('ORG.Util.Page');
 		$table=M("Users");
+        $condition = "1 = 1";
+        if($this->isPost()){
+            $name = $this->_post("name");
+            $teaid = $this->_post("teaid");
+            if(!empty($name)){
+                $condition .= " and name = '".$name."'";
+            }
+            if(!empty($teaid)){
+                $condition .= " and teaid = '".$teaid."'";
+            }
+        }
 		//取所有用户信息
-		$data=$table->select();
+        $count = $table->where($condition)->count();
+        $Page = new Page($count,10);
+        $Page->setConfig("theme","<ul class='pagination'><li><span>%nowPage%/%totalPage% 页</span></li> %first% %prePage% %linkPage% %nextPage% %end%</ul>");
+		$data=$table->where($condition)->order("uid asc")->limit($Page->firstRow.','.$Page->listRows)->select();
 		for($i=0;$i<count($data);$i++)
 		{
 			if ($data[$i]['role']==1)
@@ -20,16 +35,23 @@ class UserAction extends Action {
 				$data[$i]['role']= '教学院长';
 			if ($data[$i]['role']==5)
 				$data[$i]['role']= '教师';
-		}									
+		}
 		//发送到页面
+        $this->page = $Page->show();
 		$this->userList=$data;
 		$this->display();
+    }
+    public function add_user(){
+        checkLogin();
+        $dgroup = M("Dgroup");
+        $dd_array = $dgroup->Distinct(true)->field("gname")->order("gname asc")->select();
+        $this->dd_array = $dd_array;
+        $this->display();
     }
 	//添加新用户
 	public function addUser(){
 		checkLogin();
 		$user = M("Users");
-		$dd = M(Dd);
 		$data['teaid'] = $this->_post('teaid');
 		$data['name'] = $this->_post('name');
 		$data['title'] = $this->_post('title');
@@ -38,8 +60,19 @@ class UserAction extends Action {
 		$data['phone'] = $this->_post('phone');
 		$data['mobi'] = $this->_post('mobi');
 		$data['email'] = $this->_post('email');
-		$user->data($data)->add();
-		$this->redirect("User/user");
+        $data['password'] = sha1(substr($data['idcard'], 6,8)); //sha1加密方式
+        $data['role'] = $this->_post('role');
+        $uid = $user->data($data)->add();
+        if($data['role'] == 2){
+            $dd = M("Dd");
+            $data1['year'] = session("year");
+            $data1['term'] = session("term");
+            $data1['uid'] = $uid;
+            $data1['pos'] = $this->_post('pos');
+            $data1['group'] = $this->_post('group');
+            $dd->data($data1)->add();
+        }
+		$this->success("新增成功","User/user");
 	}
 
     //个人信息查看
@@ -65,7 +98,7 @@ class UserAction extends Action {
             $data['mobi'] = $this->_post('mobi');
             $data['phone'] = $this->_post('phone');
             $data['email'] = $this->_post('email');
-            $data['password'] = $this->_post('password');
+            $data['password'] = sha1($this->_post('password'));
             $con['uid'] = $this->_post('uid');
             foreach ($data as $key => $value) {
                 if (empty($value)) {
@@ -93,11 +126,9 @@ class UserAction extends Action {
         $deldd = M("Users");
         $con['uid'] = $uid;
         $deldd->where($con)->delete();
-		$script = "<script>alert('Success!');location.href='http://localhost/jwcdd/index.php/User/user.html';</script>";
-		echo $script;
 		$userid = session('userId');
-		saveOperation($userid,'删除了Users表中id为'.$uid.'的字段');
-       // $this->redirect("User/user");
+		$this->saveOperation($userid,'删除了Users表中id为'.$uid.'的字段');
+        $this->redirect("User/user");
     }
 
     //显示要修改用户信息
@@ -130,7 +161,7 @@ class UserAction extends Action {
         $con['uid'] = $this->_post('uid');
         if($user->data($data)->where($con)->save()) {
             $this->saveOperation($userid,'用户修改用户信息 [uid='.$con['uid'].']');
-            }else{
+        }else{
                 $this->error('修改用户信息失败!');
         } 
         if ($flag==0) {
@@ -252,6 +283,16 @@ class UserAction extends Action {
         $con['did'] = $did;
         $deldd->where($con)->delete();
         $this->redirect("User/user_dd");
+    }
+
+    //将学校数据库的职工信息导入到本地数据库中
+    public function import_teacher(){
+        $tea = new TeaModel("Tea","syn_","DB_CONFIG");
+        $data = $tea->field("teaid,name,password,college,title,idcard,phone,mobi,email")->order("teaid asc")->select();
+        change_array_index($data);
+        $users = M("Users");
+        $users->addAll($data);
+        $this->redirect("User/user");
     }
 
     //记录用户操作

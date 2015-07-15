@@ -26,7 +26,7 @@
         <select class='select2 input-block-level' name="yt" id="yterm">
             <option value='-1' selected="selected"/>------请选择------
         <volist name="yt" id="vo">
-            <option value="{$vo.yt}">{$vo.yt}</option>
+            <option value="{$vo.value}">{$vo.item}</option>
         </volist>
         </select>
     </div>
@@ -37,12 +37,7 @@
 <div class='span2'>
     <div class='row-fluid'>
         <strong>教师名称</strong>
-        <select class='select2 input-block-level' name="teacher">
-            <option value='-1' selected="selected"/>------请选择------
-            <volist name="tea" id="vo">
-                <option value="{$vo.teaid}">{$vo.tname}</option>
-            </volist>
-        </select>
+        <input type="text" name="teacher" class="input-block-level" value="">
     </div>
 </div>
 <div class='span2'>
@@ -50,9 +45,11 @@
         <strong>教师职称</strong>
         <select class='select2 input-block-level' name="title">
             <option value='-1' selected="selected"/>------请选择------
-            <volist name="ttitle" id="vo">
-                <option value="{$vo.title}">{$vo.title}</option>
-            </volist>
+            <option value='教授' />教授
+            <option value='副教授' />副教授
+            <option value='讲师' />讲师
+            <option value='高级工程师' />高级工程师
+            <option value='工程师' />工程师
         </select>
     </div>
 </div>
@@ -62,7 +59,7 @@
         <select class='select2 input-block-level' name="tcollege">
             <option value='-1' selected="selected"/>------请选择------
         <volist name="tcollege" id="vo">
-            <option value="{$vo.tcollege}">{$vo.tcollege}</option>
+            <option value="{$vo.college}">{$vo.college}</option>
         </volist>
         </select>
     </div>
@@ -70,12 +67,7 @@
 <div class='span2'>
     <div class='row-fluid'>
         <strong>上课地点</strong>
-        <select class='select2 input-block-level' name="skplace">
-            <option value='-1' selected="selected"/>------请选择------
-        <volist name="place" id="vo">
-            <option value="{$vo.cplace}">{$vo.cplace}</option>
-        </volist>
-        </select>
+        <input type="text" name="skplace" class="input-block-level" value="" />
     </div>
 </div>
 </div>
@@ -84,39 +76,45 @@
 <div class='span2'>
     <div class='row-fluid'>
         <strong>课程名称</strong>
-        <select class='select2 input-block-level' name="course">
+        <input type="text" name="course" class="input-block-level">
+    </div>
+</div>
+<div class='span2'>
+    <div class='row-fluid'>
+        <strong>课程类别1</strong>
+        <select class='select2 input-block-level' name="category1">
             <option value='-1' selected="selected"/>------请选择------
-        <volist name="course" id="vo">
-            <option value="{$vo.cname}">{$vo.cname}</option>
-        </volist>
+            <option value="公共课">公共课</option>
+            <option value="专业课">专业课</option>
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
-        <strong>课程类别</strong>
-        <select class='select2 input-block-level' name="topic">
+        <strong>课程类别2</strong>
+        <select class='select2 input-block-level' name="category2">
             <option value='-1' selected="selected"/>------请选择------
-        <volist name="topic" id="vo">
-            <option value="{$vo.topic}">{$vo.topic}</option>
-        </volist>
+            <option value="必修课">必修课</option>
+            <option value="选修课">选修课</option>
+            <option value="任选课">任选课</option>
+            <option value="限选课">限选课</option>
         </select>
     </div>
 </div>
-<div class='span4'>
+<div class='span2'>
     <div class='row-fluid'>
         <strong>学生院系</strong>
         <select class='select2 input-block-level' name="scollege">
             <option value='-1' selected="selected"/>------请选择------
         <volist name="scollege" id="vo">
-            <option value="{$vo.scollege}">{$vo.scollege}</option>
+            <option value="{$vo.college}">{$vo.college}</option>
         </volist>   
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
-        <strong>年级</strong>
+        <strong>行政班级</strong>
         <select class='select2 input-block-level' name="sclass">
             <option value='-1' selected="selected"/>------请选择------
         <volist name="sclass" id="vo">
@@ -139,28 +137,30 @@
     <div class='box-content box-no-padding'>
         <div class='responsive-table'>
             <div class='scrollable-area'>
-                <table class='data-table table table-bordered table-striped' style='margin-bottom:0;'>
+                <table class='table table-bordered table-striped' style='margin-bottom:0;'>
                 <thead>
                 <tr>  
                     <td><strong>学年学期</strong></td> 
                     <td><strong>课程名称</strong></td>
-                    <td><strong>课程类别</strong></td>
+                    <td><strong>课程类别1</strong></td>
+                    <td><strong>课程类别2</strong></td>
                     <td><strong>教师姓名</strong></td>
                     <td><strong>教师单位</strong></td>
                     <td><strong>教师职称</strong></td>
                     <td><strong>上课地点</strong></td>
                     <td><strong>上课时间</strong></td>
                     <td><strong>学生院系</strong></td>
-                    <td><strong>学生年级</strong></td>
+                    <td><strong>行政班级</strong></td>
                     <td><strong>填写记录</strong></td>
                 </tr>
                 </thead>
                 <tbody>
                 <volist name="data" id="vo1">
                 <tr>
-                    <td>{$vo1.year}{$vo1.term}</td>
+                    <td>{$vo1.year}年第{$vo1.term}学期</td>
                     <td>{$vo1.cname}</td>
-                    <td>{$vo1.category}</td>
+                    <td>{$vo1.category1}</td>
+                    <td>{$vo1.category2}</td>
                     <td>{$vo1.tname}</td>
                     <td>{$vo1.tcollege}</td>
                     <td>{$vo1.title}</td>
@@ -179,6 +179,7 @@
                 </volist>
                 </tbody>
                 </table>
+                <div class="pagination" style="margin: auto; width:725px;">{$page}</div>
             </div>
         </div>
     </div>

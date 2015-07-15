@@ -157,10 +157,12 @@
             }
         });
         $(document).on("click","#submit",function(){
-            if($("#pwd1").val() != ""){
-                $("#pwd1").val($.md5($("#pwd1").val()));
+            if($("#pwd1").val() == $("#pwd2").val()){
+                $("#form").submit();
+            }else{
+                $("#info").show();
+                setTimeout(function(){$("#info").hide();},1500);
             }
-            $("#form").submit();
         });
     });
 </script>

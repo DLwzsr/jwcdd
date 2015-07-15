@@ -16,7 +16,7 @@ class LoginAction extends Action {
             $con['teaid'] = $teaid;
             $users = M('users');
             if (!$success->out || empty($success->out)){  //认证不成功，本地认证
-                $password = md5($password);
+                $password = sha1($password);
                 $users = M('users');
                 $pwd_db = $users->where($con)->getField('password');
                 if (!empty($pwd_db)) {
@@ -34,8 +34,41 @@ class LoginAction extends Action {
             setSession('userId',$user_data[0]['uid']);
             setSession('userRole',$user_data[0]['role']);
             $this->saveOperation($user_data[0]['uid'],'用户['.$user_data[0]['name'].']登录系统');
-            //记录当前用户的提醒
-            
+            //判断学期
+            $to_date = date("Y-m-d h:i:s");
+            $spring = date("Y")."-02-15 12:00:00";
+            $autumn = date("Y")."-08-15 12:00:00";
+            if(strtotime($to_date) >= strtotime($spring) && strtotime($to_date) < strtotime($autumn)){
+                setSession("year",date("Y"));
+                setSession("term",1);
+            }else{
+                setSession("term",0);
+                $month = date("m");
+                if($month >= 8){
+                    setSession("year",date("Y"));
+                }else{
+                    setSession("year",date("Y")-1);
+                }
+            }
+            $u_task = M("task_user");
+            $con1["uid"] = session("userId");
+            //$con1["year"] = session("year");
+            $con1["year"] = 2014;
+            $con1["term"] = session("term");
+            $con1["record"] = 0;
+            $con1["_string"] = "to_days(tktime)-to_days(curdate()) <= 14 and to_days(tktime)-to_days(curdate()) > 0";
+            $message = $u_task->where($con1)->field("cid,tktime,topic")->order("tktime asc")->limit("0,5")->select();
+            $con2["id"] = "BKS1";
+            $course = new CourseModel("Course","syn_","DB_CONFIG");
+            $length = count($message,0);
+            for ($i=0; $i < $length; $i++) { 
+                $con2["id"] = $message[$i]["cid"];
+                $course_array = $course->where($con2)->field("cname,cplace1")->find();
+                $message[$i]["cname"] = $course_array["CNAME"];
+                $message[$i]["place"] = $course_array["CPLACE1"];
+            }
+            setSession("message",$message);
+            setSession("msg_count",$length);
             $this->redirect('Index/index');
         }else {
             $this->error("非法操作！");

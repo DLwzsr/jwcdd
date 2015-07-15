@@ -25,7 +25,7 @@ class Page {
     // 分页总页面数
     protected $totalPages  ;
     // 总行数
-    protected $totalRows  ;
+    public $totalRows  ;
     // 当前页数
     protected $nowPage    ;
     // 分页的栏的总页数
@@ -43,6 +43,25 @@ class Page {
      * @param array $parameter  分页跳转的参数
      */
     public function __construct($totalRows,$listRows='',$parameter='',$url='') {
+        $this->totalRows    =   $totalRows;
+        $this->parameter    =   $parameter;
+        $this->varPage      =   C('VAR_PAGE') ? C('VAR_PAGE') : 'p' ;
+        if(!empty($listRows)) {
+            $this->listRows =   intval($listRows);
+        }
+        $this->totalPages   =   ceil($this->totalRows/$this->listRows);     //总页数
+        $this->coolPages    =   ceil($this->totalPages/$this->rollPage);
+        $this->nowPage      =   !empty($_GET[$this->varPage])?intval($_GET[$this->varPage]):1;
+        if($this->nowPage<1){
+            $this->nowPage  =   1;
+        }elseif(!empty($this->totalPages) && $this->nowPage>$this->totalPages) {
+            $this->nowPage  =   $this->totalPages;
+        }
+        $this->firstRow     =   $this->listRows*($this->nowPage-1);
+        if(!empty($url))    $this->url  =   $url; 
+    }
+
+    public function init($totalRows,$listRows='',$parameter='',$url='') {
         $this->totalRows    =   $totalRows;
         $this->parameter    =   $parameter;
         $this->varPage      =   C('VAR_PAGE') ? C('VAR_PAGE') : 'p' ;

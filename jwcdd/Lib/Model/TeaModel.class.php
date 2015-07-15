@@ -2,7 +2,7 @@
 	class TeaModel extends Model {
 		protected $tableName = "JGJBXX";
 		protected $fields = array(
-			'uuid','teaid','name','password','college','title','idcard','phone','mobi','email','role'
+			'UUID','TEAID','NAME','PASSWORD','COLLEGE','TITLE','IDCARD','PHONE','MOBI','EMAIL','ROLE'
 		);
 	}
 
