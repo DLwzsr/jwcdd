@@ -32,7 +32,7 @@
                             <li>
                                 <span class="time">{$vo.uptime}</span> 
                                 <b class="icon-triangle"></b>
-                                <a href="{$vo.fpath}" target="_blank">{$vo.ftitle}</a>
+                                <a href="{:U('Notice/download_file',array('fid'=>$vo['fid']))}" target="_blank">{$vo.ftitle}</a>
                             </li> 
                         </volist>
                     </ul>
@@ -44,26 +44,40 @@
                     <div id="calendar" style="margin-top: 10px;">
                     </div>
              	</div>
-                <div class="column-item item-block1"><!--第二列内容-->
+                <div class="column-item" style="padding-top: 10px;"><!--第二列内容-->
+                    <img src="/jwcdd/Public/images/links.png" width="700" height="280" border="0" usemap="#Map" />
+                    <map name="Map" id="Map">
+                        <area shape="rect" coords="3,32,171,78" href="{:U('Record/showRecord')}" />
+                        <area shape="rect" coords="33,112,173,156" href="{:U('Task/showTask')}" />
+                        <area shape="rect" coords="37,192,172,234" href="{:U('Analysis/analysis')}" />
+                        <area shape="rect" coords="519,4,696,46" href="http://172.22.80.41:8080/bnujw/public/dykb.kckb.html" />
+                        <area shape="rect" coords="511,49,696,94" href="http://172.22.80.41:8080/bnujw/public/dykb.jskb.html" />
+                        <area shape="rect" coords="512,96,696,142" href="http://172.22.80.41:8080/bnujw/public/dykb.jsikb.html" />
+                        <area shape="rect" coords="513,144,696,186" href="http://172.22.80.41:8080/bnujw/public/dykb.zykb.html" />
+                        <area shape="rect" coords="513,188,694,235" href="http://172.22.80.41:8080/bnujw/public/dykb.zrjckb.html" />
+                        <area shape="rect" coords="517,237,697,277" href="http://172.22.80.41:8080/bnujw/public/dykb.zkb.html" />
+                    </map>
+                </div>
+                <!-- <div class="column-item item-block1">第二列内容
                     <a href="http://172.22.80.41:8080/bnujw/public/dykb.kckb.html">
-            			<div class="column-item item-img">
-            			</div>
+                                        <div class="column-item item-img">
+                                        </div>
                     </a>
                     <a href="{:U('Record/showRecord')}">
                         <div class="column-item item-img1">
                         </div>
                     </a>
                 </div>
-                <div class="column-item item-block2"><!--第三列内容-->
+                <div class="column-item item-block2">第三列内容
                     <a href="{:U('Task/showTask')}">
                         <div class="column-item item-img2">
                         </div>
                     </a>
-        			<a href="{:U('Analysis/analysis')}">
+                                    <a href="{:U('Analysis/analysis')}">
                         <div class="column-item item-img3">
                         </div>
                     </a>
-                </div>
+                </div> -->
              </div>
         </div>
 <script type="text/javascript">

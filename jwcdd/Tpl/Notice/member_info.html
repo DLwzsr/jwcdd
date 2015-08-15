@@ -1,0 +1,34 @@
+<include file="./jwcdd/Tpl/noticeHeader.html" />
+	<div class="context-warrp"><!--整个内容部分-->
+        <div class="column-rows"><!--第一行内容-->
+        	<div class="member" style="margin: auto; font-size: 16px; line-height: 30px;">
+        		<empty name="data">
+        			<p>没有该督导的简介信息，我们会及时更新</p>
+        		<else />
+	        		<p style="text-align: center; margin-top: 20px; font-size: 18px;"><b>本科教学督导工作平台&nbsp;——&nbsp;{$data['name']}</b></p>
+	        		<hr>
+					<div class="content" style="padding-left: 10px;">
+						<p class="intro_content">
+							<span><strong>　　姓名:&nbsp;</strong>{$data['name']}</span>
+						</p>
+						<p class="intro_content">
+							<span><strong>　　职称:&nbsp;</strong>{$data['title']}</span>
+						</p>
+						<p class="intro_content">
+							<span><strong>　　院系:&nbsp;</strong>{$data['college']}</span>
+						</p>
+						<p class="intro_content">
+							<span><strong>　 Email:&nbsp;</strong>{$data['email']}</span>
+						</p>
+						<p class="intro_content">
+							<span><strong>办公电话:&nbsp;</strong>{$data['phone']}</span>
+						</p>
+						<p class="intro_content">
+							<span><strong>督导简介:&nbsp;</strong>{$data['intro']}</span>
+						</p>
+					</div>
+				</empty>
+        	</div>
+        </div>
+    </div>
+<include file="./jwcdd/Tpl/noticeFooter.html" />

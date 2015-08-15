@@ -8,7 +8,21 @@ a{color:#060606;text-decoration:none;}
 /*layout*/
 .container{width:1000px;margin:0px auto;}
 
-.header-warrp{background:url(../images/head.png) no-repeat;height:152px;}
+.header-warrp{
+	width: 1000px;
+	height:152px;
+}
+
+.intro_title{
+	margin-top: 35px;
+}
+
+.intro_content{
+	font-size: 16px;
+	line-height: 30px;
+	margin-left: 15px;
+	margin-right: 15px;
+}
 
 .index-navbar{height:35px;line-height:35px;background:url(../images/top-bg5.png) repeat-x;overflow:hidden;margin-top:2px;margin-bottom:1px;}
 .index-navbar ul{height:35px;float:right;}

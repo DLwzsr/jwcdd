@@ -5,19 +5,25 @@
 		*对接公共资源服务中心的数据接口，将课程数据下载到本地存储
 		*/
 		public function download_course(){
+			set_time_limit(0);
 			$length = count($data,0);
 			$course_data = array();
 			$i = 0;
+			$count = 0;
 			$users = M('users');
 			$loc_course = M('courses');
 			$course = M('brw_kbinfo_graduate', 'v_', 'DB_CONFIG');
-			$data = $course->where('PYCC_M = 1')->select();
+			/*$condition['PYCC_M'] = 1;
+			$condition['XN'] = array('in','2014,2015');*/
+			$data = $course->where('PYCC_M = 1 and XN in (2014,2015)')->order('XN desc, XQ_M desc')->select();
 			foreach ($data as $key => $value) {
 				$course_data[$i]['year'] = $value['XN'];
 				if ('0' == $value['XQ_M']){
 					$course_data[$i]['term'] = '秋季';
-				}else {
+				}elseif ('1' == $value['XQ_M']) {
 					$course_data[$i]['term'] = '春季';
+				}else {
+					$course_data[$i]['term'] = '夏季';
 				}
 				$course_data[$i]['week'] = $value['周次'];
 				$course_data[$i]['courseid'] = $value['课程代码'];
@@ -28,18 +34,22 @@
 				$course_data[$i]['cplace'] = $value['上课地点'];
 				$course_data[$i]['teaid'] = $value['第一任课教师工号'];
 				$course_data[$i]['tname'] = $value['第一任课教师姓名'];
-				$course_data[$i]['tcollege'] = '';
+				$course_data[$i]['scollege'] = '';
 				//获取教师所在的院系
 				$con['teaid'] = $value['第一任课教师工号'];
-				$scollege = $users->where($con)->getField('college');
-				$course_data[$i]['scollege'] = $scollege;
-				$course_data[$i]['sclass'] = $value['上课班号'];
+				$tea_info = $users->field('college, title')->where($con)->find();
+				$course_data[$i]['tcollege'] = $tea_info['college'];
+				//$course_data[$i]['title'] = $tea_info['title'];
+				$course_data[$i]['sclass'] = $value['课程代码'].$value['上课班号'];	//上课班级号
 				$course_data[$i]['content'] = '';
-				$i++;
+				//$i++;
+				$loc_course->add($course_data[$i],array(),true);
+				$count++;
 			}
-			dump($course_data);
+			//dump($course_data);
+			dump("Inserting data sum: ".$count);
 			//$loc_course->addAll($course_data);
-			//$this->saveOperation(session('userId'),'管理员用户下载了公资中心接口课程数据');
+			$this->saveOperation(session('userId'),'管理员用户下载了公资中心接口课程数据');
 			//$this->success('操作成功','Index/index');
 		}
 		public function update_course(){

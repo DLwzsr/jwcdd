@@ -11,7 +11,16 @@
 <link href="/jwcdd/Public/css/glDatePicker.default.css" rel="stylesheet" type="text/css" />
 <link href="/jwcdd/Public/css/notice.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="/jwcdd/Public/assets/javascripts/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jwcdd/Public/assets/javascripts/bootstrap/bootstrap.min.js"></script>
 <script type="text/javascript" src="/jwcdd/Public/js/glDatePicker.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.carousel').carousel({
+            interval: 3000
+        });
+    });
+</script>
 </head>
 
 <body>
@@ -31,4 +40,36 @@
 		</div>
         
         <div class="header-warrp"><!--页面logo-->
+            <div id="myCarousel" class="carousel slide">
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+                    <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="active item">
+                        <img src="/jwcdd/Public/images/head1.png" alt="">
+                        <!-- <div class="carousel-caption">
+                          <h4>图片标题</h4>
+                          <p>具体描述</p>
+                        </div> -->
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head2.png" alt="">
+                        <!-- <div class="carousel-caption">
+                          <h4>图片标题</h4>
+                          <p>具体描述</p>
+                        </div> -->
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head3.png" alt="">
+                        <!-- <div class="carousel-caption">
+                          <h4>图片标题</h4>
+                          <p>具体描述</p>
+                        </div> -->
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+            </div>
         </div>
