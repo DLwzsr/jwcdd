@@ -16,7 +16,7 @@
     if(session("?userName") && session("userName") != null){
       return true;
     }else{
-      header("location: http://172.16.14.73:8081/jwcdd/Login/login");
+      header("location: ".HTTP_ADDRESS_PORT."/jwcdd/Login/login");
     }
   }
   //upload image

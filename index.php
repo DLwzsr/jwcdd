@@ -13,6 +13,8 @@
   define('BUILD_DIR_SECURE',true);
   define('DIR_SECURE_FILENAME', 'default.html');
   define('DIR_SECURE_CONTENT', 'Deny Access!');
+  define('REAL_PATH',realpath(dirname(__FILE__).'/'));
+  define('HTTP_ADDRESS_PORT','http://172.16.14.73:8081');
 
   require './ThinkPHP/ThinkPHP.php';
 ?>

@@ -12,7 +12,7 @@
                             <li>
                                 <span class="time">{$vo.uptime}</span> 
                                 <b class="icon-triangle"></b>
-                                <a href="{$vo.fpath}" target="_blank">{$vo.ftitle}</a>
+                                <a href="{:U('Notice/download_file',array('fid'=>$vo['fid']))}" target="_blank">{$vo.ftitle}</a>
                             </li> 
                         </volist>
                     </ul>

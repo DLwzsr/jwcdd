@@ -74,6 +74,7 @@
                     <i class='icon-reorder'></i>
                 </a-->
                 <ul class='nav pull-right'>
+                    <li class="dark"><a href="{:U('Notice/notice')}">新闻首页</a></li>
                     <if condition="$Think.session.userRole eq 2">
                     <li class='dropdown medium only-icon widget'>
                         <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
@@ -144,10 +145,31 @@
 </li-->
 <if condition="$Think.session.userRole eq 1">
 <li id="unotice">
-    <a href='{:U('Notice/show_notice')}'>
+    <a class='dropdown-collapse' href='#'>
         <i class='icon-dashboard'></i>
-        <span>通知</span>
+        <span>首页管理</span>
+        <i class='icon-angle-down angle-down'></i>
     </a>
+    <ul class='nav nav-stacked'>
+        <li id="show_notice">
+            <a href='{:U('Notice/show_notice')}'>
+                <i class='icon-caret-right'></i>
+                <span>通知&nbsp;|&nbsp;简报</span>
+            </a>
+        </li>
+        <li id="show_dd">
+            <a href='{:U('Notice/show_dd')}'>
+                <i class='icon-caret-right'></i>
+                <span>督导介绍</span>
+            </a>
+        </li>
+        <li id="show_course">
+            <a href='{:U('Notice/show_course')}'>
+                <i class='icon-caret-right'></i>
+                <span>课程大纲</span>
+            </a>
+        </li>
+    </ul>
 </li>
 <li id="umanager">
     <a class='dropdown-collapse' href='#'>
