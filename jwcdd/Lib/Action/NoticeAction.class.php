@@ -10,8 +10,8 @@ class NoticeAction extends Action {
 	public function notice() {
 		$notice = M('notice');
 		$jb = M('files');
-		$data = $notice->where('1 = 1')->field('id,title,date')->order('date desc, id desc')->limit('0,6')->select();
-		$data_jb = $jb->where('1 = 1')->field('fid,ftitle,uptime')->order('uptime desc, fid desc')->limit('0,6')->select();
+		$data = $notice->where('1 = 1')->field('id,title,date')->order('date desc, id desc')->limit('0,5')->select();
+		$data_jb = $jb->where('1 = 1')->field('fid,ftitle,uptime')->order('uptime desc, fid desc')->limit('0,5')->select();
 		$len = count($data_jb,0);
 		for ($i=0; $i < $len; $i++) { 
 			$data_jb[$i]['uptime'] = substr($data_jb[$i]['uptime'],0,10);
@@ -135,11 +135,11 @@ class NoticeAction extends Action {
 		$file = iconv('utf-8','gb2312',$file);
 		$filename = $data['fname'];
 		if (!file_exists($file)) {
-			dump($file);
 			echo "File is not exist";
 			exit(0);
 		}
 	    header("Content-type: application/octet-stream");
+	    // header("Content-type: application/pdf");
 	    //处理中文文件名
 	    $ua = $_SERVER["HTTP_USER_AGENT"];
 	    $encoded_filename = rawurlencode($filename);
@@ -163,7 +163,7 @@ class NoticeAction extends Action {
 	public function member() {
 		$dd = M('users');
 		$map['role'] = 2;
-		$data = $dd->field('uid,name,title,college')->where($map)->order('uid desc')->select();
+		$data = $dd->field('uid,name,title,college')->where($map)->order('CONVERT(name USING gbk) asc')->select();
 		$this->data = $data;
 		$this->display();
 	}
@@ -189,18 +189,25 @@ class NoticeAction extends Action {
 		checkLogin();
 		$userRole = session('userRole');
 		if(1 == $userRole){
+			$condition = "1 = 1";
+			if($this->isPost()){
+	            $title = $this->_post("title");
+	            if(!empty($title)){
+	                $condition .= " and locate('$title', concat(title,content)) > 0 ";
+	            }
+	        }
 			$notice = M('notice');
 			import('ORG.Util.Page');
-			$count = $notice->count();
+			$count = $notice->where($condition)->count();
 	        $Page = new Page($count,10);
 	        $Page->setConfig("theme","<ul class='pagination'><li><span>%nowPage%/%totalPage% 页</span></li> %first% %prePage% %linkPage% %nextPage% %end%</ul>");
-			$data=$notice->where('1 = 1')->order("date desc, id desc")->limit($Page->firstRow.','.$Page->listRows)->select();
+			$data=$notice->where($condition)->order("date desc, id desc")->limit($Page->firstRow.','.$Page->listRows)->select();
 			//发送到页面
 	        $this->page = $Page->show();
 			$this->noticeList=$data;
 			$this->display();
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 		
 	}
@@ -214,7 +221,7 @@ class NoticeAction extends Action {
 		if(1 == $userRole){
 			$this->display();
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 		
 	}
@@ -256,7 +263,7 @@ class NoticeAction extends Action {
 			
 			$this->ajaxReturn($json);
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 		
 	}
@@ -274,7 +281,7 @@ class NoticeAction extends Action {
 			$this->notice_data = $data[0];
 			$this->display();
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 	}
 
@@ -289,7 +296,7 @@ class NoticeAction extends Action {
 			$notice->where($con)->delete();
 			$this->success('操作成功,信息已删除');
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 	}
 
@@ -311,7 +318,7 @@ class NoticeAction extends Action {
 			$this->noticeList=$data;
 			$this->display();
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 		
 	}
@@ -336,7 +343,7 @@ class NoticeAction extends Action {
 			$this->dd_users = $result;
 			$this->display();
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 	}
 
@@ -377,7 +384,7 @@ class NoticeAction extends Action {
 			
 			$this->ajaxReturn($json);
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 		
 	}
@@ -399,7 +406,7 @@ class NoticeAction extends Action {
 			$this->notice_data = $data[0];
 			$this->display();
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 	}
 
@@ -414,9 +421,185 @@ class NoticeAction extends Action {
 			$notice->where($con)->delete();
 			$this->success('操作成功,信息已删除');
 		}else{
-			$this->error('亲~ 你不具备这样的能力哦~');
+			$this->error('亲~ 你不具备这样的权限哦~');
 		}
 	}
+
+	/**
+	 * 数据下载页面
+	 */
+	public function data_download(){
+		checkLogin();
+		/*$year = (int)date('Y') + 1;
+		$data = array();
+		$k = 0;
+		for ($i = $year; $i >= 2013; $i -= 1) { 
+			$data[$k]['year'] = $i;
+			$data[$k]['text'] = (string)($i).'学年';
+			$k += 1;
+		}*/
+		$this->yt = get_year_term();
+		$this->display();
+	}
+	
+	/**
+	 * 对接东软的数据接口 获取职工数据 信息网络中心
+	 */
+	public function staff_download(){
+		checkLogin();
+		header('Content-Type:application/json; charset=utf-8');
+		$json = array();
+		$userRole = session('userRole');	//获取用户权限
+		
+	    if ($userRole == 1) {
+			set_time_limit(0);
+
+			$loc_users = M('users');
+			$tea = new TeaModel("Tea","syn_","DB_CONFIG2");
+			/*$data = $tea->count();
+			dump($tea);exit(0);*/
+	        $data = $tea->field("teaid,name,password,college,title,idcard,phone,mobi,email")->order("teaid asc")->select();
+			if (false === $data) {
+				$json = array('code'=>0, 'msg'=>'连接信息网络中心数据接口失败,请重新加载页面后再尝试');
+				$this->ajaxReturn($json);
+				exit(0);
+			}
+			foreach ($data as $key => $value) {
+				$staff_data = array();
+				$staff_data['teaid'] = $value['TEAID'];
+				$staff_data['name'] = $value['NAME'];
+				$staff_data['college'] = $value['COLLEGE'];
+				$staff_data['title'] = $value['TITLE'];
+				$staff_data['idcard'] = $value['IDCARD'];
+				$staff_data['phone'] = $value['PHONE'];
+				$staff_data['mobi'] = $value['MOBI'];
+				$staff_data['email'] = $value['EMAIL'];
+				$staff_data['role'] = 5;
+				$map = array();
+				$map['teaid'] = $staff_data['teaid'];
+				$map['name'] = $staff_data['name'];
+				$result = $loc_course->where($map)->find();
+				if (false === $result || empty($result)) {	//不存在 添加
+					$add_result = $loc_users->data($staff_data)->add();
+					if (false === $add_result) {
+						$json = array('code'=>0, 'msg'=>'插入本地数据库失败,请重新加载页面后再尝试');
+						$this->ajaxReturn($json);
+						exit(0);
+					}
+				}else {	//存在 更新
+					$loc_users->data($staff_data)->save();
+				}
+			}
+			$this->saveOperation(session('userId'),'管理员用户下载了信息网络中心职工数据');
+			$json = array('code'=>1, 'msg'=>'从信息网络中心成功下载或更新职工数据');
+			$this->ajaxReturn($json);
+			exit(0);
+		} else {
+			$json = array('code'=>0, 'msg'=>'亲~ 没有权限操作');
+			$this->ajaxReturn($json);
+			exit(0);
+		}
+	}
+
+	/**
+	* 对接公共资源服务中心的数据接口，将课程数据下载到本地存储
+	*/
+		public function download_course(){
+			checkLogin();
+			/*$course = M('brw_kbinfo_graduate', 'v_', 'DB_CONFIG');
+			$condition['PYCC_M'] = 1;
+			$condition['XN'] = 2015;
+			$condition['XQ_M'] = 1;
+			$condition = 'XN = 2015 and PYCC_M = 1 and XQ_M = 1';
+			$data = $course->where($condition)->count();
+			dump($data);
+			exit(0);*/
+			header('Content-Type:application/json; charset=utf-8');
+			$json = array();
+			$userRole = session('userRole');	//获取用户权限
+			
+	    	if ($userRole == 1) {
+				set_time_limit(0);
+				
+				$yt = $this->_post('year');
+				$arr = explode(",", $yt);
+                $year = (int)$arr[0];
+                $term = ($arr[1] == '春季' ? 1 : 0);
+				$users = M('users');
+				$loc_course = M('courses');
+				$course = M('brw_kbinfo_graduate', 'v_', 'DB_CONFIG');
+				/*$condition['PYCC_M'] = 1;
+				$condition['XN'] = $year;
+				$condition['XQ_M'] = $term;*/
+				$condition = 'PYCC_M = 1 and XN = '.$year.' and XQ_M = '.$term;
+				$data = $course->where($condition)->order('XN desc, XQ_M desc')->select();
+				//dump($data);exit(0);
+				if (false === $data) {
+					$json = array('code'=>0, 'msg'=>'连接公资中心数据接口失败,请重新加载页面后再尝试');
+					$this->ajaxReturn($json);
+					exit(0);
+				}
+				foreach ($data as $key => $value) {
+					$course_data = array();
+					$course_data['idr'] = $value['IDR'];
+					$course_data['year'] = $value['XN'];
+					if ('0' == $value['XQ_M']){
+						$course_data['term'] = '秋季';
+					}elseif ('1' == $value['XQ_M']) {
+						$course_data['term'] = '春季';
+					}else {
+						$course_data['term'] = '夏季';
+					}
+					$course_data['week'] = $value['周次'];
+					$course_data['courseid'] = $value['课程代码'];
+					$course_data['cname'] = $value['课程名称'];
+					$course_data['category1'] = $value['课程类别'];
+					$course_data['category2'] = $value['课程性质'];
+					$course_data['ctime'] = $value['节次'];
+					$course_data['cplace'] = $value['上课地点'];
+					$course_data['teaid'] = $value['第一任课教师工号'];
+					$course_data['tname'] = $value['第一任课教师姓名'];
+					$course_data['scollege'] = '';
+					//获取教师所在的院系和职称
+					$con['teaid'] = $value['第一任课教师工号'];
+					$tea_info = $users->field('college, title')->where($con)->find();
+					$course_data['tcollege'] = $tea_info['college'];
+					$course_data['title'] = $tea_info['title'];
+					$course_data['sclass'] = $value['课程代码'].$value['上课班号'];	//上课班级号
+					$course_data['content'] = '';
+					//$i++;
+					$map = array();
+					//$map['idr'] = $course_data['idr'];
+					$map['year'] = $course_data['year'];
+					$map['term'] = $course_data['term'];
+					$map['courseid'] = $course_data['courseid'];
+					$map['cname'] = $course_data['cname'];
+					$map['ctime'] = $course_data['ctime'];
+					$map['cplace'] = $course_data['cplace'];
+					$map['teaid'] = $course_data['teaid'];
+					$map['sclass'] = $course_data['sclass'];
+					$result = $loc_course->where($map)->find();
+					if (false === $result || empty($result)) {	//不存在 添加
+						$add_result = $loc_course->data($course_data)->add();
+						if (false === $add_result) {
+							$json = array('code'=>0, 'msg'=>'插入本地数据库失败,请重新加载页面后再尝试');
+							$this->ajaxReturn($json);
+							exit(0);
+						}
+					}else {	//存在 更新
+						$loc_course->data($course_data)->save();
+					}
+				}
+				$this->saveOperation(session('userId'),'管理员角色下载了公资中心接口课程数据');
+				$json = array('code'=>1, 'msg'=>'从公资中心成功下载或更新课程数据');
+				$this->ajaxReturn($json);
+				exit(0);
+			}else {
+				$json = array('code'=>0, 'msg'=>'亲~ 没有权限操作');
+				$this->ajaxReturn($json);
+				exit(0);
+			}
+		}
 
 	//记录用户操作
     private function saveOperation($uid,$operation){

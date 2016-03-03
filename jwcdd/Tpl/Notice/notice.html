@@ -1,4 +1,77 @@
 <include file="./jwcdd/Tpl/noticeHeader.html" />
+        <div class="header-warrp"><!--页面logo-->
+            <div id="myCarousel" class="carousel slide">
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+                    <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+                    <li data-target="#myCarousel" data-slide-to="3" class=""></li>
+                    <li data-target="#myCarousel" data-slide-to="4" class=""></li>
+                    <li data-target="#myCarousel" data-slide-to="5" class=""></li>
+                    <li data-target="#myCarousel" data-slide-to="6" class=""></li>
+                    <li data-target="#myCarousel" data-slide-to="7" class=""></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="active item">
+                        <img src="/jwcdd/Public/images/head1.png" alt="">
+                        <!-- <div class="carousel-caption">
+                            <h4>图片标题</h4>
+                            <p>描述内容</p>
+                        </div> -->
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head2.png" alt="">
+                        <div class="carousel-caption" style="padding: 10px;
+    font-size: 15px;">
+                            <p>刘川生书记和董奇校长在督导工作会议上讲话</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head3.png" alt="">
+                        <div class="carousel-caption" style="padding: 10px;
+    font-size: 15px;">
+                            <p>本科教学督导团部分成员合影&nbsp;&nbsp;&nbsp;&nbsp;2015年春季学期督导工作总结会</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head4.png" alt="">
+                        <div class="carousel-caption" style="padding: 10px;
+    font-size: 15px;">
+                            <p>主办北京地区高校教学督导工作交流会议&nbsp;&nbsp;&nbsp;&nbsp;督导团成员与信息科学与技术学院青年教师交流</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head5.png" alt="">
+                        <div class="carousel-caption" style="padding: 10px;
+    font-size: 15px;">
+                            <p>督导与院系负责人交流试卷管理工作&nbsp;&nbsp;&nbsp;&nbsp;专家组查阅院系课程考核管理文档</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head6.png" alt="">
+                        <div class="carousel-caption" style="padding: 10px;
+    font-size: 15px;">
+                            <p>专家组讨论汇总检查意见&nbsp;&nbsp;&nbsp;&nbsp;专家组向院系反馈检查意见</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head7.png" alt="">
+                        <div class="carousel-caption" style="padding: 10px;
+    font-size: 15px;">
+                            <p>专家组在外国语言文学学院检查毕业论文(设计)管理工作&nbsp;&nbsp;&nbsp;&nbsp;专家组交流专项检查意见</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/jwcdd/Public/images/head8.png" alt="">
+                        <div class="carousel-caption" style="padding: 10px;font-size: 15px;">
+                            <p>听课是督导老师的基本工作&nbsp;&nbsp;&nbsp;&nbsp;督导小组讨论学期工作计划</p>
+                        </div>
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+            </div>
+        </div>
         <div class="context-warrp"><!--整个内容部分-->
         	<div class="column-rows"><!--第一行内容-->
             	<div class="column-item item-xwdt"><!--第一行第一列内容-->
@@ -23,7 +96,7 @@
                 <div class="column-item item-xwdt2"><!--第一行第二列内容-->
         			<div class="column-title"><!--title-->
            				<b class="title-icon icon-arrow"></b>
-            			<span class="title-text">督导简报</span>
+            			<span class="title-text">督导简报&nbsp;\&nbsp;专题报告</span>
             			<a class="title-more" href="{:U('Notice/jb_more')}" target="_blank"></a>
         			</div>
                     <div class="column-list">
@@ -44,42 +117,129 @@
                     <div id="calendar" style="margin-top: 10px;">
                     </div>
              	</div>
-                <div class="column-item" style="padding-top: 10px;"><!--第二列内容-->
-                    <img src="/jwcdd/Public/images/links.png" width="700" height="280" border="0" usemap="#Map" />
+                <div class="column-item"><!--第一列内容-->
+                    <img src="/jwcdd/Public/images/links.png" style="width: 533px; height: 227px; margin-left: 80px; margin-top: 30px;" usemap="#Map">
                     <map name="Map" id="Map">
-                        <area shape="rect" coords="3,32,171,78" href="{:U('Record/showRecord')}" />
-                        <area shape="rect" coords="33,112,173,156" href="{:U('Task/showTask')}" />
-                        <area shape="rect" coords="37,192,172,234" href="{:U('Analysis/analysis')}" />
-                        <area shape="rect" coords="519,4,696,46" href="http://172.22.80.41:8080/bnujw/public/dykb.kckb.html" />
-                        <area shape="rect" coords="511,49,696,94" href="http://172.22.80.41:8080/bnujw/public/dykb.jskb.html" />
-                        <area shape="rect" coords="512,96,696,142" href="http://172.22.80.41:8080/bnujw/public/dykb.jsikb.html" />
-                        <area shape="rect" coords="513,144,696,186" href="http://172.22.80.41:8080/bnujw/public/dykb.zykb.html" />
-                        <area shape="rect" coords="513,188,694,235" href="http://172.22.80.41:8080/bnujw/public/dykb.zrjckb.html" />
-                        <area shape="rect" coords="517,237,697,277" href="http://172.22.80.41:8080/bnujw/public/dykb.zkb.html" />
+                        <area shape="rect" coords="14,9,180,63" href="{:U('Record/record')}" />
+                        <if condition="$Think.session.userRole lt 3">
+                            <area shape="rect" coords="183,85,351,142" href="{:U('Task/showTask')}" />
+                        <else />
+                            <area shape="rect" coords="183,85,351,142" href="{:U('Record/showRecord')}" />
+                        </if>
+                        <!-- <a data-toggle='modal' href='#course_link'></a> -->
+                        <area shape="rect" coords="13,161,180,218" data-toggle='modal' href="#course_link" />
+                        <area shape="rect" coords="351,163,524,220" href="http://kczx.bnu.edu.cn" />
+                        <area shape="rect" coords="356,8,522,65" href="{:U('Analysis/analysis')}" />
                     </map>
                 </div>
-                <!-- <div class="column-item item-block1">第二列内容
-                    <a href="http://172.22.80.41:8080/bnujw/public/dykb.kckb.html">
-                                        <div class="column-item item-img">
-                                        </div>
-                    </a>
-                    <a href="{:U('Record/showRecord')}">
-                        <div class="column-item item-img1">
-                        </div>
-                    </a>
+                <!-- <div class="column-item item-block">
+                    <div class="column-item item-img">
+                        <a href="{:U('Analysis/analysis')}">
+                            <img src="/jwcdd/Public/images/ckpjtj.png" width="226" height="87">
+                        </a>
+                    </div>
+                    <div class="column-item item-img">
+                        <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.kckb.html">
+                            <img src="/jwcdd/Public/images/kckb.png" width="226" height="87">
+                        </a>
+                    </div>
+                    <div class="column-item item-img">
+                        <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.jskb.html">
+                            <img src="/jwcdd/Public/images/jskb.png" width="226" height="87">
+                        </a>
+                    </div>
                 </div>
-                <div class="column-item item-block2">第三列内容
-                    <a href="{:U('Task/showTask')}">
-                        <div class="column-item item-img2">
-                        </div>
-                    </a>
-                                    <a href="{:U('Analysis/analysis')}">
-                        <div class="column-item item-img3">
-                        </div>
-                    </a>
+                <div class="column-item item-block">
+                    <div class="column-item item-img">
+                        <if condition="$Think.session.userRole lt 3">
+                            <a href="{:U('Task/showTask')}">
+                                <img src="/jwcdd/Public/images/ckddjl.png" width="226" height="87">
+                            </a>
+                        <else />
+                            <a href="{:U('Record/showRecord')}">
+                                <img src="/jwcdd/Public/images/ckddjl.png" width="226" height="87">
+                            </a>
+                        </if>
+                    </div>
+                    <div class="column-item item-img">
+                        <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.zykb.html">
+                            <img src="/jwcdd/Public/images/zykb.png" width="226" height="87">
+                        </a>
+                    </div>
+                    <div class="column-item item-img">
+                        <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.jsikb.html">
+                            <img src="/jwcdd/Public/images/jshkb.png" width="226" height="87">
+                        </a>
+                    </div>
+                </div>
+                <div class="column-item item-block">
+                    <div class="column-item item-img">
+                        <a href="{:U('Record/record')}">
+                            <img src="/jwcdd/Public/images/tkjl.png" width="226" height="87">
+                        </a>
+                    </div>
+                    <div class="column-item item-img">
+                        <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.zrjckb.html">
+                            <img src="/jwcdd/Public/images/jckb.png" width="226" height="87">
+                        </a>
+                    </div>
+                    <div class="column-item item-img">
+                        <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.zkb.html">
+                            <img src="/jwcdd/Public/images/qxkb.png" width="226" height="87">
+                        </a>
+                    </div>
                 </div> -->
              </div>
         </div>
+<div class='modal hide fade' id='course_link' role='dialog' tabindex='-1' style="width:780px; height: 285px; margin-left: -380px;">
+    <div class='modal-header'>
+        <button class='close' data-dismiss='modal' type='button'>&times;</button>
+        <h3>课程查询</h3>
+    </div> 
+    <form class='form form-horizontal' style='margin-bottom: 0;' enctype="multipart/form-data" method="post" action="{:U('Notice/uploadFile')}">
+        <div class='modal-body' style="height: 200px;">
+            <div class="column-item item-block">
+                <div class="column-item item-img">
+                    <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.kckb.html">
+                        <img src="/jwcdd/Public/images/kckb.png" width="226" height="87">
+                    </a>
+                </div>
+                <div class="column-item item-img">
+                    <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.jskb.html">
+                        <img src="/jwcdd/Public/images/jskb.png" width="226" height="87">
+                    </a>
+                </div>
+            </div>
+            <div class="column-item item-block">
+                <div class="column-item item-img">
+                    <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.zykb.html">
+                        <img src="/jwcdd/Public/images/zykb.png" width="226" height="87">
+                    </a>
+                </div>
+                <div class="column-item item-img">
+                    <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.jsikb.html">
+                        <img src="/jwcdd/Public/images/jshkb.png" width="226" height="87">
+                    </a>
+                </div>
+            </div>
+            <div class="column-item item-block">
+                <div class="column-item item-img">
+                    <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.zrjckb.html">
+                        <img src="/jwcdd/Public/images/jckb.png" width="226" height="87">
+                    </a>
+                </div>
+                <div class="column-item item-img">
+                    <a href="http://zyfw.prsc.bnu.edu.cn/public/dykb.zkb.html">
+                        <img src="/jwcdd/Public/images/qxkb.png" width="226" height="87">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class='modal-footer'>
+            <button class='btn' data-dismiss='modal'>关闭</button>
+        </div>
+    </form>
+</div>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#calendar').glDatePicker({

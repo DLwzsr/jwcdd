@@ -16,52 +16,119 @@
 <div class='row-fluid'>
     <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
         <div class='box-header green-background'>
-            <div class='text-center'>北京师范大学本科教学督导团专家听课记录表（2014版）</div>
+            <div class='text-center'>北京师范大学本科教学督导团专家听课记录表（2015版）</div>
         </div>
         <div class=''>
 		<form accept-charset="UTF-8" action="{:U('Task/saveEditRecordT')}" class="form form-horizontal" method="post" style="margin-bottom: 0;">
             <div class='responsive-table'>
                 <div class='scrollable-area'>
                     <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+                    	<tr>
+                            <th>课程类型</th>
+                            <td colspan="9">
+                                <label class="checkbox inline">
+                                	<if condition="strstr($record['ctype'], '绪论课') neq false">
+										<input type="checkbox" name="topic[]" value="绪论课" checked="checked">&nbsp;绪论课
+                                	<else />
+                                    	<input type="checkbox" name="topic[]" value="绪论课">&nbsp;绪论课
+                                    </if>
+                                </label>
+                                <label class="checkbox inline">
+                                	<if condition="strstr($record['ctype'], '新生研讨课') neq false">
+										<input type="checkbox" name="topic[]" value="新生研讨课" checked="checked">&nbsp;新生研讨课
+                                	<else />
+                                    	<input type="checkbox" name="topic[]" value="新生研讨课">&nbsp;新生研讨课
+                                    </if>
+                                </label>
+                                <label class="checkbox inline">
+                                	<if condition="strstr($record['ctype'], '通识课') neq false">
+										<input type="checkbox" name="topic[]" value="通识课" checked="checked">&nbsp;通识课
+                                	<else />
+                                    	<input type="checkbox" name="topic[]" value="通识课">&nbsp;通识课
+                                    </if>
+                                </label>
+                                <label class="checkbox inline">
+                                     <if condition="strstr($record['ctype'], '实验课') neq false">
+                                        <input type="checkbox" name="topic[]" value="实验课" checked="checked">&nbsp;实验课
+                                    <else />
+                                        <input type="checkbox" name="topic[]" value="实验课">&nbsp;实验课
+                                    </if>
+                                </label>
+                                <label class="checkbox inline">
+                                    <if condition="strstr($record['ctype'], '评教高分课') neq false">
+                                        <input type="checkbox" name="topic[]" value="评教高分课" checked="checked">&nbsp;评教高分课
+                                    <else />
+                                        <input type="checkbox" name="topic[]" value="评教高分课">&nbsp;评教高分课
+                                    </if>
+                                </label>
+                                <label class="checkbox inline">
+                                    <if condition="strstr($record['ctype'], '评教低分课') neq false">
+                                        <input type="checkbox" name="topic[]" value="评教低分课" checked="checked">&nbsp;评教低分课
+                                    <else />
+                                        <input type="checkbox" name="topic[]" value="评教低分课">&nbsp;评教低分课
+                                    </if>
+                                </label>
+                                <label class="checkbox inline">
+                                    <if condition="strstr($record['ctype'], '青年教师课') neq false">
+                                        <input type="checkbox" name="topic[]" value="青年教师课" checked="checked">&nbsp;青年教师课
+                                    <else />
+                                        <input type="checkbox" name="topic[]" value="青年教师课">&nbsp;青年教师课
+                                    </if>
+                                </label>
+                                <label class="checkbox inline">
+                                    <if condition="strstr($record['ctype'], '小学期课程') neq false">
+                                        <input type="checkbox" name="topic[]" value="小学期课程" checked="checked">&nbsp;小学期课程
+                                    <else />
+                                        <input type="checkbox" name="topic[]" value="小学期课程">&nbsp;小学期课程
+                                    </if>
+                                </label>
+                                <br/>
+                                <label class="checkbox inline">
+                                    其他&nbsp;&nbsp;<input type="text" class="input-xxlarge" name="others" value="{$record['others']}">
+                                </label>
+                                <div style="margin-top: 5px;">
+                                    <strong>课程类别:&nbsp;&nbsp;</strong><input type="text" name="category" value="{$record['category1']} / {$record['category2']}" disabled="disabled">
+                                </div>
+                            </td>
+                        </tr>
                         <tr>
                             <th>课程名称</th>
                             <td colspan="2">
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='cname' value='{$course.cname}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='cname' value='{$record.cname}' />
                             </td>
                             <th>学生院系/年级</th>
                             <td>
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='sc' value='{$course.scollege}{$course.sclass}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='sc' value='{$record.scollege}/{$record.sclass}' />
                             </td>
                             <th colspan="2">上课地点</th>
                             <td colspan="3">
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='cplase' value='{$course.cplace}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='cplase' value='{$record.skplace}' />
                             </td>  
                         </tr>
                         <tr>
                             <th>教师姓名</th>
                             <td>
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='tname' value='{$course.tname}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='tname' value='{$record.teaname}' />
                             </td>
                             <th >教师单位</th>
                             <td colspan="2">
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='tcollege' value='{$course.tcollege}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='tcollege' value='{$record.teacollege}' />
                             </td>
                             <th colspan="2">上课时间</th>
                             <td colspan="3">
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='ctime' value='{$course.ctime}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='ctime' value='{$record.sktime}' />
                             </td>
                         </tr>
                         <tr>
                             <th>职称</th>
                             <td>
-                                <input class='span12' id='full-name' type='text' disabled="disabled" name='title' value='{$course.title}' />
+                                <input class='span12' id='full-name' type='text' disabled="disabled" name='title' value='{$record.teatitle}' />
                             </td>
                             <th>听课时间</th>
                             <td colspan="2">
-                                <!--<input class='span12' id='full-name' type='text' value='' name='tktime' required data-msg-required="x"/>-->
                                 <div>
                                     <div class='datepicker input-append' id='datepicker'>
-                                        <input class='input-medium' data-format='yyyy-MM-dd' type='text' name='tktime' value='{$record.tktime}' required/>
+                                        <input class='input-medium' data-format='yyyy-MM-dd' type='text' name='tktime' value='{$record.tktime}' />
                                         <span class='add-on'>
                                         <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
                                         </span>
@@ -70,465 +137,412 @@
                             </td>
                             <th colspan="2">听课节数</th>
                             <td colspan="3">
-                                <input class='span12' id='full-name' type='text' name='tkjs' value='{$record.tkjs}' required/>
+                                <input class='span12' id='full-name' type='number' name='tkjs' value='{$record.tkjs}' required/>
                             </td>
                         </tr>   
                         <tr>
                             <th>主要授课内容</th>
                             <td colspan="9">
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="content" required><?php echo $record[content];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="content">{$record['content']}</textarea>
                                 </div>
                             </td>
                         </tr> 
                         <tr>
                             <th>评价指标</th>
-                            <th colspan="4" style="text-align:center">主要观察点及A级（好）评价标准</th>
+                            <th colspan="4" style="text-align:center">主要观察点及评价“好”的标准（请再五个等级中选择）</th>
                             <th>好</th>
                             <th>较好</th>
                             <th>一般</th>
                             <th>较差</th>
                             <th>差</th>
-                        </tr>                        
-                        <tr>
+                        </tr>
+						<tr>
                             <th rowspan="2">教学态度</th>
-                            <th colspan="4">*教学态度认真，爱岗敬业，精神饱满，仪表端庄</th>
-								<switch name="record.jxtd_rz" value = "{$record.jxtd_rz}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxtd_rz' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_rz'/></td>
-									<td><input id='' type='radio' value='3' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_rz'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_rz'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_rz' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_rz'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_rz'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='3' name='jxtd_rz' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxtd_rz'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_rz'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='3' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_rz' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxtd_rz'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='3' name='jxtd_rz' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_rz' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_rz' checked/></td>
-								</case>
-								<default/>
-							</switch>
-                        </tr>
-                        <tr>                            
-                            <th colspan="4">课前教学准备工作充分，熟悉教学内容</th>
-								<switch name="record.jxtd_kqzb" value = "{$record.jxtd_kqzb}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxtd_kqzb' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_kqzb'/></td>
-									<td><input id='' type='radio' value='3' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_kqzb'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_kqzb'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_kqzb' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_kqzb'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_kqzb'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='3' name='jxtd_kqzb' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxtd_kqzb'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_kqzb'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='3' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_kqzb' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxtd_kqzb'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='2' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='3' name='jxtd_kqzb' /></td>
-									<td><input id='' type='radio' value='4' name='jxtd_kqzb' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxtd_kqzb' checked/></td>
-								</case>
-								<default/>
-							</switch>
-                        </tr> 
-                        <tr>
-                            <th rowspan="4">教学内容</th>
-                            <th colspan="4">教学内容符合教学目标和教学大纲要求</th>
-							<switch name="record.jxnr_nrfh" value = "{$record.jxnr_nrfh}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrfh' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrfh'/></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrfh'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrfh'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrfh' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrfh'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrfh'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrfh' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrfh'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrfh'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrfh' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxnr_nrfh'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrfh' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrfh' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrfh' checked/></td>
-								</case>
-								<default/>
-							</switch>
-                        </tr> 
-                        <tr>
-                            <th colspan="4">*教学内容充实，体系完整，针对性强，讲授过程中对知识的运用自如</th>
-							<switch name="record.jxnr_nrcs" value = "{$record.jxnr_nrcs}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrcs' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrcs'/></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrcs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrcs'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrcs' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrcs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrcs'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrcs' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrcs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrcs'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrcs' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxnr_nrcs'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrcs' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrcs' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrcs' checked/></td>
-								</case>
-								<default/>
-							</switch>
-                        </tr> 
-                        <tr>
-                            <th colspan="4">*对问题的阐述简练准确，重点突出，思路清晰；语言生动富有感染力</th>
-							<switch name="record.jxnr_wtcs" value = "{$record.jxnr_wtcs}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxnr_wtcs' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_wtcs'/></td>
-									<td><input id='' type='radio' value='3' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_wtcs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_wtcs'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_wtcs' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_wtcs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_wtcs'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_wtcs' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxnr_wtcs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_wtcs'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_wtcs' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxnr_wtcs'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_wtcs' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_wtcs' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_wtcs' checked/></td>
-								</case>
-								<default/>
-							</switch>
-                        </tr>  
-                        <tr>
-                            <th colspan="4" cla>注重教学内容的更新；教学中能够反映或联系学科发展的新思想、新概念、新成果、及学科前沿与热点</th>
-							<switch name="record.jxnr_nrgx" value = "{$record.jxnr_nrgx}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrgx' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrgx'/></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrgx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrgx'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrgx' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrgx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrgx'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrgx' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrgx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrgx'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrgx' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxnr_nrgx'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='2' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='3' name='jxnr_nrgx' /></td>
-									<td><input id='' type='radio' value='4' name='jxnr_nrgx' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxnr_nrgx' checked/></td>
-								</case>
-								<default/>
-							</switch>
-                        </tr>
-                        <tr>
-                            <th rowspan="2">教学方法与手段</th>
-                            <th colspan="4">*能有效调控课堂秩序，并根据课程特点采取灵活多样的教学形式和方法，通过适当互动，调动学生学习情绪</th>
-							<switch name="record.jxff_ktzx" value = "{$record.jxff_ktzx}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxff_ktzx' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxff_ktzx'/></td>
-									<td><input id='' type='radio' value='3' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='4' name='jxff_ktzx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxff_ktzx'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='2' name='jxff_ktzx' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='4' name='jxff_ktzx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxff_ktzx'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='2' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='3' name='jxff_ktzx' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxff_ktzx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxff_ktzx'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='2' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='3' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='4' name='jxff_ktzx' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxff_ktzx'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='2' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='3' name='jxff_ktzx' /></td>
-									<td><input id='' type='radio' value='4' name='jxff_ktzx' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxff_ktzx' checked/></td>
-								</case>
-								<default/>
-							</switch>
+                            <th colspan="4">* 坚持立德树人，为人师表；爱岗敬业，精神饱满，仪表端庄</th>
+                            <td>
+                            	<if condition="$record['jxtd_rz'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxtd_rz' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxtd_rz' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxtd_rz'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxtd_rz' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxtd_rz' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxtd_rz'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxtd_rz' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxtd_rz' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxtd_rz'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxtd_rz' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxtd_rz' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxtd_rz'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxtd_rz' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxtd_rz' required/>
+                            	</if>
+                            </td>
                         </tr>
                         <tr>                            
 
-                            <th colspan="4">恰当有效利用多种教学媒体，辅助教学效果好；板书工整、清楚</th>
-							<switch name="record.jxff_fzjx" value = "{$record.jxff_fzjx}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxff_fzjx' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxff_fzjx'/></td>
-									<td><input id='' type='radio' value='3' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='4' name='jxff_fzjx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxff_fzjx'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='2' name='jxff_fzjx' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='4' name='jxff_fzjx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxff_fzjx'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='2' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='3' name='jxff_fzjx' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxff_fzjx'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxff_fzjx'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='2' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='3' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='4' name='jxff_fzjx' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxff_fzjx'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='2' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='3' name='jxff_fzjx' /></td>
-									<td><input id='' type='radio' value='4' name='jxff_fzjx' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxff_fzjx' checked/></td>
-								</case>
-								<default/>
-							</switch>
-                        </tr>  
+                            <th colspan="4">教学准备工作充分，教学理念先进，教学设计合理, 注重教书育人</th>
+                            <td>
+                            	<if condition="$record['jxtd_kqzb'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxtd_kqzb' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxtd_kqzb' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxtd_kqzb'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxtd_kqzb' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxtd_kqzb' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxtd_kqzb'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxtd_kqzb' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxtd_kqzb' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxtd_kqzb'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxtd_kqzb' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxtd_kqzb' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxtd_kqzb'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxtd_kqzb' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxtd_kqzb' required/>
+                            	</if>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th rowspan="2">教学内容</th>
+                            <th colspan="4">* 教学内容充实，科学性、学术性强，理论联系实际，符合教学目标和教学大纲要求</th>
+                            <td>
+                            	<if condition="$record['jxnr_nrfh'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxnr_nrfh' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxnr_nrfh' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxnr_nrfh'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxnr_nrfh' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxnr_nrfh' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxnr_nrfh'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxnr_nrfh' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxnr_nrfh' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxnr_nrfh'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxnr_nrfh' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxnr_nrfh' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxnr_nrfh'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxnr_nrfh' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxnr_nrfh' required/>
+                            	</if>
+                            </td>
+                        </tr> 
+                        <tr>
+
+                            <th colspan="4">注重教学内容的更新，选用高水平教材或自编讲义等，体现学科发展的新思想、新成果</th>
+                            <td>
+                            	<if condition="$record['jxnr_nrcs'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxnr_nrcs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxnr_nrcs' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxnr_nrcs'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxnr_nrcs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxnr_nrcs' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxnr_nrcs'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxnr_nrcs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxnr_nrcs' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxnr_nrcs'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxnr_nrcs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxnr_nrcs' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxnr_nrcs'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxnr_nrcs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxnr_nrcs' required/>
+                            	</if>
+                            </td>
+                        </tr> 
+                        <tr>
+                            <th rowspan="3">教学方法与手段</th>
+                            <th colspan="4">* 对问题的阐述科学、严谨，重点突出，逻辑性强，符合学生认知规律,突出学生主体性</th>
+                            <td>
+                            	<if condition="$record['jxff_ktzx'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxff_ktzx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxff_ktzx' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_ktzx'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxff_ktzx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxff_ktzx' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_ktzx'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxff_ktzx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxff_ktzx' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_ktzx'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxff_ktzx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxff_ktzx' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_ktzx'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxff_ktzx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxff_ktzx' required/>
+                            	</if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">* 教学方法灵活多样，有特色和风格，能有效调控课堂秩序，学生参与教学程度高</th>
+                            <td>
+                            	<if condition="$record['jxff_fzjx'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxff_fzjx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxff_fzjx' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_fzjx'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxff_fzjx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxff_fzjx' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_fzjx'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxff_fzjx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxff_fzjx' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_fzjx'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxff_fzjx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxff_fzjx' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_fzjx'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxff_fzjx' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxff_fzjx' required/>
+                            	</if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">有效利用多种教学媒体，板书与ppt工整、清楚，重点突出，辅助教学效果好</th>
+                            <td>
+                            	<if condition="$record['jxff_jxgj'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxff_jxgj' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxff_jxgj' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_jxgj'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxff_jxgj' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxff_jxgj' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_jxgj'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxff_jxgj' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxff_jxgj' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_jxgj'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxff_jxgj' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxff_jxgj' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxff_jxgj'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxff_jxgj' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxff_jxgj' required/>
+                            	</if>
+                            </td>
+                        </tr>   
                         <tr>
                             <th rowspan="2">教学效果</th>
-                            <th colspan="4">*能给予学生思考、联想和创新的启迪</th>
-							<switch name="record.jxxg_qdxs" value = "{$record.jxxg_qdxs}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxxg_qdxs' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_qdxs'/></td>
-									<td><input id='' type='radio' value='3' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='4' name='jxxg_qdxs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxxg_qdxs'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_qdxs' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='4' name='jxxg_qdxs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxxg_qdxs'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='3' name='jxxg_qdxs' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxxg_qdxs'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxxg_qdxs'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='3' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='4' name='jxxg_qdxs' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxxg_qdxs'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='3' name='jxxg_qdxs' /></td>
-									<td><input id='' type='radio' value='4' name='jxxg_qdxs' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxxg_qdxs' checked/></td>
-								</case>
-								<default/>
-							</switch>
+                            <th colspan="4">* 注重综合素质培养，激发学生思考，能给与学生联想与创新的启迪</th>
+                            <td>
+                            	<if condition="$record['jxxg_qdxs'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxxg_qdxs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxxg_qdxs' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxxg_qdxs'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxxg_qdxs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxxg_qdxs' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxxg_qdxs'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxxg_qdxs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxxg_qdxs' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxxg_qdxs'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxxg_qdxs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxxg_qdxs' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxxg_qdxs'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxxg_qdxs' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxxg_qdxs' required/>
+                            	</if>
+                            </td>
                         </tr>
                         <tr>                            
-                            <th colspan="4">能够帮助学生较好地掌握基本知识和提高技能</th>
-							<switch name="record.jxxg_bzzw" value = "{$record.jxxg_bzzw}">
-								<case value='1'>
-									<td><input id='' type='radio' value='1' name='jxxg_bzzw' checked /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_bzzw'/></td>
-									<td><input id='' type='radio' value='3' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='4' name='jxxg_bzzw'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxxg_bzzw'/></td>
-								</case>
-								<case value='2'>
-									<td><input id='' type='radio' value='1' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_bzzw' checked/></td>
-									<td><input id='' type='radio' value='3' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='4' name='jxxg_bzzw'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxxg_bzzw'/></td>
-								</case>
-								<case value='3'>
-									<td><input id='' type='radio' value='1' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='3' name='jxxg_bzzw' checked/></td>
-									<td><input id='' type='radio' value='4' name='jxxg_bzzw'/></td>                           
-									<td><input id='' type='radio' value='5' name='jxxg_bzzw'/></td>
-								</case>
-								<case value='4'>
-									<td><input id='' type='radio' value='1' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='3' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='4' name='jxxg_bzzw' checked /></td>                 
-									<td><input id='' type='radio' value='5' name='jxxg_bzzw'/></td>
-								</case>				
-								<case value='5'>
-									<td><input id='' type='radio' value='1' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='2' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='3' name='jxxg_bzzw' /></td>
-									<td><input id='' type='radio' value='4' name='jxxg_bzzw' /></td>                           
-									<td><input id='' type='radio' value='5' name='jxxg_bzzw' checked/></td>
-								</case>
-								<default/>
-							</switch>
+
+                            <th colspan="4">注重学生全面发展，能够帮助学生掌握基本知识和提高技能</th>
+                            <td>
+                            	<if condition="$record['jxxg_bzzw'] eq '1'">
+                            		<input id='' type='radio' value='1' name='jxxg_bzzw' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='1' name='jxxg_bzzw' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxxg_bzzw'] eq '2'">
+                            		<input id='' type='radio' value='2' name='jxxg_bzzw' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='2' name='jxxg_bzzw' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxxg_bzzw'] eq '3'">
+                            		<input id='' type='radio' value='3' name='jxxg_bzzw' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='3' name='jxxg_bzzw' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxxg_bzzw'] eq '4'">
+                            		<input id='' type='radio' value='4' name='jxxg_bzzw' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='4' name='jxxg_bzzw' required/>
+                            	</if>
+                            </td>
+                            <td>
+                            	<if condition="$record['jxxg_bzzw'] eq '5'">
+                            		<input id='' type='radio' value='5' name='jxxg_bzzw' required checked="checked"/>
+                            	<else />
+                            		<input id='' type='radio' value='5' name='jxxg_bzzw' required/>
+                            	</if>
+                            </td>
                         </tr>
                         <tr>
-                            <th>绪论课（引航课）评价</th>
+                            <th>绪论课（导引课）补充评价</th>
+                            <td colspan="9">
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="xlkpj">{$record['xlkpj']}</textarea>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>对课堂教学的评价与建议</th>
                             <td colspan="9">
                                 <div class="form-group">
                                     <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="xlkpj" required><?php echo $record[xlkpj];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="pjjy" required>{$record['pjjy']}</textarea>
                                 </div>
                             </td>
-                        </tr> 
+                        </tr>
                         <tr>
                             <th>助教工作情况</th>
                             <td colspan="9">
                                 <div class="form-group">
-                                    <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="zjgz" required><?php echo $record[zjgz];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="zjgz">{$record['zjgz']}</textarea>
                                 </div>
                             </td>
                         </tr> 
+                        
                         <tr>
-                            <th>对课堂教学的具体评价与建议</th>
+                            <th>对学生学习情况的意见或建议</th>
                             <td colspan="9">
                                 <div class="form-group">
-                                    <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="pjjy" required><?php echo $record[pjjy];?></textarea>
+                                	<div class="form-inline">
+                                        &nbsp;&nbsp;应到(名):&nbsp;&nbsp;<input class="input-small" type="number" value="{$record['yingdao']}" name="yingdao" >&nbsp;&nbsp;&nbsp;&nbsp;
+                                        实到(名):&nbsp;&nbsp;<input class="input-small" type="number" value="{$record['shidao']}" name="shidao" >&nbsp;&nbsp;&nbsp;&nbsp;
+                                        迟到(名):&nbsp;&nbsp;<input class="input-small" type="number" value="{$record['chidao']}" name="chidao" >&nbsp;&nbsp;&nbsp;&nbsp;
+                                        早退(名):&nbsp;&nbsp;<input class="input-small" type="number" value="{$record['zaotui']}" name="zaotui" >
+                                    </div>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="xsjy">{$record['xsjy']}</textarea>
                                 </div>
                             </td>
                         </tr> 
@@ -536,176 +550,72 @@
                             <th>总体评价</th>
                             <td colspan="9">
                                 <div class="form-group">
-								<switch name="record.ztpj" value = "{$record.ztpj}">
-								<case value='1'>
-									<label class="radio inline">
-                                        <input id='' type='radio' value='1' name='ztpj' checked/>&nbsp;&nbsp;好
+                                	<label class="radio inline">
+                                		<if condition="$record['ztpj'] eq '1'">
+		                            		<input id='' type='radio' value='1' name='ztpj' required checked="checked"/>&nbsp;&nbsp;好
+		                            	<else />
+		                            		<input id='' type='radio' value='1' name='ztpj' required/>&nbsp;&nbsp;好
+		                            	</if>
                                     </label>
                                     <label class="radio inline">
-                                        <input id='' type='radio' value='2' name='ztpj' />&nbsp;&nbsp;较好
+                                    	<if condition="$record['ztpj'] eq '2'">
+		                            		<input id='' type='radio' value='2' name='ztpj' required checked="checked"/>&nbsp;&nbsp;较好
+		                            	<else />
+		                            		<input id='' type='radio' value='2' name='ztpj' required/>&nbsp;&nbsp;较好
+		                            	</if>
                                     </label>
                                     <label class="radio inline">
-                                        <input id='' type='radio' value='3' name='ztpj' />&nbsp;&nbsp;一般
+                                    	<if condition="$record['ztpj'] eq '3'">
+		                            		<input id='' type='radio' value='3' name='ztpj' required checked="checked"/>&nbsp;&nbsp;一般
+		                            	<else />
+		                            		<input id='' type='radio' value='3' name='ztpj' required/>&nbsp;&nbsp;一般
+		                            	</if>
                                     </label>
                                     <label class="radio inline">
-                                        <input id='' type='radio' value='4' name='ztpj' />&nbsp;&nbsp;较差
+                                    	<if condition="$record['ztpj'] eq '4'">
+		                            		<input id='' type='radio' value='4' name='ztpj' required checked="checked"/>&nbsp;&nbsp;较差
+		                            	<else />
+		                            		<input id='' type='radio' value='4' name='ztpj' required/>&nbsp;&nbsp;较差
+		                            	</if>
                                     </label>
                                     <label class="radio inline">
-                                        <input id='' type='radio' value='5' name='ztpj' />&nbsp;&nbsp;差
+                                    	<if condition="$record['ztpj'] eq '5'">
+		                            		<input id='' type='radio' value='5' name='ztpj' required checked="checked"/>&nbsp;&nbsp;差
+		                            	<else />
+		                            		<input id='' type='radio' value='5' name='ztpj' required/>&nbsp;&nbsp;差
+		                            	</if>
                                     </label>
                                     <label class="radio inline">
-                                        <input id='' type='radio' value='6' name='ztpj' />&nbsp;&nbsp;未评价
+                                    	<if condition="$record['ztpj'] eq '6'">
+		                            		<input id='' type='radio' value='6' name='ztpj' required checked="checked"/>&nbsp;&nbsp;未评价
+		                            	<else />
+		                            		<input id='' type='radio' value='6' name='ztpj' required/>&nbsp;&nbsp;未评价
+		                            	</if>
                                     </label>
-								</case>
-								<case value='2'>
-									<label class="radio inline">
-                                        <input id='' type='radio' value='1' name='ztpj' />&nbsp;&nbsp;好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='2' name='ztpj' checked/>&nbsp;&nbsp;较好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='3' name='ztpj' />&nbsp;&nbsp;一般
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='4' name='ztpj' />&nbsp;&nbsp;较差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='5' name='ztpj' />&nbsp;&nbsp;差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='6' name='ztpj' />&nbsp;&nbsp;未评价
-                                    </label>
-								</case>
-								<case value='3'>
-									<label class="radio inline">
-                                        <input id='' type='radio' value='1' name='ztpj' />&nbsp;&nbsp;好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='2' name='ztpj' />&nbsp;&nbsp;较好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='3' name='ztpj' checked/>&nbsp;&nbsp;一般
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='4' name='ztpj' />&nbsp;&nbsp;较差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='5' name='ztpj' />&nbsp;&nbsp;差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='6' name='ztpj' />&nbsp;&nbsp;未评价
-                                    </label>
-								</case>
-								<case value='4'>
-									<label class="radio inline">
-                                        <input id='' type='radio' value='1' name='ztpj' />&nbsp;&nbsp;好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='2' name='ztpj' />&nbsp;&nbsp;较好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='3' name='ztpj' />&nbsp;&nbsp;一般
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='4' name='ztpj' checked/>&nbsp;&nbsp;较差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='5' name='ztpj' />&nbsp;&nbsp;差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='6' name='ztpj' />&nbsp;&nbsp;未评价
-                                    </label>
-								</case>				
-								<case value='5'>
-									<label class="radio inline">
-                                        <input id='' type='radio' value='1' name='ztpj' />&nbsp;&nbsp;好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='2' name='ztpj' />&nbsp;&nbsp;较好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='3' name='ztpj' />&nbsp;&nbsp;一般
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='4' name='ztpj' />&nbsp;&nbsp;较差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='5' name='ztpj' checked/>&nbsp;&nbsp;差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='6' name='ztpj' />&nbsp;&nbsp;未评价
-                                    </label>
-								</case>
-								<case value='6'>
-									<label class="radio inline">
-                                        <input id='' type='radio' value='1' name='ztpj' />&nbsp;&nbsp;好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='2' name='ztpj' />&nbsp;&nbsp;较好
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='3' name='ztpj' />&nbsp;&nbsp;一般
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='4' name='ztpj' />&nbsp;&nbsp;较差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='5' name='ztpj' />&nbsp;&nbsp;差
-                                    </label>
-                                    <label class="radio inline">
-                                        <input id='' type='radio' value='6' name='ztpj' checked/>&nbsp;&nbsp;未评价
-                                    </label>
-								</case>
-								<default/>
-							</switch>
                                 </div>
                             </td>
-                        </tr> 
-                        <tr>
-                            <th>对学生学习情况的意见或建议</th>
-                            <td colspan="9">
-                                <div class="form-group">
-                                    <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="xsjy" required><?php echo $record[xsjy];?></textarea>
-                                </div>
-                            </td>
-                        </tr> 
+                        </tr>
                         <tr>
                             <th>对教学环境、教学服务情况的意见与建议</th>
                             <td colspan="9">
                                 <div class="form-group">
                                     <!--label for="name">文本框</label-->
-                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="hjjy" required><?php echo $record[hjjy];?></textarea>
+                                    <textarea class="form-control" rows="3" style="margin-left: 0px; margin-right: 0px; width: 950px;" name="hjjy">{$record['hjjy']}</textarea>
                                 </div>
                             </td>
                         </tr>  
                         <tr>
-                            <td colspan="10">说明：<br/>1.本表只是听课的实况记录，仅作为教师教学情况评价的参考，不作为或决定对一门课程的全面评价。<br/>2.对每一个考察点进行评价，请在好、较好、一般、较差、差五个等级中选择，并选中相应位置。</td>
-                        </tr>   
-                        <!--<tr>
-                            <th>听课专家（签字）</th>
-                            <td colspan="2">
-                                <input class='span12' id='full-name' type='text'  value='{$record.xlkpj}'/>
-
+                            <td colspan="10">
+                            	说明：本表只是听课的实况记录，仅作为教师教学情况评价的参考，不作为或决定对一门课程的全面评价。
+                                <br />
+                                <div class="pull-right">北京师范大学教务处制表</div>
                             </td>
-                            <th>填表日期</th>
-                            <td colspan="6">
-                            <div>
-                                <div class='datepicker input-append' id='datepicker'>
-                                    <input class='input-medium' data-format='yyyy-MM-dd' type='text' />
-                                <span class='add-on'>
-                                <i data-date-icon='icon-calendar' data-time-icon='icon-time'></i>
-                                </span>
-                                </div>
-                            </div>                            
-                            </td>
-                        </tr>-->    
-						
+                        </tr> 
                     </table>
 					<input type='hidden' name='rid' value='{$record.rid}'>
+					<input type='hidden' name='rtype' value='1'>
                     <button class='btn btn-success' type='submit' style='margin-right:20px;'>
-					<i class='icon-save' type='submit'></i>保存</button>
+					<i class='icon-save' type='submit'></i>提交</button>
                     <button class='btn'><a href="{:U('Task/showTask')}">取消</a></button>
                 </div>
 				</div>

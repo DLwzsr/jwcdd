@@ -17,7 +17,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('.carousel').carousel({
-            interval: 3000
+            interval: 3500
         });
     });
 </script>
@@ -29,47 +29,18 @@
     		<ul>
                 <li><a href="{:U('Notice/notice')}">首页</a></li>  
                 <li class="navline"></li>
-        		<li><a href="{:U('Notice/intro')}">督导工作介绍</a></li>  
+        		<li><a href="{:U('Notice/intro')}">督导工作简介</a></li>  
         		<li class="navline"></li>
-                <li><a href="{:U('Notice/member')}">督导成员介绍况</a></li>
+                <li><a href="{:U('Notice/member')}">督导成员简介</a></li>
+                <!-- <li class="navline"></li>
+                <li><a href="http://kczx.bnu.edu.cn" target="_blank">课程大纲介绍</a></li> -->
                 <li class="navline"></li>
-                <li class="connect"><a href="{:U('Notice/contact')}">联系我们</a></li>
-                <li class="navline"></li>
-                <a href="{:U('Login/login')}"><li class="login"></li></a><!--用户登录-->
+                <li><a href="{:U('Notice/contact')}">联系我们</a></li>
+                <empty name="Think.session.userName">
+                    <!-- <a href="{:U('Login/login')}"><li class="login"></li></a> -->
+                <else />
+                    <li class="navline"></li>
+                    <li><a href="{:U('Index/index')}">平台管理</a></li>
+                </empty>
    		 	</ul>
 		</div>
-        
-        <div class="header-warrp"><!--页面logo-->
-            <div id="myCarousel" class="carousel slide">
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1" class=""></li>
-                    <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="active item">
-                        <img src="/jwcdd/Public/images/head1.png" alt="">
-                        <!-- <div class="carousel-caption">
-                          <h4>图片标题</h4>
-                          <p>具体描述</p>
-                        </div> -->
-                    </div>
-                    <div class="item">
-                        <img src="/jwcdd/Public/images/head2.png" alt="">
-                        <!-- <div class="carousel-caption">
-                          <h4>图片标题</h4>
-                          <p>具体描述</p>
-                        </div> -->
-                    </div>
-                    <div class="item">
-                        <img src="/jwcdd/Public/images/head3.png" alt="">
-                        <!-- <div class="carousel-caption">
-                          <h4>图片标题</h4>
-                          <p>具体描述</p>
-                        </div> -->
-                    </div>
-                </div>
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
-            </div>
-        </div>

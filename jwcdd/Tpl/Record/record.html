@@ -18,7 +18,7 @@
 <!--课程名称、学生院系、年级、课程类别 -->
 <div id="search">
 <form method="post" action="{:U('Record/record')}">
-    <button class="btn btn-large btn-success pull-right" type="submit" style="margin:0px 0px 5px 0px;" formaction="{:U('Task/showTask')}">查看我的任务</button>
+    <button class="btn btn-large btn-default pull-right" type="submit" style="margin:0px 0px 5px 0px;" formaction="{:U('Task/showTask')}">查看已填写听课记录</button>
 <div class='row-fluid'>
 <div class='span3'>
     <div class='row-fluid'>
@@ -26,7 +26,11 @@
         <select class='select2 input-block-level' name="yt" id="yterm">
             <option value='-1' selected="selected"/>------请选择------
         <volist name="yt" id="vo">
-            <option value="{$vo.value}">{$vo.item}</option>
+            <if condition="$yearTerm neq null and $vo.value eq $yearTerm">
+                <option value="{$vo.value}" selected="selected">{$vo.item}</option>
+            <else />
+                <option value="{$vo.value}">{$vo.item}</option>
+            </if>
         </volist>
         </select>
     </div>
@@ -37,7 +41,16 @@
 <div class='span2'>
     <div class='row-fluid'>
         <strong>教师名称</strong>
-        <input type="text" name="teacher" class="input-block-level" value="">
+        <select class='select2 input-block-level' name="teacher">
+            <option value='-1' selected="selected"/>------请选择------
+            <volist name="tname" id="vo">
+                <if condition="$selected['tname'] neq null and $vo.tname eq $selected['tname']">
+                    <option value="{$vo.tname}" selected="selected">{$vo.tname}</option>
+                <else />
+                    <option value="{$vo.tname}">{$vo.tname}</option>
+                </if>
+            </volist>
+        </select>
     </div>
 </div>
 <div class='span2'>
@@ -45,11 +58,13 @@
         <strong>教师职称</strong>
         <select class='select2 input-block-level' name="title">
             <option value='-1' selected="selected"/>------请选择------
-            <option value='教授' />教授
-            <option value='副教授' />副教授
-            <option value='讲师' />讲师
-            <option value='高级工程师' />高级工程师
-            <option value='工程师' />工程师
+            <volist name="title" id="vo">
+                <if condition="$selected['title'] neq null and $vo.title eq $selected['title']">
+                    <option value="{$vo.title}" selected="selected">{$vo.title}</option>
+                <else />
+                    <option value="{$vo.title}">{$vo.title}</option>
+                </if>
+            </volist>
         </select>
     </div>
 </div>
@@ -58,25 +73,47 @@
         <strong>教师单位</strong>
         <select class='select2 input-block-level' name="tcollege">
             <option value='-1' selected="selected"/>------请选择------
-        <volist name="tcollege" id="vo">
-            <option value="{$vo.college}">{$vo.college}</option>
-        </volist>
+            <volist name="tcollege" id="vo">
+                <if condition="$selected['tcollege'] neq null and $vo.tcollege eq $selected['tcollege']">
+                    <option value="{$vo.tcollege}" selected="selected">{$vo.tcollege}</option>
+                <else />
+                    <option value="{$vo.tcollege}">{$vo.tcollege}</option>
+                </if>
+            </volist>
         </select>
     </div>
 </div>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>上课地点</strong>
-        <input type="text" name="skplace" class="input-block-level" value="" />
+        <select class='select2 input-block-level' name="skplace">
+            <option value='-1' selected="selected"/>------请选择------
+            <volist name="cplace" id="vo">
+                <if condition="$selected['cplace'] neq null and $vo.cplace eq $selected['cplace']">
+                    <option value="{$vo.cplace}">{$vo.cplace}</option>
+                <else />
+                    <option value="{$vo.cplace}">{$vo.cplace}</option>
+                </if>
+            </volist>
+        </select>
     </div>
 </div>
 </div>
 
 <div class='row-fluid' style="margin-top:10px; margin-bottom:2px;">
-<div class='span2'>
+<div class='span3'>
     <div class='row-fluid'>
         <strong>课程名称</strong>
-        <input type="text" name="course" class="input-block-level">
+        <select class='select2 input-block-level' name="course">
+            <option value='-1' selected="selected"/>------请选择------
+            <volist name="cname" id="vo">
+                <if condition="$selected['cname'] neq null and $vo.cname eq $selected['cname']">
+                    <option value="{$vo.cname}" selected="selected">{$vo.cname}</option>
+                <else />
+                    <option value="{$vo.cname}">{$vo.cname}</option>
+                </if>
+            </volist>
+        </select>
     </div>
 </div>
 <div class='span2'>
@@ -84,8 +121,13 @@
         <strong>课程类别1</strong>
         <select class='select2 input-block-level' name="category1">
             <option value='-1' selected="selected"/>------请选择------
-            <option value="公共课">公共课</option>
-            <option value="专业课">专业课</option>
+            <volist name="category1" id="vo">
+                <if condition="$selected['category1'] neq null and $vo.category1 eq $selected['category1']">
+                    <option value="{$vo.category1}" selected="selected">{$vo.category1}</option>
+                <else />
+                    <option value="{$vo.category1}">{$vo.category1}</option>
+                </if>
+        </volist>
         </select>
     </div>
 </div>
@@ -94,21 +136,16 @@
         <strong>课程类别2</strong>
         <select class='select2 input-block-level' name="category2">
             <option value='-1' selected="selected"/>------请选择------
-            <option value="必修课">必修课</option>
-            <option value="选修课">选修课</option>
-            <option value="任选课">任选课</option>
-            <option value="限选课">限选课</option>
-        </select>
-    </div>
-</div>
-<div class='span2'>
-    <div class='row-fluid'>
-        <strong>学生院系</strong>
-        <select class='select2 input-block-level' name="scollege">
-            <option value='-1' selected="selected"/>------请选择------
-        <volist name="scollege" id="vo">
-            <option value="{$vo.college}">{$vo.college}</option>
-        </volist>   
+            <if condition="$selected['category2'] neq null and $selected['category2'] eq '必修'">
+                <option value="必修" selected="selected">必修课</option>
+            <else />
+                <option value="必修">必修课</option>
+            </if>
+            <if condition="$selected['category2'] neq null and $selected['category2'] eq '选修'">
+                <option value="选修" selected="selected">选修课</option>
+            <else />
+                <option value="选修">选修课</option>
+            </if>
         </select>
     </div>
 </div>
@@ -118,12 +155,16 @@
         <select class='select2 input-block-level' name="sclass">
             <option value='-1' selected="selected"/>------请选择------
         <volist name="sclass" id="vo">
-            <option value="{$vo.sclass}">{$vo.sclass}</option>
+            <if condition="$selected['sclass'] neq null and $vo.sclass eq $selected['sclass']">
+                <option value="{$vo.sclass}" selected="selected">{$vo.sclass}</option>
+            <else />
+                <option value="{$vo.sclass}">{$vo.sclass}</option>
+            </if>
         </volist>    
         </select>
     </div>
 </div>
-<button class="btn btn-defalut pull-right" style="margin:17px 0px 0px 0px;" type="submit">检索课程 | Search</button>
+<button class="btn btn-success pull-right" style="margin:17px 0px 0px 0px;" type="submit">检索课程 | Search</button>
 </div>
 </form>
 </div>
@@ -140,16 +181,16 @@
                 <table class='table table-bordered table-striped' style='margin-bottom:0;'>
                 <thead>
                 <tr>  
-                    <td><strong>学年学期</strong></td> 
+                    <td><strong>学年</strong></td>
+                    <td><strong>学期</strong></td>
                     <td><strong>课程名称</strong></td>
-                    <td><strong>课程类别1</strong></td>
-                    <td><strong>课程类别2</strong></td>
+                    <td><strong>课程类别</strong></td>
                     <td><strong>教师姓名</strong></td>
                     <td><strong>教师单位</strong></td>
                     <td><strong>教师职称</strong></td>
                     <td><strong>上课地点</strong></td>
                     <td><strong>上课时间</strong></td>
-                    <td><strong>学生院系</strong></td>
+                    <!-- <td><strong>学生院系</strong></td> -->
                     <td><strong>行政班级</strong></td>
                     <td><strong>填写记录</strong></td>
                 </tr>
@@ -157,16 +198,16 @@
                 <tbody>
                 <volist name="data" id="vo1">
                 <tr>
-                    <td>{$vo1.year}年第{$vo1.term}学期</td>
+                    <td>{$vo1["year"]}-{$vo1["year"]+1}</td>
+                    <td>{$vo1.term}</td>
                     <td>{$vo1.cname}</td>
-                    <td>{$vo1.category1}</td>
-                    <td>{$vo1.category2}</td>
+                    <td>{$vo1.category1}&nbsp;|&nbsp;{$vo1.category2}</td>
                     <td>{$vo1.tname}</td>
                     <td>{$vo1.tcollege}</td>
                     <td>{$vo1.title}</td>
                     <td>{$vo1.cplace}</td>
                     <td>{$vo1.ctime}</td>
-                    <td>{$vo1.scollege}</td>
+                    <!-- <td>{$vo1.scollege}</td> -->
                     <td>{$vo1.sclass}</td>
                     <td>
                         <div class='text-left'>

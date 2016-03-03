@@ -27,10 +27,28 @@
             </select>
         </div>
     </div>
-    <div class='span2'>
+    <div class='span3'>
+        <div class='row-fluid' style="margin-bottom:10px">
+            <strong>行政班级</strong>
+            <select class='select2 input-block-level' name="sclass">
+                <option value='-1' selected="selected"/>------请选择------
+            <volist name="sclass" id="vo">
+                <option value="{$vo.sclass}">{$vo.sclass}</option>
+            </volist>
+            </select>
+        </div>
+    </div>
+</div>
+<div class='row-fluid'>
+    <div class='span3'>
         <div class='row-fluid' style="margin-bottom:10px">
             <strong>教师名称</strong>
-            <input class='input-block-level' name="teaname" type="text" />
+            <select class='select2 input-block-level' name="teaname" id="teaname">
+                <option value='-1' selected="selected"/>------请选择------
+            <volist name="teaname" id="vo">
+                <option value="{$vo.tname}">{$vo.tname}</option>
+            </volist>
+            </select>
         </div>
     </div>
     <div class='span3'>
@@ -44,30 +62,6 @@
             </select>
         </div>
     </div>
-</div>
-<div class='row-fluid'>
-    <div class='span3'>
-        <div class='row-fluid' style="margin-bottom:10px">
-            <strong>学生院系</strong>
-            <select class='select2 input-block-level' name="scollege">
-                <option value='-1' selected="selected"/>------请选择------
-            <volist name="scollege" id="vo">
-                <option value="{$vo.college}">{$vo.college}</option>
-            </volist>
-            </select>
-        </div>
-    </div>
-    <div class='span3'>
-        <div class='row-fluid' style="margin-bottom:10px">
-            <strong>行政班级</strong>
-            <select class='select2 input-block-level' name="sclass">
-                <option value='-1' selected="selected"/>------请选择------
-            <volist name="sclass" id="vo">
-                <option value="{$vo.sclass}">{$vo.sclass}</option>
-            </volist>
-            </select>
-        </div>
-    </div>
     <button class="btn btn-defalut pull-right" style="margin:17px 194px 0px 0px;" type="submit">检索 | Search</button>
 </div>
 </form>
@@ -76,17 +70,16 @@
 <div class='row-fluid'>
 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
 <div class='box-header green-background'>
-    <div class='text-center'>{$year}学年 第{$term+1}学期 课程信息
-        <!--a href="#dd" class="btn btn-default pull-right">下一步</a-->
+    <div class='text-center'>课程检索结果信息
     </div>
 </div>
 <div class='box-content box-no-padding'>
 <div class='responsive-table'>
 <div class='scrollable-area'>
-<table class='data-table table table-bordered table-hover' style='margin-bottom:0;'>
+<table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
 <thead Background=#336699>
 <tr>
-    <th><!--button id="check" class="btn btn-primary btn-mini">全选</button--></th>
+    <th><input type='checkbox' value='-1' id='all_select' /></th>
     <th>教师单位</th>
     <th>教师姓名</th>
     <th>课程名称</th>
@@ -97,23 +90,20 @@
     <th>上课地点</th>
     <th>听课时间</th>
     <th>听课专题</th>
-    <!--th>听课专家[督导]</th>
-    <th>确认修改</th>
-    <th>取消修改</th-->
 </tr>
 </thead>
 <tbody>
     <volist name='clist' id='vo'>
         <tr>
-            <td><input type='checkbox' value='{$vo.id}' name='id[]' /></td>
+            <td><input type='checkbox' value='{$vo.cid}' name='cid[]' /></td>
             <td>{$vo.tcollege}</td>
-            <td>{$vo.teaname}</td>
+            <td>{$vo.tname}</td>
             <td>{$vo.cname}</td>
             <td>{$vo.category1}</td>
             <td>{$vo.category2}</td>
             <td>{$vo.scollege}</td>
-            <td>{$vo.ctime2}</td>
-            <td>{$vo.cplace1}</td>
+            <td>{$vo.ctime}</td>
+            <td>{$vo.cplace}</td>
             <td>
                 <div>
                     <div class='datepicker input-append' id='datepicker' style="margin:0; padding:0;">
@@ -157,6 +147,7 @@
     </volist>
 </tbody>
 </table>
+<div class="pagination" style="margin: auto; width:725px;">{$page}</div>
 </div>
 </div>
 </div>
@@ -212,6 +203,17 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#tmanager').nav_slide('tmanager','task');
+        var first = true;
+        $('#all_select').click(function(){
+            if(first) {
+                $("input[name='cid[]']").attr("checked",true);
+                first = false;
+            }else {
+                $("input[name='cid[]']").attr("checked",false);
+                first = true;
+            }
+            
+        });
     });
 </script>  
 <include file="./jwcdd/Tpl/footerTemp.html" />

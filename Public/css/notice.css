@@ -10,7 +10,7 @@ a{color:#060606;text-decoration:none;}
 
 .header-warrp{
 	width: 1000px;
-	height:152px;
+	height: 270px;
 }
 
 .intro_title{
@@ -129,13 +129,8 @@ a{color:#060606;text-decoration:none;}
 .item-calendar{ width:284px; min-height:234px; margin-right:10px;}
 .item-imgs{ width:284px; height:234px; background:url(../images/calendar.png) no-repeat top center; cursor:pointer; margin-top:5px; }
 
-.item-block1{ width:345px; min-height:234px; margin-right:0px;margin-top:30px;margin-left:5px;}
-.item-img{ width:345px; height:112px; background:url(../images/block_01.png) no-repeat top center; cursor:pointer; margin-bottom:8px;  }
-.item-img1{ width:345px; height:112px; background:url(../images/block_02.png) no-repeat top center; cursor:pointer;}
-
-.item-block2{ width:345px; min-height:234px; margin-top:30px;float:right}
-.item-img2{ width:345px; height:112px; background:url(../images/block_03.png) no-repeat top center; cursor:pointer; margin-bottom:8px; }
-.item-img3{ width:345px; height:112px; background:url(../images/block_04.png) no-repeat top center; cursor:pointer;}
+.item-block{ width:226px; height:87px; margin-right:0px;margin-top:15px;margin-left:9px;}
+.item-img{ width:226px; height:87px; cursor:pointer; margin-bottom:8px;  }
 
 /*公告通知*/
 .column-rows .item-ggtz{width:240px;height:230px;border:1px solid #e4e4e4;overflow:hidden;}
