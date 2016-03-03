@@ -30,7 +30,7 @@
                         <div class='box-content box-no-padding'>
                             <div class='responsive-table'>
                             <div class='scrollable-area'>
-                                <table class='data-table table table-bordered table-striped' style='margin-bottom:0;'>
+                                <table class='table table-bordered table-striped table-hover' style='margin-bottom:0;'>
                                 <thead>
                                 <tr>  
                                     <td><strong>工作证号</strong></td>
@@ -57,28 +57,28 @@
                                     <td>{$vo1.phone}</td>
                                     <td>{$vo1.email}</td>
                                     <td>
-                                        <div class='btn-group'><button class='btn dropdown-toggle' data-toggle='dropdown' style='margin-bottom:5px;'>
-                                        <if condition="$vo1.pos eq null">
-                                            未选定
-                                        <else />
-                                            {$vo1.pos}
-                                        </if>
-                                            <span class='caret'></span></button>
-                                        <ul class='dropdown-menu' style="z-index:100; position:relative;">
-                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'1.组员'))}">1.组员</a></li>
-                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'2.组长'))}">2.组长</a></li>
-                                        <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'3.团长'))}">3.团长</a></li>
-                                        </ul></div>
+                                        <div class='dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href="#">
+                                       <if condition="$vo1.pos eq null">
+                                           未选定
+                                       <else />
+                                           {$vo1.pos}
+                                       </if>
+                                           <span class='caret'></span></a>
+                                       <ul class='dropdown-menu' role="menu" aria-labelledby="dLabel" style="position: relative;">
+                                       <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'1.组员'))}">1.组员</a></li>
+                                       <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'2.组长'))}">2.组长</a></li>
+                                       <li><a href="{:U('User/user_mpos',array('did'=>$vo1['did'],'pos'=>'3.团长'))}">3.团长</a></li>
+                                       </ul></div>
                                     </td>
                                     <td>
-                                        <div class='btn-group'><button class='btn dropdown-toggle' data-toggle='dropdown' style='margin-bottom:5px'>
-                                        <if condition="$vo1.pos eq null">
+                                        <div class='dropdown'><a class='dropdown-toggle' data-toggle='dropdown' href="#">
+                                        <if condition="$vo1.group eq null">
                                             未选定
                                         <else />
                                             {$vo1.group}
                                         </if>
-                                            <span class='caret'></span></button>
-                                        <ul class='dropdown-menu' style="z-index:100; position:relative;">
+                                            <span class='caret'></span></a>
+                                        <ul class='dropdown-menu' role="menu" aria-labelledby="dLabel" style="position: relative;">
                                         <volist  name="dgroup" id="vo3"><li><a href="{:U('User/user_mgroup',array('did'=>$vo1['did'],'gname'=>$vo3['gname']))}">{$vo3.gname}</a></li></volist></ul></div>
                                     </td>
                                     <td>

@@ -5,81 +5,74 @@ class TaskAction extends Action {
         checkLogin(); 
         $userRole = session('userRole');    //获取用户权限
         if ($userRole == 1) {
+            import('ORG.Util.Page');
             $con0 = array();
             $con = array();
-            $course = new CourseModel('Course', 'syn_', 'DB_CONFIG');
+            $course = M('courses');
             $year = session('year');
             $term = session('term');
-            $con0['YEAR'] = $year = 2013;
-            $con0['TERM'] = $term = 0;
+            $con0['year'] = $year;
+            $con0['term'] = $term;
             if (!empty($_POST) && $this->isPost()) {
                 if ($this->_post('yt') != -1) {
                     $yt = $this->_post('yt');
-                    dump($yt);
-                    //exit(0);
                     $arr = explode(',', $yt);
-                    $con0['YEAR'] = $arr[0];
-                    $con0['TERM'] = $arr[1];
+                    $con0['year'] = $arr[0];
+                    $con0['term'] = $arr[1];
                 }
-                if($this->_post('teaname')!=NULL){
+                if($this->_post('teaname') != -1){
                     $teaname = $this->_post('teaname');
-                    $con['TEANAME'] = $teaname;
+                    $con['tname'] = $teaname;
                 }
-                if($this->_post('tcollege')!=-1){
+                if($this->_post('tcollege') != -1){
                     $tcollege = $this->_post('tcollege');
-                    $con['TCOLLEGE'] = $tcollege;
+                    $con['tcollege'] = $tcollege;
                 }
-                if($this->_post('scollege')!=-1){
+                /*if($this->_post('scollege') != -1){
                     $scollege = $this->_post('scollege');
-                    $con['SCOLLEGE'] = $scollege;
-                }
-                if($this->_post('sclass')!=-1){
+                    $con['scollege'] = $scollege;
+                }*/
+                if($this->_post('sclass') != -1){
                     $sclass = $this->_post('sclass');
-                    $con['SCLASS'] = $sclass;
+                    $con['sclass'] = $sclass;
                 }
             }
             else{
-                $con0['YEAR'] = $year;
-                $con0['TERM'] = $term;
+                $con0['year'] = $year;
+                $con0['term'] = $term;
             }
-            $con['COURSETYPE'] = '本科生课程';
-
-            $clist = $course->where($con)->where($con0)->limit(500)->select();
-            //exit(0);
-            change_array_index($clist);
+            //取课程信息
+            
+            $count = $course->where($con0)->count();
+            $Page = new Page($count,20);
+            $Page->setConfig("theme","<ul class='pagination'><li><span>%nowPage%/%totalPage% 页</span></li> %first% %prePage% %linkPage% %nextPage% %end%</ul>");
+            $clist=$course->where($con0)->where($con)->order("cid asc,cname asc")->limit($Page->firstRow.','.$Page->listRows)->select();
             $this->clist = $clist;
+            $this->page = $Page->show();
             
             $this->yt = get_year_term();
             $college = M("college");
-            $this->tcollege=$tcollege=$college->field('college')->order('CONVERT(college USING gbk) asc')->select();
-            $this->scollege=$scollege=$college->field('college')->order('CONVERT(college USING gbk) asc')->where('tea=0')->select();
-            $sclass=$course->Distinct(true)->field('sclass')->where($con0)->order('sclass asc')->select();
-            change_array_index($sclass);
-            $this->sclass=$sclass;
+            $this->tcollege=$tcollege=$college->field('college')->order('convert(college using gbk) asc')->select();
+            $this->scollege=$scollege=$college->field('college')->order('convert(college using gbk) asc')->where('tea=0')->select();
+            $this->sclass =$course->distinct(true)->field('sclass')->where($con0)->order('sclass asc')->select();
+            $this->teaname = $course->distinct(true)->field('tname')->where($con0)->order('convert(tname using gbk) asc')->select();
                        
             $this->year = $year;
             $this->term = $term;
 
-            $topiclist=M("Topic");
+            $topiclist=m("topic");
             $topiclist=$topiclist->where($con0)->select();
             $this->topiclist=$topiclist;
 
-            $dd=M("Dd");
-            $dd=$dd->join('dd_Users on dd_Users.uid=dd_Dd.uid')->field('teaid, did, name, title, college, mobi')->where($con0)->order('CONVERT(name USING gbk) asc')->select();
+            $dd=m("dd");
+            $dd=$dd->join('dd_users on dd_users.uid=dd_dd.uid')->field('teaid, did, name, title, college, mobi')->where($con0)->order('convert(name using gbk) asc')->select();
             $this->dd=$dd;
-            //dump($dd);
+            $this->display();
         }
         else {
-            $this->error('亲~ 你不具备这样的能力哦~');
+            $this->error('亲~ 你不具备这样的权限哦~');
+            $this->redirect("Index/index");
         }
-        $this->display();
-    }
-
-    //获取学年学期
-    private function getYearTerm($tableName){
-        $hz = M($tableName);
-        $data = $hz->Distinct(true)->field(array('concat(year,term)'=>'yt'))->group('year,term')->order('year desc')->select();
-        return $data;
     }
 
     //分配本学期督导听课任务
@@ -88,11 +81,7 @@ class TaskAction extends Action {
         $userid = session('userId');
         $task = M("Tasks");
         $taskdid = $this->_post('did');
-        $taskcid = $this->_post('id');
-        //dump($taskcid);
-        //exit(0);
-        //$taskc['tktime'] = $this->_post('tktime');
-        //$taskc['topicname'] = $this->_post('topicname');
+        $taskcid = $this->_post('cid');
         $len1 = count($taskdid);
         $len2 = count($taskcid);
         for ($i=0; $i < $len1; $i++) { 
@@ -100,6 +89,7 @@ class TaskAction extends Action {
                 $newtask['did'] = $taskdid[$i];
                 $newtask['cid'] = $taskcid[$j];
                 $newtask['check'] = 1;
+                $newtask['pass'] = 0;
                 $newtask['record'] = 0;
                 $newtask['tktime'] = NULL;
                 $newtask['topic'] = NULL;
@@ -117,7 +107,7 @@ class TaskAction extends Action {
                 }   
             }
         }
-        $this->redirect('Task/task');
+        $this->success('听课任务分配成功，请继续操作~', 'Task/task');
     }
 
     //显示本学期督导听课任务
@@ -128,39 +118,38 @@ class TaskAction extends Action {
         $userid = session('userId');
         $flag = 0;
         $con = array();
-        $task = M("Task_user");
-        $course = new CourseModel('Course', 'syn_', 'DB_CONFIG');
-        $topiclist=M("Topic");
-        $dd=M("Dd");
+        $task = M("task_user");
+        $topiclist=m("topic");
+        $dd=m("dd");
 
-        $this->year = $con0['YEAR'] = 2013;
-        $this->term = $con0['TERM'] = 0;
-
+        $this->year = $con0['year'] = session("year");
+        $this->term = $con0['term'] = session("term");
+        import('ORG.Util.Page');
         if ($userRole == 1) {
             if (!empty($_POST) && $this->isPost()) {
-                if($this->_post('cname')!=NULL){
+                if($this->_post('cname')!=null){
                     $cname = $this->_post('cname');
-                    $con['CNAME'] = $cname;
+                    $con['cname'] = $cname;
                 }
-                if($this->_post('teaname')!=NULL){
+                if($this->_post('teaname')!=null){
                     $teaname = $this->_post('teaname');
-                    $con['TEANAME'] = $teaname;
+                    $con['teaname'] = $teaname;
                 }
                 if($this->_post('tcollege')!=-1){
                     $tcollege = $this->_post('tcollege');
-                    $con['TCOLLEGE'] = $tcollege;
+                    $con['tcollege'] = $tcollege;
                 }
                 if($this->_post('tkmonth')!=-1){
                     $tkmonth = $this->_post('tkmonth');
-                    $con['TKMONTH'] = $tkmonth;
+                    $con['tkmonth'] = $tkmonth;
                 }
                 if($this->_post('scollege')!=-1){
                     $scollege = $this->_post('scollege');
-                    $con['SCOLLEGE'] = $scollege;
+                    $con['scollege'] = $scollege;
                 }
                 if($this->_post('dname')!=-1){
                     $dname = $this->_post('dname');
-                    $con['DNAME'] = $dname;
+                    $con['dname'] = $dname;
                 }
             }
         }
@@ -176,34 +165,16 @@ class TaskAction extends Action {
             }
         }
         else{
-            $this->error('亲~ 你不具备这样的能力哦~');
+            $this->error('亲~ 你不具备这样的权限哦~');
+            exit(0);
         }
-
-        $tlist=$task->where($con0)->where($con)->order('`tktime` asc, tid asc')->select();
-        // 根据tlist中的cid从oracle数据库中查询出课程信息
-        $con['COURSETYPE'] = '本科生课程';
-        $cid = i_array_column($tlist, 'cid');
-        for ($i=0; $i < count($cid); $i++) { 
-            $con1['ID'] = $cid[$i];
-            $clist = $course->where($con)->where($con0)->where($con1)->SELECT();
-            $tlist[$i]['cname'] = $clist[0]['CNAME'];
-            $tlist[$i]['category1'] = $clist[0]['CATEGORY1']; 
-            $tlist[$i]['category2'] = $clist[0]['CATEGORY2']; 
-            $tlist[$i]['ctime1'] = $clist[0]['CTIME1']; 
-            $tlist[$i]['ctime2'] = $clist[0]['CTIME2'];  
-            $tlist[$i]['week'] = $clist[0]['WEEK']; 
-            $tlist[$i]['cplace1'] = $clist[0]['CPLACE1']; 
-            $tlist[$i]['cplace2'] = $clist[0]['CPLACE2']; 
-            $tlist[$i]['teaid'] = $clist[0]['TEAID'];
-            $tlist[$i]['teaname'] = $clist[0]['TEANAME']; 
-            $tlist[$i]['tcollege'] = $clist[0]['TCOLLEGE']; 
-            $tlist[$i]['title'] = $clist[0]['TITLE']; 
-            $tlist[$i]['scollege'] = $clist[0]['SCOLLEGE'];
-            $tlist[$i]['sclassid'] = $clist[0]['SCLASSID'];
-            $tlist[$i]['sclass'] = $clist[0]['SCOLLEGE']; 
-        }      
-
+        $count = $task->where($con0)->where($con)->count();
+        $Page = new Page($count, 10);
+        $Page->setConfig("theme","<ul class='pagination'><li><span>%nowPage%/%totalPage% 页</span></li> %first% %prePage% %linkPage% %nextPage% %end%</ul>");
+        $tlist=$task->field('tid,week,ctime,cplace,cname,tname,tcollege,scollege,category1,category2,tktime,topic,dname,pass,record')->where($con0)->where($con)->order('record asc, pass asc, tktime asc, tid asc')->limit($Page->firstRow.','.$Page->listRows)->select();
+        //dump($tlist);exit(0);
         $this->tlist=$tlist;
+        $this->page = $Page->show();
         // 获取院系列表  
         $college = M("college");
         $this->tcollege=$tcollege=$college->field('college')->order('CONVERT(college USING gbk) asc')->select();
@@ -215,39 +186,17 @@ class TaskAction extends Action {
         $this->topiclist=$topiclist;
   
         $dd=$dd->join('dd_Users on dd_Users.uid=dd_Dd.uid')->field('teaid, did, name, title, college, mobi')->where($con)->order('CONVERT(name USING gbk) asc')->select();
-            $this->dd=$dd;
+        $this->dd=$dd;
         
         $this->display();
-    }
-
-
-    //下面三个函数用于修改督导听课任务
-    public function editTaskcheck($tid=-1, $check=-1){
-        checkLogin();
-        $userid = session('userId');
-        $userRole = session('userRole');
-        if ($userRole == 1) {
-            $task = M("Tasks");
-            $con['tid'] = $tid;
-            $data['check'] = $check;
-            if($task->where($con)->data($data)->save()) {
-               $this->saveOperation($userid,'用户审核通过听课任务 [tid='.$tid.']');
-            }else{
-                $this->error('审核听课任务失败！');
-            }  
-        }
-        else{
-            $this->error('亲~ 你不具备这样的能力哦~');
-        }
-        $this->redirect('Task/showTask');  
     }
 
     public function taskinfo($tid){
         checkLogin();
         $task = M("Tasks");
         $task_course = M("Task_course");
-        $con0['year'] = 2013;
-        $con0['term'] = 0;
+        $con0['year'] = session('year');
+        $con0['term'] = session('term');
 
         $con['tid'] = $tid;
         $task_course = $task_course->where($con)->select();
@@ -263,7 +212,7 @@ class TaskAction extends Action {
         $this->topiclist = $topiclist;
 
         $dd=M("Dd");
-        $dd=$dd->join('dd_Users on dd_Users.uid=dd_Dd.uid')->field('teaid, did, name, title, college, mobi')->where($con0)->order('CONVERT(name USING gbk) asc')->select();
+        $dd=$dd->join('dd_Users on dd_Users.uid=dd_dd.uid')->field('did, name')->where($con0)->order('CONVERT(name USING gbk) asc')->select();
         $this->dd=$dd;
 
         $this->display();
@@ -279,68 +228,20 @@ class TaskAction extends Action {
         $data['tktime'] = $this->_post('tktime');
         $data['topic'] = $this->_post('topic');
         $data['did'] = $this->_post('did');
-        $data['check'] = $this->_post('check');
 
         if($userRole == 1){
-            $task->data($data)->where($con)->save();
-            if ($task->where($con)->data($data)->save()) {
+            $result = $task->where($con)->data($data)->save();
+            if ($result) {
                 $this->saveOperation($userid,'用户修改听课任务 [tid='.$tid.']');
             }else{
                 $this->error('修改听课任务失败！');
             }
         }
         else{
-            $this->error('亲~ 你不具备这样的能力哦~');
+            $this->error('亲~ 你不具备这样的权限哦~');
         }
         $this->redirect("Task/showTask");
     }
-    
-    /*  
-    public function editTasktopic($tid=-1, $topic=-1){
-        //$userid = session('userid');
-        $userid = 1;
-        $task = M("Tasks");
-        $con['tid'] = $tid;
-        $data['topic'] = $topic;
-        if ($task->where($con)->data($data)->save()) {
-            $this->saveOperation($userid,'用户修改任务的听课专题 [tid='.$tid.']');
-        }else{
-            $this->error('修改听课专题失败！');
-        }
-        $this->redirect('Task/showTask');
-    }
-
-    public function editTaskdd($tid=-1, $did=-1){
-        //$userid = session('userid');
-        $userid = 1;
-        $task = M("Tasks");
-        $con['tid'] = $tid;
-        $data['did'] = $did;
-        if($task->where($con)->data($data)->save()) {
-            $this->saveOperation($userid,'用户修改听课督导 [tid='.$tid.']');
-        }else{
-            $this->error('修改听课督导失败！');
-        }
-        $this->redirect('Task/showTask');
-    }
-
-        public function editTasktime(){
-        $task = M("Tasks");
-        $tid = $this->_post('tid');
-        $tktime = $this->_post('tktime');
-        $con['tid'] = $tid;
-        $data['tktime'] = $tktime;
-        header('Content-Type:application/json; charset=utf-8');
-        if($task->where($con)->save($data)){
-            $json = array("code"=>1,"message"=>"修改听课时间成功");
-        }else{
-            $json = array("code"=>0,"message"=>"修改听课时间失败");
-        }
-        exit(json_encode($json));
-    }
-
-    */
-
 
     //删除听课任务记录
     public function delTask($tid=-1){
@@ -358,7 +259,7 @@ class TaskAction extends Action {
             }
             $this->redirect("Task/showTask");
         }else{
-            $this->error('亲~ 你不具备这样的能力哦~');
+            $this->error('亲~ 你不具备这样的权限哦~');
         }   
     } 
 
@@ -370,7 +271,7 @@ class TaskAction extends Action {
         $task_course= M("task_course");
         $record_add = M("record_add");
  
-        if ($userRole == '1'|'2'){
+        if ($userRole == 1 || $userRole == 2){
             $con['tid'] = $tid;//查看是否已经有这一听课记录
             $task_course = $task_course->where($con)->select();
 
@@ -379,33 +280,62 @@ class TaskAction extends Action {
                 $data_course = $record_add->where($con0)->select();
                 $this->data_course=$data_course[0];
                 $this->task_course=$task_course[0];
-                $this->display();
+                if (!empty($_POST) && $this->isPost()) {
+                    $type = (int)$this->_post('tktype');
+                    switch ($type) {
+                        case 1:
+                            $this->display('addRecordT');
+                            break;
+                        case 2:
+                            $this->display('addLab');
+                            break;
+                        case 3:
+                            $this->display('addXiao');
+                            break;
+                        default:
+                            $this->display('addRecordT');
+                            break;
+                    }
+                }else{
+                    $this->display("addRecordT");
+                } 
             }
+        }else{
+            $this->error("亲~您不具备权限哈~");
         }
     }
 
     //修改听课记录
-    public function editRecordT($tid){
+    public function editRecordT($tid = -1){
         checkLogin();
         $userRole = session('userRole');    //获取用户权限
         $userid = session('userId');
-        if ($userRole <= 2 ){
+        if ($userRole == 2 || $userRole == 1){
             $record = M('records');
             $course = M('record_add');
 
             $con1['tid'] = $tid;
             $data_record = $record->where($con1)->select();//从记录表中找到记录信息
             $this->record=$data_record[0];
-            
-            $con2['courseid'] = $data_record[0]['courseid'];
-            $data_course = $course->where($con2)->select();//从视图中找到课程信息
-
-            $this->course=$data_course[0];
+            $rtype = $data_record[0]['rtype'];
+            switch ($rtype) {
+                case 1:
+                    $this->display('editRecordT');
+                    break;
+                case 2:
+                    $this->display('editLab');
+                    break;
+                case 3:
+                    $this->display('editXiao');
+                    break;
+                default:
+                    $this->display('editRecordT');
+                    break;
+            }
         }
         else{
-            $this->error('亲~ 你不具备这样的能力哦~');
+            $this->error('亲~ 你不具备这样的权限哦~');
         }
-        $this->display();
     }
 
     //保存听课记录
@@ -432,17 +362,26 @@ class TaskAction extends Action {
         $data['content'] = $this->_post('content');//听课内容
         $data['skplace'] = $data_course[0]['cplace'];
         $data['sktime'] = $data_course[0]['ctime'];
+        $data['category1'] = $data_course[0]['category1'];
+        $data['category2'] = $data_course[0]['category2']; 
+        
         $data['tktime'] = $this->_post('tktime');//听课时间
         $data['tkjs'] = $this->_post('tkjs'); //听课节数-这里要做两个框-开始节次，结束节次
         $data['tbtime'] = date('Y-m-d');//获取填表日期
         $data['jxtd_rz'] = $this->_post('jxtd_rz');//教学态度-认真
         $data['jxtd_kqzb'] = $this->_post('jxtd_kqzb');//教学态度-课前准备
+        if ($this->_post('jxtd_sy') != NULL){
+            $data['jxtd_sy'] = $this->_post('jxtd_sy');//教学态度-实验
+        }
         $data['jxnr_nrfh'] = $this->_post('jxnr_nrfh');//教学内容-内容符合
         $data['jxnr_nrcs'] = $this->_post('jxnr_nrcs');//教学内容-内容充实
-        $data['jxnr_wtcs'] = $this->_post('jxnr_wtcs');//教学内容-问题充实
-        $data['jxnr_nrgx'] = $this->_post('jxnr_nrgx');//教学内容-内容更新
+        if ($this->_post('jxnr_sy') != NULL){
+            $data['jxnr_sy'] = $this->_post('jxnr_sy');//教学内容-实验
+        }
+        /*$data['jxnr_nrgx'] = $this->_post('jxnr_nrgx');//教学内容-内容更新*/
         $data['jxff_ktzx'] = $this->_post('jxff_ktzx');//教学辅助-课堂秩序
         $data['jxff_fzjx'] = $this->_post('jxff_fzjx');//教学辅助-辅助教学
+        $data['jxff_jxgj'] = $this->_post('jxff_jxgj');//教学辅助-教学工具
         $data['jxxg_qdxs'] = $this->_post('jxxg_qdxs');//教学效果-启迪学生
         $data['jxxg_bzzw'] = $this->_post('jxxg_bzzw');//教学效果-帮助掌握
         $data['xlkpj'] = $this->_post('xlkpj');//绪论课评价
@@ -451,8 +390,71 @@ class TaskAction extends Action {
         $data['ztpj'] = $this->_post('ztpj');//总体评价
         $data['xsjy'] = $this->_post('xsjy');//学生建议
         $data['hjjy'] = $this->_post('hjjy');//环境建议
-
+        if ($this->_post('jsfy') != NULL){
+            $data['jsfy'] = $this->_post('jsfy');//教师反映
+        }
+        $data['yingdao'] = $this->_post('yingdao');
+        $data['shidao'] = $this->_post('shidao');
+        $data['chidao'] = $this->_post('chidao');
+        $data['rtype'] = $this->_post('rtype');
+        if ($this->_post('zaotui') != NULL){
+            $data['zaotui'] = $this->_post('zaotui');
+        }
+        if ($this->_post('zushu') != NULL){
+            $data['zushu'] = $this->_post('zushu');
+        }
+        if ($this->_post('renshu') != NULL){
+            $data['renshu'] = $this->_post('renshu');
+        }
+        if ($this->_post('tech_name') != NULL){
+            $data['tech_name'] = $this->_post('tech_name');
+        }
+        if ($this->_post('tech_title') != NULL){
+            $data['tech_title'] = $this->_post('tech_title');
+        }
+        if ($this->_post('tech_work') != NULL){
+            $data['tech_work'] = $this->_post('tech_work');
+        }
+        if ($this->_post('topic') != NULL){
+            $ctype =  $this->_post('topic');
+            $result = "";
+            $first = true;
+            foreach ($ctype as $key => $value) {
+                if ($first){
+                    $result = $value;
+                    $first = false;
+                    continue;
+                }
+                $result .= ','.$value;
+            }
+            $data['ctype'] = $result;
+        }
+        if ($this->_post('others') != NULL){
+            $data['others'] = $this->_post('others');
+        }
+        if ($this->_post('labtype') != NULL){
+            $labtype =  $this->_post('labtype');
+            $result = "";
+            $first = true;
+            foreach ($labtype as $key => $value) {
+                if ($first){
+                    $result = $value;
+                    $first = false;
+                    continue;
+                }
+                $result .= ','.$value;
+            }
+            $data['labtype'] = $result;
+        }
+        if ($this->_post('others_lab') != NULL){
+            $data['others_lab'] = $this->_post('others_lab');
+        }
         $uid = $data_course[0]['uid'];
+        // 更新task表
+        $con12['tid'] = $tid;
+        $data12['tktime'] = $this->_post('tktime');//听课时间
+        $task->where($con12)->data($data12)->save();
+
         $r = $record->where($con)->select();//找tid的记录
         if ($userRole == 1) {
             if($r == NULL){//如果没有这个任务的记录
@@ -520,12 +522,18 @@ class TaskAction extends Action {
         $data['tbtime'] = date('Y-m-d');//获取填表日期
         $data['jxtd_rz'] = $this->_post('jxtd_rz');//教学态度-认真
         $data['jxtd_kqzb'] = $this->_post('jxtd_kqzb');//教学态度-课前准备
+        if ($this->_post('jxtd_sy') != NULL){
+            $data['jxtd_sy'] = $this->_post('jxtd_sy');//教学态度-实验
+        }
         $data['jxnr_nrfh'] = $this->_post('jxnr_nrfh');//教学内容-内容符合
         $data['jxnr_nrcs'] = $this->_post('jxnr_nrcs');//教学内容-内容充实
-        $data['jxnr_wtcs'] = $this->_post('jxnr_wtcs');//教学内容-问题充实
-        $data['jxnr_nrgx'] = $this->_post('jxnr_nrgx');//教学内容-内容更新
+        if ($this->_post('jxnr_sy') != NULL){
+            $data['jxnr_sy'] = $this->_post('jxnr_sy');//教学内容-实验
+        }
+        /*$data['jxnr_nrgx'] = $this->_post('jxnr_nrgx');//教学内容-内容更新*/
         $data['jxff_ktzx'] = $this->_post('jxff_ktzx');//教学辅助-课堂秩序
         $data['jxff_fzjx'] = $this->_post('jxff_fzjx');//教学辅助-辅助教学
+        $data['jxff_jxgj'] = $this->_post('jxff_jxgj');//教学辅助-教学工具
         $data['jxxg_qdxs'] = $this->_post('jxxg_qdxs');//教学效果-启迪学生
         $data['jxxg_bzzw'] = $this->_post('jxxg_bzzw');//教学效果-帮助掌握
         $data['xlkpj'] = $this->_post('xlkpj');//绪论课评价
@@ -534,14 +542,79 @@ class TaskAction extends Action {
         $data['ztpj'] = $this->_post('ztpj');//总体评价
         $data['xsjy'] = $this->_post('xsjy');//学生建议
         $data['hjjy'] = $this->_post('hjjy');//环境建议
+        if ($this->_post('jsfy') != NULL){
+            $data['jsfy'] = $this->_post('jsfy');//教师反映
+        }
+        $data['yingdao'] = $this->_post('yingdao');
+        $data['shidao'] = $this->_post('shidao');
+        $data['chidao'] = $this->_post('chidao');
+        $data['rtype'] = $this->_post('rtype');
+        if ($this->_post('zaotui') != NULL){
+            $data['zaotui'] = $this->_post('zaotui');
+        }
+        if ($this->_post('zushu') != NULL){
+            $data['zushu'] = $this->_post('zushu');
+        }
+        if ($this->_post('renshu') != NULL){
+            $data['renshu'] = $this->_post('renshu');
+        }
+        if ($this->_post('tech_name') != NULL){
+            $data['tech_name'] = $this->_post('tech_name');
+        }
+        if ($this->_post('tech_title') != NULL){
+            $data['tech_title'] = $this->_post('tech_title');
+        }
+        if ($this->_post('tech_work') != NULL){
+            $data['tech_work'] = $this->_post('tech_work');
+        }
+        if ($this->_post('topic') != NULL){
+            $ctype =  $this->_post('topic');
+            $result = "";
+            $first = true;
+            foreach ($ctype as $key => $value) {
+                if ($first){
+                    $result = $value;
+                    $first = false;
+                    continue;
+                }
+                $result .= ','.$value;
+            }
+            $data['ctype'] = $result;
+        }
+        if ($this->_post('others') != NULL){
+            $data['others'] = $this->_post('others');
+        }
+        if ($this->_post('labtype') != NULL){
+            $labtype =  $this->_post('labtype');
+            $result = "";
+            $first = true;
+            foreach ($labtype as $key => $value) {
+                if ($first){
+                    $result = $value;
+                    $first = false;
+                    continue;
+                }
+                $result .= ','.$value;
+            }
+            $data['labtype'] = $result;
+        }
+        if ($this->_post('others_lab') != NULL){
+            $data['others_lab'] = $this->_post('others_lab');
+        }
         
         $edit = $record->data($data)->where($con)->save();
         if ($edit){
+            // 更新task表
+            $con11['rid'] = $this->_post('rid');
+            $con12['tid'] = $record->where($con11)->getField('tid');
+            $data12['tktime'] = $this->_post('tktime');//听课时间
+            $task = M('tasks');
+            $task->where($con12)->data($data12)->save();
             $this->saveOperation($userid,'修改听课记录 [rid='.$con['rid'].']');
+            $this->redirect("Task/showTask");//跳转待定
         }else{
             $this->error('没有修改听课记录！');
         }
-        $this->redirect("Task/showTask");//跳转待定
     }
 
     //记录用户操作

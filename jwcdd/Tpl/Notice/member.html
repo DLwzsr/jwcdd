@@ -1,13 +1,16 @@
 <include file="./jwcdd/Tpl/noticeHeader.html" />
-	<div class="context-warrp"><!--整个内容部分-->
-        <div class="column-rows"><!--第一行内容-->
-        	<div class="member" style="width: 900px; margin: auto; font-size: 16px; line-height: 30px;">
-        		<p style="text-align: center; margin-top: 20px; font-size: 18px;"><b>本科教学督导工作平台——督导成员列表</b></p>
-        		<hr>
-				<div class="content">
+	<div class="banner">
+		<img src="/jwcdd/Public/images/banner.png" style="width: 1000px; height: 152px;" alt="">
+	</div>
+	<div class="container-fluid"><!--整个内容部分-->
+		<div class="row-fluid">
+			<div class="member" style="width: 900px; margin: auto; font-size: 16px; line-height: 30px;">
+		        <p style="text-align: center; margin-top: 20px; font-size: 18px;"><b>督导成员简介</b></p>
+		        <hr>
+		        <div class="submember">
 					<volist name="data" id="vo">
 						<div class="teacher" style="width: 200px; margin: 5px; padding-left: 10px; float: left; background-color: #F9E9ED;">
-							<a href="{:U('Notice/member_info',array('id'=>$vo['uid']))}" style="text-decoration: none;">
+							<a href="{:U('Notice/member_info',array('id'=>$vo['uid']))}" style="text-decoration: none; color: #20649F;">
 								<p>
 									<h5>姓名:&nbsp;{$vo.name}</h5>
 									<spam style="display: block;">职称:&nbsp;{$vo.title}</spam>
@@ -17,8 +20,7 @@
 						</div>
 					</volist>
 				</div>
-        	</div>
-        	
-        </div>
+		       </div>
+		</div>
     </div>
 <include file="./jwcdd/Tpl/noticeFooter.html" />

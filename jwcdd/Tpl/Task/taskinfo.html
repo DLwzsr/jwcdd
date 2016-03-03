@@ -33,7 +33,7 @@
                                 <div class='control-group'>
                                     <label class='control-label' for='inputText1'>课程类别</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' name='category' value='{$taskinfo.category}' />
+                                        <input id='inputText1' type='text' name='category' value='{$taskinfo.category1} | {$taskinfo.category2}' disabled='disabled' />
                                     </div>
                                 </div>
 
@@ -101,25 +101,9 @@
                                     </div>
                                 </div>
 
-                                <div class='control-group'>
-                                    <label class='control-label' for='inputText1'>审核状态</label>
-                                    <div class='controls'>
-                                        <if condition="$taskinfo.check eq '1'">
-                                            <select id='inputSelect' name='check'>
-                                            <option value='1' selected="selected">已通过</option>
-                                            <option value='0'>未审核</option> 
-                                            </select>
-                                        <else /><select id='inputSelect' name='check'>
-                                            <option value='0' selected="selected">未审核</option>
-                                            <option value='1'>已通过</option>
-                                            </select>
-                                        </if>
-                                    </div>
-                                </div>
-
                                 <div class='form-actions'>
                                     <input type='hidden' name='tid' value='{$taskinfo.tid}'>
-                                    <button class='btn btn-primary' type='submit'><i class='icon-save'></i>&nbsp;保存</button>
+                                    <button class='btn btn-primary' type='submit'><i class='icon-save'></i>&nbsp;提交</button>
                                     <a class='btn' style="margin-left: 20px;" href="{:U('Task/showTask')}"><i class='icon-remove'></i>&nbsp;取消</a>
                                 </div>
                                 

@@ -45,6 +45,7 @@ class UserAction extends Action {
         checkLogin();
         $dgroup = M("Dgroup");
         $dd_array = $dgroup->Distinct(true)->field("gname")->order("gname asc")->select();
+        $this->college = $this->getCollege();
         $this->dd_array = $dd_array;
         $this->display();
     }
@@ -60,7 +61,8 @@ class UserAction extends Action {
 		$data['phone'] = $this->_post('phone');
 		$data['mobi'] = $this->_post('mobi');
 		$data['email'] = $this->_post('email');
-        $data['password'] = sha1(substr($data['idcard'], 6,8)); //sha1加密方式
+        $data['password'] = sha1("123");
+        //$data['password'] = sha1(substr($data['idcard'], 6,8)); //sha1加密方式 八位生日
         $data['role'] = $this->_post('role');
         $uid = $user->data($data)->add();
         if($data['role'] == 2){
@@ -80,7 +82,7 @@ class UserAction extends Action {
         $users = M('Users');
         $userid = session('userId');
         $con['uid'] = $userid;
-        $data = $users->where($con)->field('teaid,name,college,title,idcard,phone,mobi,email')->select();
+        $data = $users->where($con)->field('teaid,name,college,title,phone,mobi,email')->select();
         $this->data = $data[0];
 		$this->display();
     }
@@ -94,7 +96,6 @@ class UserAction extends Action {
             $data['name'] = $this->_post('name');
             $data['title'] = $this->_post('title');
             $data['college'] = $this->_post('college');
-            $data['idcard'] = $this->_post('idcard');
             $data['mobi'] = $this->_post('mobi');
             $data['phone'] = $this->_post('phone');
             $data['email'] = $this->_post('email');
@@ -112,7 +113,7 @@ class UserAction extends Action {
             $data = array();
             $userid = session('userId');
             $con['uid'] = $userid;
-            $data = $users->where($con)->field('uid,teaid,name,college,title,idcard,phone,mobi,email')->select();
+            $data = $users->where($con)->field('uid,teaid,name,college,title,phone,mobi,email')->select();
 
             $this->data = $data[0];
             
@@ -177,18 +178,19 @@ class UserAction extends Action {
     public function user_dd(){
         checkLogin();
         //查询本学期可用督导信息
-        $nowdd = M("Dd");
+        $nowdd = M("dd");
         //先固定学年学期取值，后面再设成变量传参
-        $con1['year'] = 2014;
-        $con1['term'] = '春季';
+        $con1['year'] = session('year');
+        $con1['term'] = session('term');
         $con2['role'] = 2;
-        $ddinfo = $nowdd->join('dd_Users on dd_Dd.uid = dd_Users.uid')->field('dd_Users.uid, teaid, name, title, college, idcard, mobi, phone, email, pos, group, did')->where($con1)->where($con2)->order('`group` asc, pos desc')->select();
+        $ddinfo = $nowdd->join('dd_Users on dd_dd.uid = dd_Users.uid')->field('dd_Users.uid, teaid, name, title, college, idcard, mobi, phone, email, pos, group, did')->where($con1)->where($con2)->order('did desc')->select();
         $this->ddinfo = $ddinfo;
         //查询本学期还可添加哪些督导
         $users = M("Users");         
         $dduid = i_array_column($ddinfo, 'uid');
-        //dump($dduid);
-        $con2['uid'] = array('not in', $dduid);
+        if(!empty($dduid)){
+            $con2['uid'] = array('not in', $dduid);
+        }
         $dd = $users->field('password,role',true)->where($con2)->order('uid asc')->select();
         $this->dd = $dd;
         //查询已有的组别
@@ -225,8 +227,8 @@ class UserAction extends Action {
         $userid = session('userId');
         //$userid = 1;
         $nowdd = M("Dd");
-        $data['year'] = 2014;
-        $data['term'] = '春季';
+        $data['year'] = session('year');
+        $data['term'] = session('term');
         $uid = $this->_post('uid');
         $length = count($uid);
         for ($i=0; $i<$length; $i++){
@@ -284,15 +286,46 @@ class UserAction extends Action {
         $deldd->where($con)->delete();
         $this->redirect("User/user_dd");
     }
-
-    //将学校数据库的职工信息导入到本地数据库中
-    public function import_teacher(){
-        $tea = new TeaModel("Tea","syn_","DB_CONFIG");
-        $data = $tea->field("teaid,name,password,college,title,idcard,phone,mobi,email")->order("teaid asc")->select();
-        change_array_index($data);
-        $users = M("Users");
-        $users->addAll($data);
-        $this->redirect("User/user");
+    //分配权限
+    public function assignMenu(){
+        checkLogin();
+        $userRole = session("userRole");
+        if ($userRole == 1) {
+            header('Content-Type:application/json; charset=utf-8');
+            $module = M('users_modules');
+            $data = array();
+            $con = array();
+            $data['uid'] = $con['uid'] = (int)$this->_post('uid');
+            $data['module'] = $this->_post('mids');
+            $data['datetime'] = date('Y-m-d H:i:s');
+            $umid = $module->where($con)->getField('umid');
+            if(empty($umid)){
+                if($module->data($data)->add()){
+                    $this->saveOperation(session("userId"),'管理员给用户[uid: '.$data['uid'].']分配了菜单[module: '.$data['module'].']权限');
+                    $json = array('code'=>1, 'message'=>'菜单分配操作已成功~');
+                }else{
+                    $json = array('code'=>1, 'message'=>'菜单分配操作失败~');
+                }
+            }else{
+                $map = array();
+                $map['umid'] = $umid;
+                if($module->where($map)->data($data)->save()){
+                    $this->saveOperation(session("userId"),'管理员更新用户[uid: '.$data['uid'].']的菜单[module: '.$data['module'].']权限');
+                    $json = array('code'=>1, 'message'=>'菜单更新操作已成功~');
+                }else{
+                    $json = array('code'=>1, 'message'=>'菜单更新操作失败~');
+                }
+            }
+            $this->ajaxReturn($json);
+        }else{
+            $this->error("亲~您不具备这样的权限哦~");
+        }
+    }
+    // 获取院系信息
+    private function getCollege() {
+        $college = M('college');
+        $data = $college->field('college')->where('1 = 1')->order('tea asc, CONVERT(college USING gbk) asc')->select();
+        return $data;
     }
 
     //记录用户操作
@@ -304,17 +337,4 @@ class UserAction extends Action {
         $data['operation'] = $operation;
         $logs->data($data)->add();
     }  
-
-	// 定义一个函数getIP()
-	private function getIP(){
-		$ip = '';
-		if (getenv("HTTP_CLIENT_IP"))
-			$ip = getenv("HTTP_CLIENT_IP");
-		else if(getenv("HTTP_X_FORWARDED_FOR"))
-			$ip = getenv("HTTP_X_FORWARDED_FOR");
-		else if(getenv("REMOTE_ADDR"))
-			$ip = getenv("REMOTE_ADDR");
-		else $ip = "Unknow";
-		return $ip;
-	}
 }

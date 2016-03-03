@@ -34,7 +34,7 @@
             <select class='select2 input-block-level' name="yt" id="selYt">
                 <option value='-1' selected="selected"/>------请选择------
                 <volist name="yt" id="vo">
-                    <option value="{$vo.yt}">{$vo.yt}</option>
+                    <option value="{$vo.value}">{$vo.item}</option>
                 </volist>
             </select>
         </form>
@@ -50,7 +50,7 @@
         <div class='box-content box-no-padding'>
             <div class='responsive-table'>
               <div class='scrollable-area' id="table_analysis">
-                <table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
+                <table  class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
                   <thead>
                     <!--tr>
                       <th colspan='26' style='text-align:center;'>2014-2015学年第一学期督导听课统计总表（按院系统计）</th>
@@ -148,6 +148,14 @@
         });
         $('#exportBtn').click(function(){
             $('#table_analysis').printArea();
+            /*$('#table_analysis').tableExport({
+                type:'csv',
+                separator:',',
+                tableName:'data.csv',
+                escape:'true',
+                htmlContent:'false',
+                consoleLog:'false'
+            });*/
         });
     });
 </script>

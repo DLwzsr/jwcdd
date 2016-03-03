@@ -9,92 +9,101 @@ class AnalysisAction extends Action {
         $user = M('Users');
         $hz = M('hz_tkrecord');
 
-        $con = array(); 
-        $con0 = array();
+        $con = array();
         $year = session('year');
         $term = session('term');
-        $year = 2014;
-        $term = '春季';
 
-    	if ($userRole == 1 | 3) {
-            if (!empty($_POST) && $this->isPost()) {
-                if ($this->_post('yt') != -1) {
-                    $yt = $this->_post('yt');
-                    $arr = explode(",", $arr);
-                    $year = $arr[0];
-                    $term = $arr[1];
-                }
-                if($this->_post('group') != -1){
-                    $con['group'] = $this->_post('group');
-                }
-                if($this->_post('month') != -1){
-                    $con['tkmonth'] = $this->_post('month');
-                }
-                if($this->_post('ztpj') != -1){
-                    $con['ztpj'] = $this->_post('ztpj');
-                }
-                if($this->_post('dd') != -1){
-                    $con['dduid'] = $this->_post('dd');
-                }
-                if($this->_post('teacher') != -1){
-                    $con['teaid'] = $this->_post('teacher');
-                }
-                if($this->_post('title') != -1){
-                    $con['title'] = $this->_post('title');
-                }
-                if($this->_post('tcollege') != -1){
-                    $con['tcollege'] = $this->_post('tcollege');
-                }
-                if($this->_post('skplace') != -1){
-                    $con['skplace'] = $this->_post('skplace');
-                }
-                if($this->_post('course') != -1){
-                    $con['cname'] = $this->_post('course');
-                }
-                if($this->_post('topic') != -1){
-                    $con['topic'] = $this->_post('topic');
-                }
-                if($this->_post('scollege') != -1){
-                    $con['sclass'] = $this->_post('scollege');
-                }
-                if($this->_post('grade') != -1){
-                    $con['sclass'] = $this->_post('grade');
-                }
+        if (!empty($_POST) && $this->isPost()) {
+            if ($this->_post('yt') != -1) {
+                $yt = $this->_post('yt');
+                $arr = explode(",", $yt);
+                $year = $arr[0];
+                $term = $arr[1];
+            }
+            if($this->_post('group') != -1){
+                $con['group'] = $this->_post('group');
+            }
+            if($this->_post('month') != -1){
+                $con['tkmonth'] = $this->_post('month');
+            }
+            if($this->_post('ztpj') != -1){
+                $con['ztpj'] = $this->_post('ztpj');
+            }
+            if($this->_post('dd') != -1){
+                $con['dduid'] = $this->_post('dd');
+            }
+            if($this->_post('teacher') != -1){
+                $con['teaid'] = $this->_post('teacher');
+            }
+            if($this->_post('title') != -1){
+                $con['title'] = $this->_post('title');
+            }
+            if($this->_post('tcollege') != -1){
+                $con['tcollege'] = $this->_post('tcollege');
+            }
+            if($this->_post('skplace') != -1){
+                $con['skplace'] = $this->_post('skplace');
+            }
+            if($this->_post('course') != -1){
+                $con['cname'] = $this->_post('course');
+            }
+            if($this->_post('topic') != -1){
+                $con['topic'] = $this->_post('topic');
+            }
+            // if($this->_post('scollege') != -1){
+            //     $con['scollege'] = $this->_post('scollege');
+            // }
+            if($this->_post('grade') != -1){
+                $con['sclass'] = $this->_post('grade');
             }
         }
-            
         $con['year'] = $year;
         $con['term'] = $term;
+        // 督导用户 可以查看督导所在组的所有听课记录信息
+        if ($userRole == 2) {
+            $con0 = array();
+            $con0['year'] = $year;
+            $con0['term'] = $term;
+            $con0['uid'] = $userid;
+            $dd = M('dd');
+            $dduids = $dd->where($con0)->field('uid')->select();
+            $dduids = i_array_column($dduids,'uid');
+            $con['dduid'] = array('in', $dduids);
+        }
            
         if ($userRole == 5) {
+            $con0 = array();
             $con0['uid'] = $userid;
             $tea = $user->where($con0)->select();
             $con['teaid'] = $tea[0]['teaid'];
         }
 
         if ($userRole == 4) {
+            $con0 = array();
             $con0['uid'] = $userid;
             $collegeData = $user->where($con0)->select();
             //$con2['scollege'] = $collegeData[0]['college'];
-            $con2['tcollege'] = $collegeData[0]['college'];
-            $con2['_logic'] = 'OR';
-            $con['_complex']= $con2;
+            // $con2['tcollege'] = $collegeData[0]['college'];
+            // $con2['_logic'] = 'OR';
+            // $con['_complex']= $con2;
+            $con['tcollege'] = $collegeData[0]['college'];
         }
         $count = $hz->where($con)->count();
         $Page = new Page($count,10);
         $Page->setConfig("theme","<ul class='pagination'><li><span>%nowPage%/%totalPage% 页</span></li> %first% %prePage% %linkPage% %nextPage% %end%</ul>");
     	$data = $hz->where($con)->order('rid asc')->limit($Page->firstRow.','.$Page->listRows)->select();
         $college = M("College");
-    	//$this->yt = $this->getYearTerm('hz_tkrecord');
         $this->yt = get_year_term();
     	$this->group = $this->getGroup($year,$term,'hz_tkrecord');
         $this->dd = $this->getDd($year,$term,'hz_tkrecord');
         $this->tea = $this->getTeacher($year,$term,'hz_tkrecord');
         $this->college = $college->field("college")->order('CONVERT(college USING gbk) asc')->select();
-        $this->scollege = $college->where("tea = 0")->field("college")->order('CONVERT(college USING gbk) asc')->select();
+        // $this->scollege = $college->where("tea = 0")->field("college")->order('CONVERT(college USING gbk) asc')->select();
         $this->place = $this->getPlace($year,$term,'hz_tkrecord');
         $this->course = $this->getCourse($year,$term,'hz_tkrecord');
         $this->topic = $this->getTopic($year,$term,'hz_tkrecord');
+        $this->sclass = $this->getSclass($year,$term,'hz_tkrecord');
+        $this->title = $this->getTitle($year,$term,'hz_tkrecord');
     	$this->data = $data;
         $this->year = $year;
         $this->term = $term;
@@ -178,6 +187,7 @@ class AnalysisAction extends Action {
                 $data2['topic'] = $excelData[$i][18];
                 $data2['check'] = '1';
                 $data2['record'] = '1';
+                $data2['pass'] = 1;
                 $tid = M('tasks')->data($data2)->add();
             }
             $data1[$i]['tid'] = $tid;
@@ -192,7 +202,7 @@ class AnalysisAction extends Action {
             $data1[$i]['sktime'] = $excelData[$i][9];
             $data1[$i]['tktime'] = $excelData[$i][2];
             $data1[$i]['tkjs'] = $excelData[$i][11];
-            $data1[$i]['tbtime'] = $this->getDate(); //导入时间
+            $data1[$i]['tbtime'] = date('Y-m-d'); //导入时间
             $data1[$i]['ztpj'] = $ztpj[$excelData[$i][15]];
             $data1[$i]['pjjy'] = $excelData[$i][14];
             $data1[$i]['xlkpj'] = $excelData[$i][12];
@@ -202,9 +212,9 @@ class AnalysisAction extends Action {
         }
         //dump($data1);
         M('records')->addAll($data1);
-        $this->saveOperation($uid,'用户更新文件 {'.$fileInfo.'}');
+        $this->saveOperation($uid,'用户上传文件 {'.$fileInfo.'}');
 
-        $this->redirect('Analysis/analysis');
+        $this->success('文件导入成功~','Analysis/analysis');
     }
 
     //获取按院系统计
@@ -216,17 +226,15 @@ class AnalysisAction extends Action {
         $con0 = array();
         $year = session('year');
         $term = session('term');
-        $year = 2014;
-        $term = '春季';
         $hz_college = M('hz_college');
         $user = M('Users');
 
         if(!empty($_POST) && $this->isPost()){
             if ($this->_post('yt') != -1) {
                 $yt = $this->_post('yt');
-                $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                $len = strlen($yt) - 6;
-                $year = substr($yt, 0, $len);
+                $arr = explode(",", $yt);
+                $year = $arr[0];
+                $term = $arr[1];
             }
         }
 
@@ -237,14 +245,15 @@ class AnalysisAction extends Action {
             $con0['uid'] = $userid;
             $collegeData = $user->where($con0)->select();
             //$con2['scollege'] = $collegeData[0]['college'];
-            $con2['tcollege'] = $collegeData[0]['college'];
-            $con2['_logic'] = 'OR';
-            $con['_complex']= $con2;
+            // $con2['tcollege'] = $collegeData[0]['college'];
+            // $con2['_logic'] = 'OR';
+            // $con['_complex']= $con2;
+            $con['tcollege'] = $collegeData[0]['college'];
         }
         
-        $data = $hz_college->where($con)->order('tcollege asc')->select();
+        $data = $hz_college->where($con)->order('CONVERT(tcollege USING gbk) asc')->select();
 
-        $this->yt = $this->getYearTerm('hz_college');
+        $this->yt = get_year_term();
         $this->year = $year;
         $this->term = $term;
         $this->data = $data;
@@ -261,17 +270,15 @@ class AnalysisAction extends Action {
         $con0 = array();
         $year = session('year');
         $term = session('term');
-        $year = 2014;
-        $term = '春季';
         $hz_month = M('hz_colmonth');
         $user = M('Users');
 
         if(!empty($_POST) && $this->isPost()){
             if ($this->_post('yt') != -1) {
                 $yt = $this->_post('yt');
-                $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                $len = strlen($yt) - 6;
-                $year = substr($yt, 0, $len);
+                $arr = explode(",", $yt);
+                $year = $arr[0];
+                $term = $arr[1];
             }
         }
         $con['year'] = $year;
@@ -281,13 +288,14 @@ class AnalysisAction extends Action {
             $con0['uid'] = $userid;
             $collegeData = $user->where($con0)->select();
             //$con2['scollege'] = $collegeData[0]['college'];
-            $con2['tcollege'] = $collegeData[0]['college'];
-            $con2['_logic'] = 'OR';
-            $con['_complex']= $con2;
+            // $con2['tcollege'] = $collegeData[0]['college'];
+            // $con2['_logic'] = 'OR';
+            // $con['_complex']= $con2;
+            $con['tcollege'] = $collegeData[0]['college'];
         }
-        $data = $hz_month->where($con)->order('tcollege asc,tkmonth asc')->select();
+        $data = $hz_month->where($con)->order('CONVERT(tcollege USING gbk) asc,tkmonth asc')->select();
 
-        $this->yt = $this->getYearTerm('hz_colmonth');
+        $this->yt = get_year_term();
         $this->year = $year;
         $this->term = $term;
         $this->data = $data;
@@ -298,37 +306,28 @@ class AnalysisAction extends Action {
     public function supervisor(){
         checkLogin();
         $userRole = session('userRole');    //获取用户权限
-        $userRole = 1;
-        if ($userRole == 1) {
-            $con = array();
-            $year = null;
-            $term = null;
-            //$hz_dd = M('hz_dd');
+        $year = session('year');
+        $term = session('term');
+        if ($userRole == 1 || $userRole == 2 || $userRole == 3) {
             if(!empty($_POST) && $this->isPost()){
                 if ($this->_post('yt') != -1) {
                     $yt = $this->_post('yt');
-                    $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                    $len = strlen($yt) - 6;
-                    $year = substr($yt, 0, $len);
-                    $con['year'] = $year;
-                    $con['term'] = $term;
+                    $arr = explode(",", $yt);
+                    $year = $arr[0];
+                    $term = $arr[1];
                 }
-            }else{
-                $year = session('year');
-                $term = session('term');
-                $year = 2014;
-                $term = '春季';
-                $con['year'] = $year;
-                $con['term'] = $term;
             }
-
+            $con['year'] = $year;
+            $con['term'] = $term;
             $data = $this->getHzDd($year,$term,'hz_dd');
-            $this->yt = $this->getYearTerm('hz_dd');
-            $this->year = $year;
+            $this->yt = get_year_term();
             $this->term = $term;
             $this->data = $data;
             $this->display();
+        }else{
+            $this->error("亲~您不具备权限哈~");
         }
+        
     }
 
     //获取教师统计表
@@ -343,15 +342,13 @@ class AnalysisAction extends Action {
         $con0 = array();
         $year = session('year');
         $term = session('term');
-        $year = 2014;
-        $term = '春季';
 
         if(!empty($_POST) && $this->isPost()){
             if ($this->_post('yt') != -1) {
                 $yt = $this->_post('yt');
-                $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                $len = strlen($yt) - 6;
-                $year = substr($yt, 0, $len);
+                $arr = explode(",", $yt);
+                $year = $arr[0];
+                $term = $arr[1];
             }
         }
 
@@ -362,16 +359,15 @@ class AnalysisAction extends Action {
             $con0['uid'] = $userid;
             $collegeData = $user->where($con0)->select();
             //$con2['scollege'] = $collegeData[0]['college'];
-            $con2['tcollege'] = $collegeData[0]['college'];
-            $con2['_logic'] = 'OR';
-            $con['_complex']= $con2;
+            // $con2['tcollege'] = $collegeData[0]['college'];
+            // $con2['_logic'] = 'OR';
+            // $con['_complex']= $con2;
+            $con['tcollege'] = $collegeData[0]['college'];
         }
      
-        $data = $hz_title->where($con)->order('tcollege asc')->select();
+        $data = $hz_title->where($con)->order('CONVERT(tcollege USING gbk) asc')->select();
 
-        $this->yt = $this->getYearTerm('hz_title');
-        $this->year = $year;
-        $this->term = $term;
+        $this->yt = get_year_term();
         $this->data = $data;
         $this->display();
     }
@@ -387,15 +383,13 @@ class AnalysisAction extends Action {
         $con = array(); 
         $year = session('year');
         $term = session('term');
-        $year = 2014;
-        $term = '春季';
 
         if(!empty($_POST) && $this->isPost()){
             if ($this->_post('yt') != -1) {
                 $yt = $this->_post('yt');
-                $term = substr($yt, -6);    //截取最后两个字符 最后两个中文的长度为6
-                $len = strlen($yt) - 6;
-                $year = substr($yt, 0, $len);
+                $arr = explode(",", $yt);
+                $year = $arr[0];
+                $term = $arr[1];
             }
         }
         $con['year'] = $year;
@@ -411,25 +405,19 @@ class AnalysisAction extends Action {
             $con0['uid'] = $userid;
             $collegeData = $user->where($con0)->select();
             //$con2['scollege'] = $collegeData[0]['college'];
-            $con2['tcollege'] = $collegeData[0]['college'];
-            $con2['_logic'] = 'OR';
-            $con['_complex']= $con2;
+            // $con2['tcollege'] = $collegeData[0]['college'];
+            // $con2['_logic'] = 'OR';
+            // $con['_complex']= $con2;
+            $con['tcollege'] = $collegeData[0]['college'];
         }
         
-        $data = $hz_cname->where($con)->order('tcollege asc,cname asc,tname asc')->select();
+        $data = $hz_cname->where($con)->order('CONVERT(tcollege USING gbk) asc,CONVERT(cname USING gbk) asc,CONVERT(tname USING gbk) asc')->select();
 
-        $this->yt = $this->getYearTerm('hz_cname');
+        $this->yt = get_year_term();
         $this->year = $year;
         $this->term = $term;
         $this->data = $data;
         $this->display();
-    }
-
-    //获取学年学期
-    private function getYearTerm($tableName){
-    	$hz = M($tableName);
-    	$data = $hz->Distinct(true)->field(array('concat(year,term)'=>'yt'))->group('year,term')->order('year desc')->select();
-    	return $data;
     }
 
     //获取组别
@@ -464,7 +452,7 @@ class AnalysisAction extends Action {
         $hz = M($tableName);
         $con['year'] = $year;
         $con['term'] = $term;
-        $data = $hz->Distinct(true)->field('tcollege')->where($con)->order('tcollege asc')->select();
+        $data = $hz->Distinct(true)->field('tcollege')->where($con)->order('CONVERT(tcollege USING gbk) asc')->select();
         return $data;
     }
 
@@ -482,7 +470,7 @@ class AnalysisAction extends Action {
         $hz = M($tableName);
         $con['year'] = $year;
         $con['term'] = $term;
-        $data = $hz->Distinct(true)->field('cname')->where($con)->order('cname asc')->select();
+        $data = $hz->Distinct(true)->field('cname')->where($con)->order('CONVERT(cname USING gbk) asc')->select();
         return $data;
     }
 
@@ -491,7 +479,24 @@ class AnalysisAction extends Action {
         $hz = M($tableName);
         $con['year'] = $year;
         $con['term'] = $term;
-        $data = $hz->Distinct(true)->field('topic')->where($con)->order('topic asc')->select();
+        $data = $hz->Distinct(true)->field('topic')->where($con)->order('CONVERT(topic USING gbk) asc')->select();
+        return $data;
+    }
+
+    // 获取行政班级
+    private function getSclass($year,$term,$tableName) {
+        $hz = M($tableName);
+        $con['year'] = $year;
+        $con['term'] = $term;
+        $data = $hz->Distinct(true)->field('sclass')->where($con)->order('sclass asc')->select();
+        return $data;
+    }
+    // 获取教师职称
+    private function getTitle($year,$term,$tableName) {
+        $hz = M($tableName);
+        $con['year'] = $year;
+        $con['term'] = $term;
+        $data = $hz->Distinct(true)->field('title')->where($con)->order('title asc')->select();
         return $data;
     }
 
@@ -500,7 +505,7 @@ class AnalysisAction extends Action {
         $hz_dd = M('hz_dd');
         $con['year'] = $year;
         $con['term'] = $term;
-        $data = $hz_dd->where($con)->order('dname asc,tkmonth asc')->select();
+        $data = $hz_dd->where($con)->order('CONVERT(dname USING gbk) asc,tkmonth asc')->select();
         //return $data;
         $result = array();
         $len = count($data,0);
@@ -533,12 +538,6 @@ class AnalysisAction extends Action {
         $table = M($tableName);
         $result = $table->where($con)->getField($field);
         return $result;
-    }
-
-    //获取当前的时间
-    private function getDate(){
-        $date = date('Y-m-d');
-        return $date;
     }
 
     //记录用户操作

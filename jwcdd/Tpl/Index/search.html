@@ -21,12 +21,10 @@
                         <volist name= "result" id="vo" key="i">
                         <li class='important item'>
                             <label class='check pull-left todo'>
-                                <a href='{$vo.path}' target='_blank'>
-                                   {$i}.&nbsp;&nbsp;{$vo.name}
-                                </a>
+                                <a href="{:U('Notice/download_file',array('fid'=>$vo['fid']))}" target="_blank">{$i}.&nbsp;&nbsp;{$vo.ftitle}</a>
                             </label>
                             <div class='actions pull-right'>
-                                <a class='btn btn-link' data-placement='top' href='{$vo.path}' target='_blank' title='下载'>
+                                <a class='btn btn-link' data-placement='top' href="{:U('Notice/download_file',array('fid'=>$vo['fid']))}" target='_blank' title='下载'>
                                     <i class='icon-download-alt'></i>
                                 </a>
                             </div>

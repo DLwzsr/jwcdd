@@ -23,7 +23,7 @@
         <select class='select2 input-block-level' name="yt" id="yterm">
             <option value='-1' selected="selected"/>------请选择------
         <volist name="yt" id="vo">
-            <option value="{$vo.yt}">{$vo.yt}</option>
+            <option value="{$vo.value}">{$vo.item}</option>
         </volist>
         </select>
     </div>
@@ -100,7 +100,7 @@
         </select>
     </div>
 </div>
-<div class='span4'>
+<!-- <div class='span4'>
     <div class='row-fluid'>
         <strong>学生院系</strong>
         <select class='select2 input-block-level' name="scollege">
@@ -110,7 +110,7 @@
         </volist>   
         </select>
     </div>
-</div>
+</div> -->
 <div class='span2'>
     <div class='row-fluid'>
         <strong>年级</strong>
@@ -119,6 +119,17 @@
         <volist name="sclass" id="vo">
             <option value="{$vo.sclass}">{$vo.sclass}</option>
         </volist>    
+        </select>
+    </div>
+</div>
+<div class='span2'>
+    <div class='row-fluid'>
+        <strong>督导姓名</strong>
+        <select class='select2 input-block-level' name="dd">
+            <option value='-1' selected="selected"/>------请选择------
+        <volist name="dd" id="vo">
+            <option value="{$vo.did}">{$vo.dname}</option>
+        </volist>
         </select>
     </div>
 </div>
@@ -134,43 +145,63 @@
 	<div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
 		<div class='box-header green-background'>
 			<div class='text-center'>听课记录检索结果</div>
+            <if condition="$Think.session.userRole eq 1">
+                <button class='btn btn-success btn-large' name='button' style='position:absolute; left:0px;top:2px;' id="allCheck">审核</button>
+            </if>
 		</div>
 	<div class='box-content box-no-padding'>
 		<div class='responsive-table'>
 			<div class='scrollable-area'>
-				<table class='data-table table table-bordered table-striped' style='margin-bottom:0;'>
+				<table class='table table-bordered table-hover table-striped' style='margin-bottom:0;'>
 				<thead>
-				<tr>  
+				<tr>
+                    <if condition="$Think.session.userRole eq 1">
+                        <td>
+                            <label class="checkbox"><input type="checkbox" value="-1" id="all_select"><strong>全选 </strong></label>
+                        </td>
+                    </if>
 					<td><strong>学年学期</strong></td> 
 					<td><strong>课程名称</strong></td>
 					<td><strong>课程类别</strong></td>
-                    <if condition="$Think.session.userRole lt 3">
+                    <if condition="$Think.session.userRole lt 6">
 					<td><strong>教师姓名</strong></td>
                     </if>
 					<td><strong>教师单位</strong></td>
-					<td><strong>教师职称</strong></td>
+					<td><strong>职称</strong></td>
 					<td><strong>上课地点</strong></td>
 					<td><strong>上课时间</strong></td>
-					<td><strong>学生院系</strong></td>
-					<td><strong>学生年级</strong></td>
+					<!-- <td><strong>学生院系</strong></td> -->
+					<td><strong>行政班级号</strong></td>
 					<td><strong>督导姓名</strong></td>
-					<td><strong>操作</strong></td>
+					<td>
+                        <if condition="$Think.session.userRole lt 3">
+                            <strong>编辑&nbsp;&nbsp;删除</strong>
+                        <else />
+                            <strong>操作</strong>
+                        </if>
+                    </td>
+                    <if condition="$Think.session.userRole eq 1">
+                        <td><strong>审核</strong></td>
+                    </if>
 				</tr>
 				</thead>
 				<tbody>
 				<volist name="data" id="vo1">
 				<tr>
+                    <if condition="$Think.session.userRole eq 1">
+                        <td><input type="checkbox" value="{$vo1.tid}" name='tids[]'></td>
+                    </if>
 					<td>{$vo1.year}{$vo1.term}</td>
 					<td>{$vo1.cname}</td>
-					<td>{$vo1.category}</td>
-                    <if condition="$Think.session.userRole lt 3">
+					<td>{$vo1.category1}&nbsp;|&nbsp;{$vo1.category2}</td>
+                    <if condition="$Think.session.userRole lt 6">
 					<td>{$vo1.tname}</td>
                     </if>
 					<td>{$vo1.tcollege}</td>
 					<td>{$vo1.title}</td>
 					<td>{$vo1.cplace}</td>
 					<td>{$vo1.ctime}</td>
-					<td>{$vo1.scollege}</td>
+					<!-- <td>{$vo1.scollege}</td> -->
 					<td>{$vo1.sclass}</td>
 					<td>{$vo1.dname}</td>
 					<td>
@@ -185,18 +216,96 @@
                             </if>
                             <if condition="$Think.session.userRole gt 2">
                                 <a class='btn btn-info btn-mini' href="{:U('Record/viewRecord',array('tid'=>$vo1['tid']))}">
-                                    <i class='icon-file-alt'></i>
+                                    查看
                                 </a>
                             </if>
                         </div>
 					</td>
+                    <if condition="$Think.session.userRole eq 1">
+                        <td>
+                            <if condition="$vo1['pass'] eq '0'">
+                                <button class="btn btn-mini btn_pass" tid="{$vo1['tid']}" pass="1">未审核</button>
+                            <else />
+                                <button class="btn btn-mini btn_pass" tid="{$vo1['tid']}" pass="0">已审核</button>
+                            </if>
+                        </td>
+                    </if>
 				</tr>
 				</volist>
 				</tbody>
 				</table>
+                <div class="pagination" style="margin: auto; width:725px;">{$page}</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".btn_pass").click(function(){
+            var url = "__URL__/setPass";
+            var p = {};
+            var obj = $(this);
+            p.tid = $(this).attr("tid");
+            p.pass = $(this).attr("pass");
+            $.post(url,p,function(e){
+                if(e.code == "1"){
+                    if(p.pass == 1){
+                        obj.html("已审核");
+                        obj.attr("pass", 0);
+                    }else{
+                        obj.html("未审核");
+                        obj.attr("pass", 1);
+                    }
+                }else{
+                    alert(e.message);
+                }
+            });
+        });
+    });
+</script>
 </section>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var first = true;
+        $('#all_select').click(function(){
+            if(first) {
+                $("input[name='tids[]']").attr("checked",true);
+                first = false;
+            }else {
+                $("input[name='tids[]']").attr("checked",false);
+                first = true;
+            }
+        });
+        $('#allCheck').click(function(){
+            var f = true;
+            var tids = "";
+            $("input[name='tids[]']").each(function(){
+                var exp = $(this).attr("checked");
+                if(typeof(exp) != "undefined"){
+                    if(f){
+                        tids = $(this).val();
+                        f = false;
+                    }else{
+                        tids += ","+$(this).val();
+                    }
+                }
+            });
+            if(tids != ""){
+                var url = "__URL__/setAllPass";
+                var p = {};
+                p.tids = tids;
+                $.post(url,p,function(e){
+                    if(e.code == "1"){
+                        alert(e.message);
+                        window.location.reload();
+                    }else{
+                        alert(e.message);
+                    }
+                });
+            }
+            
+            return false;
+        });
+    });
+</script>  
 <include file="./jwcdd/Tpl/footerTemp.html" />

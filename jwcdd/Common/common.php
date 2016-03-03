@@ -67,7 +67,7 @@
     function uploadDocFile($filePath){
       import("ORG.Net.UploadFile");
       $upload = new UploadFile();
-      $upload->maxSize = 3145728; //上传文件最大为3M
+      $upload->maxSize = 31457280; //上传文件最大为30M
       $upload->uploadReplace = true;  //替换相同的文件
       $upload->savePath = $filePath;  //设置保存的路径
       $upload->saveRule = '';
@@ -132,19 +132,27 @@
         }
      }
     //获取学年学期
-     function get_year_term(){
-        $yt = array();
-        $year = date("Y");
-        $begin = 2009;
-        $length = $year - $begin + 1;
-        $k = -1;
-        for ($i=0; $i < $length; $i++) {
-            $k++;
-            $yt[$k]['value'] = ($year-$i).',0';
-            $yt[$k]['item'] = ($year-$i).'-'.($year-$i+1).'学年第1学期';
-            $yt[++$k]['value'] = ($year-$i).',1';
-            $yt[$k]['item'] = ($year-$i).'-'.($year-$i+1).'学年第2学期';
-        }
-        return $yt;
-     }
+    function get_year_term(){
+      $yt = array();
+      $year = date("Y");
+      $month = (int)date("m");
+      $begin = 2014;
+      $length = $year - $begin + 1;
+      $k = -1;
+      $i = 0;
+      if ($month >= 1 && $month < 9) {
+        $i = 1;
+      }else{
+        $i = 0;
+      }
+      for (; $i < $length; $i++) {
+        $k++;
+        $yt[$k]['value'] = ($year-$i).',春季';
+        $yt[$k]['item'] = ($year-$i).'-'.($year-$i+1).'学年春季学期';
+        $k++;
+        $yt[$k]['value'] = ($year-$i).',秋季';
+        $yt[$k]['item'] = ($year-$i).'-'.($year-$i+1).'学年秋季学期';
+      }
+      return $yt;
+    }
 ?>

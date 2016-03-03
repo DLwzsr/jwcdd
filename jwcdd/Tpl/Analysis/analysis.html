@@ -9,7 +9,6 @@
             <h1 class='pull-left'>
                 <i class='icon-table'></i><span>数据报表</span>
             </h1>
-            <if condition="($Think.session.userRole eq 1) or ($Think.session.userRole eq 3)">
             <div class='pull-right'>
                 <button class="btn btn-primary" id="cos" name="button" style="margin-bottom:5px">打开检索</button>
             </div>
@@ -29,7 +28,6 @@
                     <li class='active'><a href="/jwcdd/Public/template/template.xlsx">下载汇总表模板</a></li>
                 </ul>
             </div>
-            </if>
         </div>
     </div>
 </div>
@@ -38,7 +36,7 @@
 <div id="search" style="display:none;">
 <form method="post" action="{:U('Analysis/analysis')}">
 <div class='row-fluid'>
-<div class='span3'>
+<div class='span2'>
     <div class='row-fluid'>
         <strong>学年学期</strong>
         <select class='select2 input-block-level' name="yt" id="yterm">
@@ -49,8 +47,6 @@
         </select>
     </div>
 </div>
-</div>
-<div class='row-fluid'>
 <div class='span2'>
     <div class='row-fluid'>
         <strong>组别</strong>
@@ -89,7 +85,7 @@
         </div>
     </div>
 </div>
-<div class='span4'>
+<div class='span2'>
     <div class='row-fluid'>
         <strong>总体评价</strong>
         <select class='select2 input-block-level' name="ztpj">
@@ -133,11 +129,9 @@
         <strong>教师职称</strong>
         <select class='select2 input-block-level' name="title">
             <option value='-1' selected="selected"/>------请选择------
-            <option value='教授' />教授
-            <option value='副教授' />副教授
-            <option value='讲师' />讲师
-            <option value='高级工程师' />高级工程师
-            <option value='工程师' />工程师
+            <volist name="title" id="vo">
+                <option value="{$vo.title}">{$vo.title}</option>
+            </volist>
         </select>
     </div>
 </div>
@@ -146,9 +140,9 @@
         <strong>教师单位</strong>
         <select class='select2 input-block-level' name="tcollege">
             <option value='-1' selected="selected"/>------请选择------
-        <volist name="college" id="vo">
-            <option value="{$vo.college}">{$vo.college}</option>
-        </volist>
+            <volist name="college" id="vo">
+                <option value="{$vo.college}">{$vo.college}</option>
+            </volist>
         </select>
     </div>
 </div>
@@ -180,7 +174,7 @@
 </div>
 <div class='span2'>
     <div class='row-fluid'>
-        <strong>课程类别</strong>
+        <strong>听课专题</strong>
         <select class='select2 input-block-level' name="topic">
             <option value='-1' selected="selected"/>------请选择------
         <volist name="topic" id="vo">
@@ -189,7 +183,7 @@
         </select>
     </div>
 </div>
-<div class='span4'>
+<!-- <div class='span4'>
     <div class='row-fluid'>
         <strong>学生院系</strong>
         <select class='select2 input-block-level' name="scollege">
@@ -199,16 +193,15 @@
         </volist>
         </select>
     </div>
-</div>
+</div> -->
 <div class='span2'>
     <div class='row-fluid'>
-        <strong>年级</strong>
+        <strong>行政班级</strong>
         <select class='select2 input-block-level' name="grade">
             <option value='-1' selected="selected"/>------请选择------
-            <option value='AK' />2014级
-            <option value='HI' />2013级
-            <option value='CA' />2012级
-            <option value='NV' />2011级
+            <volist name="sclass" id="vo">
+                <option value="{$vo.sclass}">{$vo.sclass}</option>
+            </volist>
         </select>
     </div>
 </div>
@@ -219,7 +212,7 @@
 <div class='row-fluid'>
 <div class='span12 box bordered-box green-border' style='margin-bottom:0;'>
 <div class='box-header green-background'>
-    <div class='text-center'>{$title}&nbsp;&nbsp;督导听课汇总表</div>
+    <div class='text-center'>督导听课汇总表</div>
     <if condition="$Think.session.userRole eq 1">
     <a class='btn btn-success btn-large' style='position:absolute; left:0px;top:2px;' data-toggle='modal' href='#addGroup' role='button'>
         <i class='icon-share'>&nbsp;&nbsp;<strong>导入</strong></i>
@@ -274,12 +267,13 @@
         <td>{$vo.zjgz}</td>
         <td>{$vo.pjjy}</td>
         <td>
-        <if condition = "$vo.ztpj eq 5">好
-        <elseif condition = '$vo.ztpj eq 4' />较好
+        <if condition = "$vo.ztpj eq 1">好
+        <elseif condition = '$vo.ztpj eq 2' />较好
         <elseif condition = '$vo.ztpj eq 3' />一般
-        <elseif condition = '$vo.ztpj eq 2' />较差
-        <elseif condition = '$vo.ztpj eq 1' />差
-        <else />未评价
+        <elseif condition = '$vo.ztpj eq 4' />较差
+        <elseif condition = '$vo.ztpj eq 5' />差
+        <elseif condition = '$vo.ztpj eq 6'/>未评价
+        <else />
         </if>
             </td>
         <td>{$vo.xsjy}</td>

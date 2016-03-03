@@ -30,8 +30,8 @@
                                             <option value="-1">请选择用户角色</option>
                                             <option value="2">督导</option>
                                             <option value="1">系统管理员</option>
-                                            <option value="3">学校领导</option>
-                                            <option value="4">教学院长</option>
+                                            <option value="3">学校领导|教务处长|教学院长</option>
+                                            <option value="4">教务员</option>
                                             <option value="5">教师</option>
                                         </select>
                                     </div>
@@ -55,9 +55,14 @@
                                     </div>
                                 </div>
                                 <div class='control-group'>
-                                    <label class='control-label' for='inputText1'>院系/机构</label>
+                                    <label class='control-label' for='tcollege'>院系/机构</label>
                                     <div class='controls'>
-                                        <input id='inputText1' type='text' name='college' value='' />
+                                        <select class='select2 input-xlarge' name="college" id="tcollege">
+                                            <option value='-1' selected="selected"/>------请选择------
+                                        <volist name="college" id="vo">
+                                            <option value="{$vo.college}">{$vo.college}</option>
+                                        </volist>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class='control-group'>
@@ -122,4 +127,9 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#umanager').nav_slide('umanager','user');
+    });
+</script>
 <include file="./jwcdd/Tpl/footerTemp.html" />
