@@ -166,7 +166,6 @@ class TaskAction extends Action {
         }
         else{
             $this->error('亲~ 你不具备这样的权限哦~');
-            exit(0);
         }
         $count = $task->where($con0)->where($con)->count();
         $Page = new Page($count, 10);
@@ -611,7 +610,7 @@ class TaskAction extends Action {
             $task = M('tasks');
             $task->where($con12)->data($data12)->save();
             $this->saveOperation($userid,'修改听课记录 [rid='.$con['rid'].']');
-            $this->redirect("Task/showTask");//跳转待定
+            $this->success("修改听课记录成功~",'showTask');//跳转待定
         }else{
             $this->error('没有修改听课记录！');
         }
