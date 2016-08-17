@@ -214,21 +214,22 @@
     </ul>
 </li>
 </if>
-<if condition="$Think.session.userRole eq 2">
-<li id="tmanager">
-    <a href='{:U('Task/showTask')}'>
-        <i class='icon-tasks'></i>
-        <span>查看听课记录</span>
-        <i class='icon-angle-down angle-down'></i>
-    </a>
-</li>
-</if>
 
 <if condition="$Think.session.userRole eq 2">
     <li id="rmanager">
     <a href='{:U('Record/record')}'>
         <i class='icon-edit'></i>
         <span>填写听课记录</span>
+        <i class='icon-angle-down angle-down'></i>
+    </a>
+</li>
+</if>
+
+<if condition="$Think.session.userRole eq 2">
+<li id="tmanager">
+    <a href='{:U('Task/showTask')}'>
+        <i class='icon-tasks'></i>
+        <span>查看听课记录</span>
         <i class='icon-angle-down angle-down'></i>
     </a>
 </li>

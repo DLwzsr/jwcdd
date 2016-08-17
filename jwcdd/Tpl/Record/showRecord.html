@@ -210,7 +210,7 @@
                                 <a class='btn btn-success btn-mini' href="{:U('Record/editRecord',array('tid'=>$vo1['tid']))}" style='margin-right:10px;'>
                                     <i class='icon-edit'></i>
                                 </a>
-                                <a class='btn btn-danger btn-mini' href="{:U('Record/record_deldd',array('tid'=>$vo1['tid']))}">
+                                <a class='btn btn-danger btn-mini' data-toggle='modal' href="#deldd" role="button">
                                     <i class='icon-remove'></i>
                                 </a>
                             </if>
@@ -239,6 +239,10 @@
 		</div>
 	</div>
 </div>
+<div class='modal hide fade' id='deldd' role='dialog' tabindex='-1' >
+<a class='btn btn-success' href="{:U('Record/record_deldd',array('tid'=>$vo1['tid']))}" style="float:left;width: 30%; text-align: center">删除</a>
+<a class='btn' data-dismiss='modal'style="float:right;width: 28%; text-align: center">关闭</a>
+</div> 
 <script type="text/javascript">
     $(document).ready(function(){
         $(".btn_pass").click(function(){

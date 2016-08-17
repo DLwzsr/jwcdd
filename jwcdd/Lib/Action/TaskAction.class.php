@@ -154,14 +154,34 @@ class TaskAction extends Action {
             }
         }
         elseif ($userRole == 2) {
-            $flag = $this->_post('flag');
+            /*$flag = $this->_post('flag');
             if($flag == 0){ 
                 $con['uid'] = $userid;
             }
-            else{
+            else{*/
+            if (!empty($_POST) && $this->isPost()) {
+                if($this->_post('cname')!=null){
+                    $cname = $this->_post('cname');
+                    $con['cname'] = $cname;
+                }
+                if($this->_post('teaname')!=null){
+                    $teaname = $this->_post('teaname');
+                    $con['teaname'] = $teaname;
+                }
+                if($this->_post('tcollege')!=-1){
+                    $tcollege = $this->_post('tcollege');
+                    $con['tcollege'] = $tcollege;
+                }
+                if($this->_post('tkmonth')!=-1){
+                    $tkmonth = $this->_post('tkmonth');
+                    $con['tkmonth'] = $tkmonth;
+                }
+            /*}
+                
                 $conu['uid'] = $userid;
                 $group = $dd->where($con0)->where($conu)->select();
                 $con['group'] = $group[0]['group'];
+                */
             }
         }
         else{

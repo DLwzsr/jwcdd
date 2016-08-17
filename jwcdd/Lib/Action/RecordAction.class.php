@@ -270,6 +270,9 @@ class RecordAction extends Action {
         $con2['year'] = $data_course[0]['year'];
         $con2['term'] = $data_course[0]['term'];
         $data_dd = $dd->where($con2)->select();//查出当前督导id
+        if(!$data_dd){
+            $this->error('您还不是本学期督导，请联系管理员添加');
+        }
         $did = $data_dd[0]['did'];//取出did
         $con3['did'] = $did;//查看是否已经有这一听课任务
         $con3['cid'] = $this->_post('cid');
@@ -736,8 +739,9 @@ class RecordAction extends Action {
             //$rid = $record->where($con)->select();//记录要删除的听课记录id
             if ($record->where($con)->delete()) {  //删除
                 $this->saveOperation($userid,'删除听课记录 [tid='.$tid.']');
-                $data['record'] = '0';
-                $task->where($con)->data($data)->save();//将记录标记为0
+                //$data['record'] = '0';
+                //$task->where($con)->data($data)->save();//将记录标记为0
+                $task->where($con)->delete();
             }        
             else{
                 $this->error('删除听课记录失败!');
